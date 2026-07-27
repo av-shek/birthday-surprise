@@ -133,6 +133,65 @@ body::before {
   to { transform: translateX(-50%); }
 }
 
+/* sand + trees */
+.shore {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 260px;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.sand-bed {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: 0;
+  height: 78px;
+  background:
+    radial-gradient(ellipse 40% 60% at 20% 40%, rgba(255, 255, 255, 0.25), transparent 60%),
+    radial-gradient(ellipse 30% 50% at 70% 60%, rgba(232, 200, 122, 0.45), transparent 55%),
+    linear-gradient(180deg, #f8e7b4 0%, #efd48a 45%, #e6c56e 100%);
+  border-radius: 60% 60% 0 0 / 28px 28px 0 0;
+  box-shadow: inset 0 8px 16px rgba(255, 255, 255, 0.25);
+}
+
+.tree {
+  position: absolute;
+  bottom: 42px;
+  transform-origin: bottom center;
+  animation: treeSway 5.5s ease-in-out infinite;
+}
+
+.tree-left-1 { left: 2%; bottom: 48px; animation-duration: 6s; }
+.tree-left-2 { left: 9%; bottom: 40px; animation-duration: 7s; animation-delay: -1.5s; }
+.tree-right-1 { right: 3%; bottom: 50px; animation-duration: 5.8s; animation-delay: -0.8s; }
+.tree-right-2 { right: 11%; bottom: 38px; animation-duration: 6.8s; animation-delay: -2.2s; }
+.tree-mid-left { left: 16%; bottom: 36px; opacity: 0.9; animation-duration: 7.4s; }
+.tree-mid-right { right: 17%; bottom: 34px; opacity: 0.9; animation-duration: 6.2s; animation-delay: -1s; }
+
+@keyframes treeSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+body.surprise-open .shore {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .tree-mid-left,
+  .tree-mid-right {
+    display: none;
+  }
+  .tree-left-2 { left: 7%; transform: scale(0.85); transform-origin: bottom center; }
+  .tree-right-2 { right: 7%; transform: scale(0.85); transform-origin: bottom center; }
+}
+
 .card {
   width: 100%;
   max-width: 440px;
@@ -600,6 +659,63 @@ body.surprise-open .waves {
   <svg class="wave-5" viewBox="0 0 1440 100" preserveAspectRatio="none">
     <path fill="#f6e2b3" d="M0,45 C200,85 400,15 720,50 C1040,85 1240,25 1440,55 L1440,100 L0,100 Z"></path>
     <path fill="#f6e2b3" d="M1440,45 C1640,85 1840,15 2160,50 C2480,85 2680,25 2880,55 L2880,100 L1440,100 Z"></path>
+  </svg>
+</div>
+
+<div class="shore" aria-hidden="true">
+  <div class="sand-bed"></div>
+
+  <!-- coconut palms -->
+  <svg class="tree tree-left-1" width="78" height="150" viewBox="0 0 78 150" fill="none">
+    <path d="M39 148 V58" stroke="#8b5a2b" stroke-width="6" stroke-linecap="round"/>
+    <path d="M39 60 C18 42 6 28 8 18 C22 28 32 42 39 58Z" fill="#2f9e44"/>
+    <path d="M39 60 C28 36 22 18 28 8 C36 22 38 40 39 58Z" fill="#3cb371"/>
+    <path d="M39 60 C50 36 56 18 50 8 C44 22 41 40 39 58Z" fill="#2f9e44"/>
+    <path d="M39 60 C60 42 72 28 70 18 C56 28 46 42 39 58Z" fill="#3cb371"/>
+    <circle cx="33" cy="62" r="4" fill="#6b3f1d"/>
+    <circle cx="45" cy="64" r="3.5" fill="#6b3f1d"/>
+  </svg>
+
+  <svg class="tree tree-right-1" width="86" height="160" viewBox="0 0 86 160" fill="none">
+    <path d="M43 158 V62" stroke="#8b5a2b" stroke-width="7" stroke-linecap="round"/>
+    <path d="M43 64 C18 44 4 28 8 16 C24 28 34 44 43 62Z" fill="#228b22"/>
+    <path d="M43 64 C30 38 24 18 32 6 C40 22 42 42 43 62Z" fill="#3cb371"/>
+    <path d="M43 64 C56 38 62 18 54 6 C48 22 45 42 43 62Z" fill="#228b22"/>
+    <path d="M43 64 C68 44 82 28 78 16 C62 28 52 44 43 62Z" fill="#3cb371"/>
+    <circle cx="36" cy="66" r="4.5" fill="#6b3f1d"/>
+    <circle cx="50" cy="68" r="4" fill="#6b3f1d"/>
+  </svg>
+
+  <!-- pine trees -->
+  <svg class="tree tree-left-2" width="56" height="120" viewBox="0 0 56 120" fill="none">
+    <rect x="24" y="88" width="8" height="28" rx="2" fill="#6b4226"/>
+    <path d="M28 18 L48 52 H8 Z" fill="#1f6b3a"/>
+    <path d="M28 34 L50 72 H6 Z" fill="#247a42"/>
+    <path d="M28 52 L52 92 H4 Z" fill="#2d8a4e"/>
+  </svg>
+
+  <svg class="tree tree-right-2" width="52" height="112" viewBox="0 0 52 112" fill="none">
+    <rect x="22" y="82" width="8" height="26" rx="2" fill="#6b4226"/>
+    <path d="M26 14 L44 46 H8 Z" fill="#1f6b3a"/>
+    <path d="M26 30 L46 66 H6 Z" fill="#247a42"/>
+    <path d="M26 48 L48 86 H4 Z" fill="#2d8a4e"/>
+  </svg>
+
+  <svg class="tree tree-mid-left" width="64" height="130" viewBox="0 0 64 130" fill="none">
+    <path d="M32 128 V54" stroke="#8b5a2b" stroke-width="5" stroke-linecap="round"/>
+    <path d="M32 56 C14 40 4 28 6 18 C18 26 26 38 32 54Z" fill="#2f9e44"/>
+    <path d="M32 56 C24 34 20 18 26 10 C30 22 32 38 32 54Z" fill="#3cb371"/>
+    <path d="M32 56 C40 34 44 18 38 10 C36 22 33 38 32 54Z" fill="#2f9e44"/>
+    <path d="M32 56 C50 40 60 28 58 18 C46 26 38 38 32 54Z" fill="#3cb371"/>
+    <circle cx="27" cy="58" r="3.5" fill="#6b3f1d"/>
+    <circle cx="37" cy="59" r="3" fill="#6b3f1d"/>
+  </svg>
+
+  <svg class="tree tree-mid-right" width="50" height="108" viewBox="0 0 50 108" fill="none">
+    <rect x="21" y="80" width="8" height="24" rx="2" fill="#6b4226"/>
+    <path d="M25 12 L42 44 H8 Z" fill="#1f6b3a"/>
+    <path d="M25 28 L44 64 H6 Z" fill="#247a42"/>
+    <path d="M25 46 L46 84 H4 Z" fill="#2d8a4e"/>
   </svg>
 </div>
 
