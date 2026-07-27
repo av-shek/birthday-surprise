@@ -1,2767 +1,850 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday ❤️</title>
-
+<title>Happy Birthday Gopal🌊</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-
-:root{
-
-    --pink:#ff4f87;
-    --light-pink:#ff9ebc;
-    --purple:#a18cd1;
-    --glass:rgba(255,255,255,.18);
-
+:root {
+  --sky-deep: #1a6bb5;
+  --sky: #4db8e8;
+  --sea: #2ec4b6;
+  --seafoam: #7fdbda;
+  --sand: #f6e2b3;
+  --sand-deep: #e8c87a;
+  --coral: #ff7a59;
+  --coral-deep: #e85d3a;
+  --foam: rgba(255, 255, 255, 0.88);
+  --ink: #14364a;
+  --glass: rgba(255, 255, 255, 0.22);
 }
 
-
-*{
-
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
-body{
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:20px;
-
-    overflow:hidden;
-
-    background:
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 28px 16px 48px;
+  font-family: "Nunito", sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -10%, #9ad8f5 0%, transparent 55%),
     linear-gradient(
-        135deg,
-        #ff9a9e,
-        #fad0c4,
-        #fbc2eb,
-        #a18cd1
+      180deg,
+      #5ec8f0 0%,
+      #3bb4e8 28%,
+      #2a9fd4 48%,
+      #36cfc9 68%,
+      #f3e0a8 88%,
+      #efd48a 100%
     );
+  position: relative;
+}
+
+/* soft floating clouds */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 180px 50px at 15% 12%, rgba(255,255,255,.45), transparent 70%),
+    radial-gradient(ellipse 220px 60px at 78% 8%, rgba(255,255,255,.35), transparent 70%),
+    radial-gradient(ellipse 160px 45px at 55% 18%, rgba(255,255,255,.28), transparent 70%);
+  animation: cloudDrift 28s ease-in-out infinite alternate;
+}
 
-    background-size:400% 400%;
-
-    animation:
-    backgroundMove 12s ease infinite;
-
-}
-
-
-@keyframes backgroundMove{
-
-    0%{
-        background-position:0% 50%;
-    }
-
-    50%{
-        background-position:100% 50%;
-    }
-
-    100%{
-        background-position:0% 50%;
-    }
-
-}
-
-
-
-.card{
-
-    width:100%;
-
-    max-width:440px;
-
-    padding:35px 30px;
-
-    border-radius:30px;
-
-
-    background:
-    rgba(255,255,255,.16);
-
-
-    backdrop-filter:
-    blur(20px);
-
-
-    border:
-    1px solid rgba(255,255,255,.3);
-
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.2);
-
-
-    color:white;
-
-    text-align:center;
-
-    position:relative;
-
-    overflow:hidden;
-
-
-    transition:
-    transform .4s ease;
-
-
-}
-
-
-
-.card::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:250px;
-
-    height:250px;
-
-    border-radius:50%;
-
-    background:
-    rgba(255,255,255,.12);
-
-    top:-120px;
-
-    right:-120px;
-
-}
-
-
-.card::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:180px;
-
-    height:180px;
-
-    border-radius:50%;
-
-    background:
-    rgba(255,255,255,.08);
-
-    bottom:-90px;
-
-    left:-90px;
-
-}
-
-
-
-.content{
-
-    position:relative;
-
-    z-index:2;
-
-}
-
-
-
-.title{
-
-    font-size:2.2rem;
-
-    font-weight:700;
-
-    margin-bottom:15px;
-
-}
-
-
-
-.subtitle{
-
-    line-height:1.7;
-
-    opacity:.95;
-
-    font-size:.98rem;
-
-    margin-bottom:30px;
-
-}
-
-
-
-.question{
-
-    display:none;
-
-    animation:
-    slideIn .5s ease;
-
-}
-
-
-
-.question.active{
-
-    display:block;
-
-}
-
-
-
-@keyframes slideIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(25px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:
-        translateY(0);
-
-    }
-
-}
-
-
-
-.question h2{
-
-    font-size:1.3rem;
-
-    line-height:1.5;
-
-    margin-bottom:30px;
-
-}
-
-
-
-.buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:20px;
-
-    height:70px;
-
-    position:relative;
-
-}
-
-
-
-button{
-
-    border:none;
-
-    cursor:pointer;
-
-    padding:14px 28px;
-
-    border-radius:50px;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    transition:.35s ease;
-
-}
-
-
-
-.yes{
-
-    background:
-    var(--pink);
-
-    color:white;
-
-    box-shadow:
-    0 10px 25px rgba(255,79,135,.45);
-
-}
-
-
-
-.yes:hover{
-
-    transform:
-    scale(1.08);
-
-}
-
-
-
-.no{
-
-    background:white;
-
-    color:
-    var(--pink);
-
-    position:relative;
-
-}
-
-
-
-.message{
-
-    min-height:55px;
-
-    margin-top:20px;
-
-    font-size:18px;
-
-    font-weight:500;
-
-}
-
-
-.hidden{
-
-    display:none;
-
-}
-
-
-@media(max-width:480px){
-
-    .card{
-
-        padding:30px 22px;
-
-    }
-
-
-    .title{
-
-        font-size:1.8rem;
-
-    }
-
-
-    .question h2{
-
-        font-size:1.15rem;
-
-    }
-
-
-    button{
-
-        padding:12px 22px;
-
-        font-size:15px;
-
-    }
-
-}
-
-/* ==========================
-   FINAL SECTION
-========================== */
-
-
-.final{
-
-animation:
-slideIn .8s ease;
-
-}
-
-
-
-.final h1{
-
-font-size:2.2rem;
-
-}
-
-
-
-.final p{
-
-font-size:.98rem;
-
-}
-
-
-
-/* ==========================
-COUPONS
-========================== */
-
-
-.coupons{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:15px;
-
-margin-top:25px;
-
-}
-
-
-
-.coupon{
-
-background:
-rgba(255,255,255,.16);
-
-border:
-1px solid rgba(255,255,255,.25);
-
-border-radius:18px;
-
-padding:18px 12px;
-
-transition:.35s ease;
-
-cursor:pointer;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-
-.coupon::before{
-
-content:"";
-
-position:absolute;
-
-width:60px;
-
-height:60px;
-
-border-radius:50%;
-
-background:
-rgba(255,255,255,.15);
-
-top:-25px;
-
-right:-25px;
-
-}
-
-
-
-.coupon:hover{
-
-transform:
-translateY(-8px)
-scale(1.04);
-
-background:
-rgba(255,255,255,.25);
-
-}
-
-
-
-.coupon h3{
-
-margin:
-
-10px 0;
-
-font-size:17px;
-
-}
-
-
-
-.coupon p{
-
-font-size:13px;
-
-opacity:.9;
-
-}
-
-
-
-
-
-/* ==========================
-SURPRISE BUTTON
-========================== */
-
-
-#surpriseBtn{
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-
-#surpriseBtn::after{
-
-content:"";
-
-position:absolute;
-
-width:0;
-
-height:0;
-
-background:
-rgba(255,255,255,.4);
-
-border-radius:50%;
-
-left:50%;
-
-top:50%;
-
-transform:
-translate(-50%,-50%);
-
-transition:.5s;
-
-}
-
-
-
-#surpriseBtn:hover::after{
-
-width:250px;
-
-height:250px;
-
-}
-
-
-
-#surpriseBtn:hover{
-
-transform:
-scale(1.08);
-
-}
-
-
-
-
-
-/* ==========================
-LETTER
-========================== */
-
-
-#letter{
-
-animation:
-letterOpen .8s ease;
-
-}
-
-
-
-@keyframes letterOpen{
-
-
-from{
-
-    opacity:0;
-
-    transform:
-    translateY(30px)
-    scale(.95);
-
-}
-
-
-to{
-
-    opacity:1;
-
-    transform:
-    translateY(0)
-    scale(1);
-
-}
-
-}
-
-
-
-
-
-/* ==========================
-FLOATING HEARTS
-========================== */
-
-
-.floating-heart{
-
-position:fixed;
-
-pointer-events:none;
-
-z-index:9999;
-
-font-size:25px;
-
-animation:
-heartFloat 2s ease forwards;
-
+@keyframes cloudDrift {
+  from { transform: translateX(-12px); }
+  to { transform: translateX(18px); }
 }
-
-
-
-@keyframes heartFloat{
-
-
-0%{
-
-    opacity:1;
-
-    transform:
-    translate(-50%,-50%)
-    scale(.8);
-
+
+/* wave band at bottom */
+.waves {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
-
-
-
-100%{
-
-    opacity:0;
-
-    transform:
-    translate(-50%,-180px)
-    scale(1.8)
-    rotate(25deg);
 
+.waves svg {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 120px;
 }
 
+.wave-a {
+  animation: waveMove 10s linear infinite;
+  opacity: 0.55;
 }
-
-
-
-
-/* ==========================
-CONFETTI CANVAS
-========================== */
-
-
-#confettiCanvas{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:999;
-
+
+.wave-b {
+  animation: waveMove 14s linear infinite reverse;
+  opacity: 0.35;
+}
+
+@keyframes waveMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  margin-top: 12px;
+  padding: 32px 26px 28px;
+  border-radius: 28px;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.28) 45%,
+    rgba(255, 248, 230, 0.35) 100%
+  );
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 18px 50px rgba(20, 70, 100, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  animation: pageAppear 0.75s ease;
 }
-
-
-
-
-
-/* ==========================
-MOBILE IMPROVEMENTS
-========================== */
 
-
-@media(max-width:480px){
-
-
-.coupons{
-
-    grid-template-columns:
-    1fr;
-
+@keyframes pageAppear {
+  from { opacity: 0; transform: translateY(22px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
-
-
-.coupon{
 
-    padding:20px;
-
+.content {
+  position: relative;
+  z-index: 2;
 }
-
-
-
-.final h1{
 
-    font-size:1.8rem;
-
+.title {
+  font-family: "Fraunces", serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #0f4c75;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
-
 
+.subtitle {
+  line-height: 1.7;
+  font-size: 0.98rem;
+  color: #255870;
+  margin-bottom: 28px;
+  opacity: 0.95;
 }
-@keyframes sparkleFade{
-
-0%{
-
-    opacity:0;
 
-    transform:
-    scale(.5);
-
+.question {
+  display: none;
+  animation: slideIn 0.45s ease;
 }
-
-
-50%{
-
-    opacity:1;
 
-    transform:
-    scale(1.3);
-
+.question.active {
+  display: block;
 }
-
-
-100%{
-
-    opacity:0;
 
-    transform:
-    scale(.2)
-    translateY(-40px);
-
+.question h2 {
+  font-family: "Fraunces", serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #134e6f;
+  line-height: 1.45;
+  margin-bottom: 22px;
 }
 
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* ==========================
-   PREMIUM LETTER EFFECT
-========================== */
-
-
-#letter{
 
-transform-origin:
-top center;
-
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  position: relative;
+  min-height: 56px;
 }
-
-
-
-#letter h2{
 
-color:white;
-
-font-size:1.4rem;
-
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-
-
 
-#letter p{
-
-animation:
-textReveal 1s ease;
-
+.yes {
+  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(232, 93, 58, 0.35);
 }
-
-
 
-@keyframes textReveal{
-
-
-from{
-
-    opacity:0;
-
-    transform:
-    translateY(15px);
-
+.yes:hover {
+  transform: translateY(-2px) scale(1.03);
 }
-
-
-to{
-
-    opacity:1;
 
-    transform:
-    translateY(0);
-
+.no {
+  background: rgba(255, 255, 255, 0.75);
+  color: #3a6a82;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  touch-action: none;
+  user-select: none;
+  position: relative;
+  z-index: 5;
+  transition: transform 0.22s ease, background 0.22s ease;
 }
 
+.no:hover {
+  background: #fff8e8;
 }
-
-
-
-
-
-/* ==========================
-COUPON CLICK EFFECT
-========================== */
-
-
-.coupon{
 
-user-select:none;
-
+.message {
+  margin-top: 18px;
+  min-height: 28px;
+  font-weight: 600;
+  color: #0f5c6e;
+  animation: slideIn 0.4s ease;
 }
-
-
-
-.coupon:active{
 
-transform:
-scale(.95);
-
+.hidden {
+  display: none !important;
 }
-
-
-
-.coupon::after{
 
-content:"✨";
-
-position:absolute;
-
-right:10px;
-
-bottom:8px;
-
-opacity:.6;
-
+.final {
+  animation: slideIn 0.7s ease;
+  padding-bottom: 8px;
 }
-
-
-
 
-
-/* ==========================
-FINAL HEART ANIMATION
-========================== */
-
-
-.final > div:first-child{
-
-animation:
-heartbeat 1.2s infinite;
-
+.final-emoji {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: inline-block;
+  animation: heartbeat 1.3s ease-in-out infinite;
 }
-
-
-
-@keyframes heartbeat{
 
-
-0%{
-
-    transform:
-    scale(1);
-
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
 }
-
 
-50%{
-
-    transform:
-    scale(1.18);
-
+.final h1 {
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+  color: #0f4c75;
+  margin-bottom: 16px;
 }
-
-
-100%{
 
-    transform:
-    scale(1);
-
+.final > p {
+  line-height: 1.8;
+  color: #255870;
+  font-size: 0.96rem;
 }
-
 
+.section-title {
+  font-family: "Fraunces", serif;
+  margin-top: 32px;
+  margin-bottom: 4px;
+  color: #0f4c75;
+  font-size: 1.35rem;
 }
-
-
-
-
-
-/* ==========================
-BUTTON GLOW
-========================== */
-
 
-#surpriseBtn{
-
-animation:
-buttonGlow 2s infinite;
-
+.section-hint {
+  font-size: 0.85rem;
+  color: #3d6f86;
+  margin-bottom: 16px;
+  opacity: 0.9;
 }
-
-
-
-@keyframes buttonGlow{
-
-
-0%{
-
-    box-shadow:
-    0 0 0 rgba(255,79,135,0);
 
+/* ===== Coupons (ticket style) ===== */
+.coupons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
 }
 
-
-50%{
-
-    box-shadow:
-    0 0 30px rgba(255,79,135,.7);
-
+.coupon {
+  position: relative;
+  background:
+    linear-gradient(180deg, #fffdf8 0%, #fff6e0 100%);
+  color: var(--ink);
+  border-radius: 16px;
+  padding: 16px 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  border: 1.5px dashed rgba(46, 196, 182, 0.45);
+  box-shadow: 0 8px 18px rgba(20, 70, 100, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+  text-align: center;
+  min-height: 128px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
-
 
-100%{
-
-    box-shadow:
-    0 0 0 rgba(255,79,135,0);
-
+.coupon::before,
+.coupon::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #5ec8f0;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35);
 }
 
+.coupon::before { left: -8px; }
+.coupon::after { right: -8px; }
 
+.coupon .icon {
+  font-size: 1.55rem;
+  line-height: 1;
 }
-
-/* ==========================
-   SMOOTH PAGE FEEL
-========================== */
-
 
-html{
-
-scroll-behavior:smooth;
-
+.coupon h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f4c75;
+  margin: 2px 0;
 }
-
-
-
-/* ==========================
-BETTER NO BUTTON
-========================== */
-
-
-.no{
-
-touch-action:none;
 
-user-select:none;
-
-transition:
-transform .25s ease,
-background .25s ease;
-
+.coupon p {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #4a7084;
+  opacity: 0.95;
 }
-
-
 
-.no:hover{
-
-background:#fff0f5;
-
+.coupon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(20, 70, 100, 0.18);
+  border-color: var(--coral);
 }
-
-
 
-
-
-/* ==========================
-FINAL MESSAGE POLISH
-========================== */
-
-
-.final{
-
-padding-bottom:10px;
-
+.coupon.is-redeemed {
+  background: linear-gradient(180deg, #e8fbf8 0%, #d5f5ef 100%);
+  border-style: solid;
+  border-color: var(--sea);
 }
-
-
 
-.final strong{
-
-color:#fff;
-
+.coupon.is-redeemed::before {
+  content: none;
 }
-
-
 
-.final p{
-
-letter-spacing:.2px;
-
+.coupon .redeemed-badge {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0f7a6e;
+  background: rgba(46, 196, 182, 0.2);
+  padding: 2px 7px;
+  border-radius: 999px;
 }
-
-
 
-
-
-/* ==========================
-MOBILE TOUCH IMPROVEMENTS
-========================== */
-
-
-@media(max-width:480px){
-
-
-body{
-
-    padding:12px;
-
+.coupon.is-redeemed .redeemed-badge {
+  display: inline-block;
 }
 
-
-
-.card{
-
-    max-height:
-    95vh;
-
-    overflow-y:auto;
-
+.coupon.is-pop {
+  animation: couponPop 0.35s ease;
 }
-
-
-
-.buttons{
 
-    gap:15px;
-
+@keyframes couponPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.06); }
+  100% { transform: scale(1); }
 }
-
-
-
-.yes,
-.no{
 
-    min-width:110px;
-
+/* ===== Surprise ===== */
+.surprise-wrap {
+  margin-top: 28px;
 }
-
 
+#surpriseBtn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1f8fc9, #2ec4b6);
+  color: #fff;
+  padding: 14px 28px;
+  box-shadow: 0 10px 26px rgba(31, 143, 201, 0.35);
+  z-index: 1;
 }
-
-
 
-
-
-/* ==========================
-DISABLE TEXT SELECTION
-========================== */
-
-
-button,
-.coupon{
-
--webkit-tap-highlight-color:
-transparent;
-
+#surpriseBtn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.04);
 }
-
-
 
-
-
-/* ==========================
-LOADING FADE
-========================== */
-
-
-.card{
-
-animation:
-pageAppear .8s ease;
-
+#surpriseBtn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
 }
-
-
 
-@keyframes pageAppear{
-
-
-from{
-
-    opacity:0;
-
-    transform:
-    translateY(20px)
-    scale(.96);
-
+#letter {
+  display: none;
+  margin-top: 22px;
+  padding: 22px 20px;
+  text-align: left;
+  line-height: 1.8;
+  color: #1d4d63;
+  background:
+    linear-gradient(160deg, rgba(255, 253, 248, 0.92), rgba(255, 244, 214, 0.85));
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 30px rgba(20, 70, 100, 0.14);
+  transform-origin: top center;
 }
-
-
-to{
-
-    opacity:1;
 
-    transform:
-    translateY(0)
-    scale(1);
-
+#letter.is-open {
+  display: block;
+  animation: letterOpen 0.65s ease;
 }
 
+@keyframes letterOpen {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
-/* ==========================
-   FINAL SPARKLE DETAILS
-========================== */
-
-
-.sparkle{
 
-position:fixed;
-
-pointer-events:none;
-
-animation:
-sparkleMove 2s ease forwards;
-
+#letter h2 {
+  font-family: "Fraunces", serif;
+  text-align: center;
+  color: #0f4c75;
+  font-size: 1.25rem;
+  margin-bottom: 14px;
 }
-
 
-
-@keyframes sparkleMove{
-
-
-0%{
-
-    opacity:0;
-
-    transform:
-    scale(.3);
-
+#letter p {
+  font-size: 0.94rem;
 }
-
-
-40%{
 
-    opacity:1;
-
-    transform:
-    scale(1.2);
-
+.birthday-footer {
+  margin-top: 24px;
+  font-size: 0.8rem;
+  color: #3d6f86;
+  opacity: 0.85;
+  text-align: center;
 }
-
-
-100%{
 
-    opacity:0;
-
-    transform:
-    translateY(-50px)
-    scale(.5);
-
+/* toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(16px);
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(15, 76, 117, 0.92);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-align: center;
+  z-index: 10000;
+  box-shadow: 0 12px 28px rgba(10, 40, 60, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
-
-
 
-
-
-/* ==========================
-FOOTER MESSAGE
-========================== */
-
-
-.birthday-footer{
-
-margin-top:25px;
-
-font-size:13px;
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 22px;
+  animation: heartFloat 1.8s ease forwards;
+}
 
-opacity:.8;
+@keyframes heartFloat {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.85); }
+  100% { opacity: 0; transform: translate(-50%, -160px) scale(1.5) rotate(20deg); }
+}
 
-text-align:center;
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
 
+@media (max-width: 480px) {
+  body { padding: 16px 12px 40px; }
+  .title { font-size: 1.8rem; }
+  .final h1 { font-size: 1.7rem; }
+  .coupons { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .coupon { min-height: 118px; padding: 14px 10px; }
+  .yes, .no { min-width: 108px; }
 }
 </style>
-
 </head>
-
-
 <body>
 
+<div class="waves" aria-hidden="true">
+  <svg class="wave-a" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path fill="#7fdbda" d="M0,64 C240,110 480,20 720,55 C960,90 1200,100 1440,50 L1440,120 L0,120 Z"></path>
+    <path fill="#7fdbda" d="M1440,64 C1680,110 1920,20 2160,55 C2400,90 2640,100 2880,50 L2880,120 L1440,120 Z"></path>
+  </svg>
+  <svg class="wave-b" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path fill="#f6e2b3" d="M0,80 C200,40 400,100 720,70 C1040,40 1240,90 1440,65 L1440,120 L0,120 Z"></path>
+    <path fill="#f6e2b3" d="M1440,80 C1640,40 1840,100 2160,70 C2480,40 2680,90 2880,65 L2880,120 L1440,120 Z"></path>
+  </svg>
+</div>
 
 <div class="card">
-
-<div class="content">
-
-
-<h1 class="title">
-🎂 Happy Birthday ❤️
-</h1>
-
-
-<p class="subtitle">
-
-Today is all about celebrating someone truly special.
-
-<br><br>
-
-I have a few tiny questions for you...
-
-Answer carefully 😇
-
-</p>
-
-<!-- QUESTION 1 -->
-
-<div class="question active">
-
-    <h2>
-        Can I officially wish you the happiest birthday ever? 🥺
-    </h2>
-
-
-    <div class="buttons">
-
-        <button class="yes">
-            YES 💖
-        </button>
-
-        <button class="no">
-            No
-        </button>
-
-    </div>
-
-
-    <div class="message"></div>
-
-
-</div>
-
-
-
-
-<!-- QUESTION 2 -->
-
-<div class="question">
-
-    <h2>
-        Will you promise to smile a little more today? 😊
-    </h2>
-
-
-    <div class="buttons">
-
-        <button class="yes">
-            Of Course ❤️
-        </button>
-
-        <button class="no">
-            No
-        </button>
-
-    </div>
-
-
-    <div class="message"></div>
-
-
-</div>
-
-
-
-
-
-<!-- QUESTION 3 -->
-
-<div class="question">
-
-    <h2>
-        Can I steal one cute smile from you today? 😋
-    </h2>
-
-
-    <div class="buttons">
-
-        <button class="yes">
-            Take It 💕
-        </button>
-
-        <button class="no">
-            No
-        </button>
-
-    </div>
-
-
-    <div class="message"></div>
-
-
-</div>
-
-
-
-
-
-<!-- QUESTION 4 -->
-
-<div class="question">
-
-    <h2>
-        Will you always remember how amazing you are? 🌸
-    </h2>
-
-
-    <div class="buttons">
-
-        <button class="yes">
-            Always ❤️
-        </button>
-
-        <button class="no">
-            No
-        </button>
-
-    </div>
-
-
-    <div class="message"></div>
-
-
-</div>
-
-
-
-
-
-<!-- FINAL BIRTHDAY SECTION -->
-
-
-<div class="final hidden">
-
-
-    <div style="font-size:70px;">
-        💖
-    </div>
-
-
-    <h1 style="margin-bottom:20px;">
-        Yayyyy!! 🎉
-    </h1>
-
-
-    <p style="line-height:1.8;">
-
-        I knew you would say yes. 😌❤️
-
-        <br><br>
-
-        Today is your day.
-
-        A day to celebrate your smile,
-        your kindness,
-        your little quirks,
-        and everything that makes you special.
-
-        <br><br>
-
-        I hope this year brings you endless happiness,
-        beautiful memories,
-        success,
-        and countless reasons to smile.
-
-        <br><br>
-
-        You deserve all the love and happiness in the world.
-
-        ❤️
-
+  <div class="content">
+    <h1 class="title">🌊 Happy Birthday Gopal!!🌊</h1>
+    <p class="subtitle">
+      Today is all about celebrating you, someone truly special.
+      <br><br>
+      I have a few tiny questions for you...<br>
+      Answer carefully 😇
     </p>
 
+    <div class="question active">
+      <h2>Will you make a wonderful birthday wish today? 🎂</h2>
 
-
-    <!-- BIRTHDAY COUPONS -->
-
-
-    <h2 style="margin-top:35px;">
-        🎟 Birthday Coupons
-    </h2>
-
-
-
-    <div class="coupons">
-
-
-        <div class="coupon">
-
-            🤗
-
-            <h3>
-                One Free Hug
-            </h3>
-
-            <p>
-                Redeem whenever you need one.
-            </p>
-
-        </div>
-
-
-
-
-        <div class="coupon">
-
-            🍫
-
-            <h3>
-                Unlimited Chocolates
-            </h3>
-
-            <p>
-                Birthday calories don't count.
-            </p>
-
-        </div>
-
-
-
-
-
-        <div class="coupon">
-
-            🎬
-
-            <h3>
-                Movie Date
-            </h3>
-
-            <p>
-                Your choice, my company.
-            </p>
-
-        </div>
-
-
-
-
-
-        <div class="coupon">
-
-            🍕
-
-
-            <h3>
-                Food Treat
-            </h3>
-
-            <p>
-                A delicious day awaits.
-            </p>
-
-        </div>
-
-
-
+      <div class="buttons">
+        <button class="yes" type="button">YES 💖</button>
+        <button class="no" type="button">No</button>
+      </div>
+      <div class="message"></div>
     </div>
 
-
-
-
-
-    <!-- SURPRISE BUTTON -->
-
-
-    <button id="surpriseBtn"
-    style="margin-top:35px;
-    background:#ff4f87;
-    color:white;">
-
-        🎁 Open Your Surprise
-
-    </button>
-
-
-
-
-
-    <!-- LETTER -->
-
-    <div id="letter"
-    style="
-    display:none;
-    margin-top:30px;
-    padding:25px;
-    background:rgba(255,255,255,.15);
-    border-radius:20px;
-    text-align:left;
-    line-height:1.8;
-    ">
-
-
-        <h2 style="text-align:center;">
-            💌 A Little Message For You
-        </h2>
-
-
-        <br>
-
-
-        <p>
-
-
-        Dear You,
-
-
-        <br><br>
-
-
-        Today is a reminder that the world became a little brighter
-        because you are in it.
-
-
-        <br><br>
-
-
-        Thank you for being the wonderful person you are.
-
-        Your smile,
-        your kindness,
-        and your presence make ordinary moments special.
-
-
-        <br><br>
-
-
-        I hope this year gives you everything you wish for:
-
-        happiness,
-        success,
-        good health,
-        unforgettable adventures,
-        and countless reasons to smile.
-
-
-        <br><br>
-
-
-        Never forget how special you are.
-
-        Keep shining,
-        keep dreaming,
-        and keep being yourself.
-
-
-        <br><br>
-
-
-        Happy Birthday ❤️
-
-
-        </p>
-
-
+    <div class="question">
+      <h2>Will you promise to smile a little more today? 😊</h2>
+      <div class="buttons">
+        <button class="yes" type="button">Of Course ❤️</button>
+        <button class="no" type="button">No</button>
+      </div>
+      <div class="message"></div>
     </div>
 
+    <div class="question">
+      <h2>Can I steal one cute smile from you today? 😋</h2>
+      <div class="buttons">
+        <button class="yes" type="button">Take It 💕</button>
+        <button class="no" type="button">No</button>
+      </div>
+      <div class="message"></div>
+    </div>
 
+    <div class="question">
+      <h2>Will you always remember how amazing you are? 🌸</h2>
+      <div class="buttons">
+        <button class="yes" type="button">Always ❤️</button>
+        <button class="no" type="button">No</button>
+      </div>
+      <div class="message"></div>
+    </div>
 
+    <div class="final hidden">
+      <div class="final-emoji">🌴</div>
+      <h1>Yayyyy!! 🎉</h1>
+      <p>
+        I knew you would say yes. 😌❤️
+        <br><br>
+        Today is your day — a day to celebrate your smile, your kindness,
+        your little quirks, and everything that makes you special.
+        <br><br>
+        I hope this year brings you endless happiness, beautiful memories,
+        success, and countless reasons to smile.
+        <br><br>
+        You deserve all the love and happiness in the world. ❤️
+      </p>
+
+      <h2 class="section-title">🎟 Birthday Coupons</h2>
+      <p class="section-hint">Tap a coupon to redeem it ✨</p>
+
+      <div class="coupons">
+        <div class="coupon" data-msg="🤗 Hug coupon activated! Save this for a special moment.">
+          <span class="redeemed-badge">Redeemed</span>
+          <span class="icon">🤗</span>
+          <h3>One Free Hug</h3>
+          <p>Redeem whenever you need one.</p>
+        </div>
+        <div class="coupon" data-msg="🍫 Chocolate permission granted forever.">
+          <span class="redeemed-badge">Redeemed</span>
+          <span class="icon">🍫</span>
+          <h3>Unlimited Chocolates</h3>
+          <p>Birthday calories don't count.</p>
+        </div>
+        <div class="coupon" data-msg="🎬 Movie date unlocked! Choose wisely 😄">
+          <span class="redeemed-badge">Redeemed</span>
+          <span class="icon">🎬</span>
+          <h3>Movie Date</h3>
+          <p>Your choice, my company.</p>
+        </div>
+        <div class="coupon" data-msg="🍕 Food treat available whenever hunger attacks.">
+          <span class="redeemed-badge">Redeemed</span>
+          <span class="icon">🍕</span>
+          <h3>Food Treat</h3>
+          <p>A delicious day awaits.</p>
+        </div>
+      </div>
+
+      <div class="surprise-wrap">
+        <button id="surpriseBtn" type="button">🎁 Open Your Surprise</button>
+        <div id="letter">
+          <h2>💌 A Little Message For You</h2>
+          <p>
+            Dear Gopal,
+            <br><br>
+            Today is a reminder that the world is a little brighter because you are in it.
+            <br><br>
+            Thank you for being the wonderful person you are.
+            Your presence makes ordinary moments special.
+            <br><br>
+            I hope this year gives you everything you wish for:
+            happiness, success, good health, unforgettable adventures,
+            and countless reasons to smile.
+            <br><br>
+            Never forget how special you are.
+            Keep shining, keep dreaming, and keep being yourself.
+            <br><br>
+            Happy Birthday ❤️🌊
+          </p>
+        </div>
+      </div>
+
+      <div class="birthday-footer">Made with ❤️ for your special day 🎂</div>
+    </div>
+  </div>
 </div>
+
 <canvas id="confettiCanvas"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
+(() => {
+  const questions = document.querySelectorAll(".question");
+  const finalSection = document.querySelector(".final");
+  const surpriseBtn = document.getElementById("surpriseBtn");
+  const letter = document.getElementById("letter");
+  const toastEl = document.getElementById("toast");
+  const canvas = document.getElementById("confettiCanvas");
+  const ctx = canvas.getContext("2d");
 
+  let currentQuestion = 0;
+  let confettiPieces = [];
+  let toastTimer = null;
+  let surpriseOpened = false;
 
-    // ==========================
-    // QUESTION LOGIC
-    // ==========================
-    
-    
-    const questions = document.querySelectorAll(".question");
-    
-    const finalSection = document.querySelector(".final");
-    
-    let currentQuestion = 0;
-    
-    
-    
-    const responses = [
-    
-        "Awww 🥹 I knew you would say yes! ❤️",
-    
-        "That smile just made this day better 🌸",
-    
-        "See? You are already making things happier 💕",
-    
-        "Perfect answer! You are officially amazing 🥳"
-    
-    ];
-    
-    
-    
-    questions.forEach((question,index)=>{
-    
-    
-        const yesBtn =
-        question.querySelector(".yes");
-    
-    
-        const noBtn =
-        question.querySelector(".no");
-    
-    
-        const message =
-        question.querySelector(".message");
-    
-    
-        let noMoves = 0;
-    
-    
-    
-        yesBtn.addEventListener("click",()=>{
-    
-    
-            message.innerHTML =
-            responses[index];
-    
-    
-            createHeartBurst();
-    
-    
-    
-            setTimeout(()=>{
-    
-    
-                question.classList.remove("active");
-    
-    
-                currentQuestion++;
-    
-    
-    
-                if(currentQuestion < questions.length){
-    
-    
-                    questions[currentQuestion]
-                    .classList.add("active");
-    
-    
-                }
-    
-                else{
-    
-    
-                    finalSection
-                    .classList.remove("hidden");
-    
-    
-                    launchConfetti();
-    
-    
-                }
-    
-    
-    
-            },1200);
-    
-    
-    
-        });
-    
-    
-    
-    
-    
-        // NO BUTTON ESCAPE
-    
-    
-        function escapeButton(){
-    
-    
-            noMoves++;
-    
-    
-            const messages = [
-    
-                "Are you sure? 🥺",
-    
-                "Wrong button 😆",
-    
-                "Try again 🙈",
-    
-                "Nope 😂",
-    
-                "Can't catch me 😜",
-    
-                "Nice try 🤭",
-    
-                "The YES button is waiting ❤️"
-    
-            ];
-    
-    
-    
-            noBtn.innerHTML =
-            messages[
-                Math.floor(
-                    Math.random()*messages.length
-                )
-            ];
-    
-    
-    
-            const x =
-            Math.random()*180-90;
-    
-    
-            const y =
-            Math.random()*50-25;
-    
-    
-    
-            const scale =
-            Math.max(
-                .55,
-                1-(noMoves*.07)
-            );
-    
-    
-    
-            noBtn.style.transform =
-            `
-            translate(${x}px,${y}px)
-            scale(${scale})
-            rotate(${Math.random()*30-15}deg)
-            `;
-    
-    
-    
-        }
-    
-    
-    
-    
-        noBtn.addEventListener(
-            "mouseenter",
-            escapeButton
-        );
-    
-    
-    
-        noBtn.addEventListener(
-            "touchstart",
-            (e)=>{
-    
-                e.preventDefault();
-    
-                escapeButton();
-    
-            }
-        );
-    
-    
-    
-    });
-    
-    
-    
-    
-    
-    // ==========================
-    // SURPRISE LETTER
-    // ==========================
-    
-    
-    const surpriseBtn =
-    document.getElementById("surpriseBtn");
-    
-    
-    const letter =
-    document.getElementById("letter");
-    
-    
-    
-    surpriseBtn.addEventListener(
-    "click",
-    ()=>{
-    
-    
-        surpriseBtn.style.display="none";
-    
-    
-        letter.style.display="block";
-    
-    
-        launchConfetti();
-    
-    
-        createHeartBurst();
-    
-    
-    });
-    
-    
-    
-    
-    
-    // ==========================
-    // FLOATING HEARTS
-    // ==========================
-    
-    
-    
-    function createHeart(x,y){
-    
-    
-        const heart =
-        document.createElement("div");
-    
-    
-        heart.className =
-        "floating-heart";
-    
-    
-    
-        const icons=[
-    
-            "❤️",
-            "💖",
-            "💕",
-            "💗",
-            "✨"
-    
-        ];
-    
-    
-    
-        heart.innerHTML =
-        icons[
-            Math.floor(
-                Math.random()*icons.length
-            )
-        ];
-    
-    
-    
-        heart.style.left =
-        x+"px";
-    
-    
-        heart.style.top =
-        y+"px";
-    
-    
-    
-        document.body.appendChild(heart);
-    
-    
-    
-        setTimeout(()=>{
-    
-            heart.remove();
-    
-        },2000);
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    document.addEventListener(
-    "click",
-    (e)=>{
-    
-    
+  const responses = [
+    "Awww 🥹 I knew you would say yes! ❤️",
+    "That smile just made this day better 🌸",
+    "See? You are already making things happier 💕",
+    "Perfect answer! You are officially amazing 🥳",
+  ];
+
+  const noMessages = [
+    "Are you sure? 🥺",
+    "Wrong button 😆",
+    "Try again 🙈",
+    "Nope 😂",
+    "Can't catch me 😜",
+    "Nice try 🤭",
+    "The YES button is waiting ❤️",
+  ];
+
+  function showToast(text) {
+    clearTimeout(toastTimer);
+    toastEl.textContent = text;
+    toastEl.classList.add("show");
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2800);
+  }
+
+  function createHeart(x, y) {
+    const heart = document.createElement("div");
+    heart.className = "floating-heart";
+    const icons = ["❤️", "💖", "💕", "🐚", "✨"];
+    heart.textContent = icons[Math.floor(Math.random() * icons.length)];
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1800);
+  }
+
+  function createHeartBurst() {
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
         createHeart(
-            e.clientX,
-            e.clientY
+          window.innerWidth / 2 + (Math.random() * 140 - 70),
+          window.innerHeight / 2 + (Math.random() * 120 - 60)
         );
-    
-    
-    });
-    
-    
-    
-    
-    document.addEventListener(
-    "touchstart",
-    (e)=>{
-    
-    
-        const touch =
-        e.touches[0];
-    
-    
-        createHeart(
-            touch.clientX,
-            touch.clientY
-        );
-    
-    
-    });
-    
-    
-    
-    
-    
-    // ==========================
-    // HEART BURST
-    // ==========================
-    
-    
-    function createHeartBurst(){
-    
-    
-        for(let i=0;i<12;i++){
-    
-    
-            setTimeout(()=>{
-    
-    
-                createHeart(
-    
-                    window.innerWidth/2+
-                    (Math.random()*150-75),
-    
-    
-                    window.innerHeight/2+
-                    (Math.random()*150-75)
-    
-                );
-    
-    
-            },i*80);
-    
-    
-        }
-    
-    
+      }, i * 70);
     }
-    
-    
-    
-// ==========================
-// CONFETTI ENGINE
-// ==========================
+  }
 
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-const canvas =
-document.getElementById("confettiCanvas");
-
-
-const ctx =
-canvas.getContext("2d");
-
-
-
-function resizeCanvas(){
-
-    canvas.width =
-    window.innerWidth;
-
-    canvas.height =
-    window.innerHeight;
-
-}
-
-
-
-resizeCanvas();
-
-
-
-window.addEventListener(
-"resize",
-resizeCanvas
-);
-
-
-
-let confettiPieces = [];
-
-
-
-function launchConfetti(){
-
-
+  function launchConfetti() {
     confettiPieces = [];
-
-
-    for(let i=0;i<180;i++){
-
-
-        confettiPieces.push({
-
-            x:
-            Math.random()*canvas.width,
-
-
-            y:
-            -20-Math.random()*300,
-
-
-            size:
-            Math.random()*8+4,
-
-
-            speed:
-            Math.random()*3+2,
-
-
-            rotation:
-            Math.random()*360,
-
-
-            rotationSpeed:
-            Math.random()*8-4,
-
-
-            color:
-            `hsl(${Math.random()*360},100%,70%)`
-
-
-        });
-
-
+    const beachColors = ["#ff7a59", "#2ec4b6", "#4db8e8", "#f6e2b3", "#ffffff", "#7fdbda"];
+    for (let i = 0; i < 140; i++) {
+      confettiPieces.push({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 280,
+        size: Math.random() * 7 + 3,
+        speed: Math.random() * 2.8 + 1.8,
+        rotation: Math.random() * 360,
+        rotationSpeed: Math.random() * 7 - 3.5,
+        color: beachColors[Math.floor(Math.random() * beachColors.length)],
+      });
     }
-
-
     animateConfetti();
+  }
 
+  function animateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiPieces = confettiPieces.filter((piece) => {
+      piece.y += piece.speed;
+      piece.rotation += piece.rotationSpeed;
+      ctx.save();
+      ctx.translate(piece.x, piece.y);
+      ctx.rotate((piece.rotation * Math.PI) / 180);
+      ctx.fillStyle = piece.color;
+      ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
+      ctx.restore();
+      return piece.y <= canvas.height + 40;
+    });
+    if (confettiPieces.length) requestAnimationFrame(animateConfetti);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
-}
+  questions.forEach((question, index) => {
+    const yesBtn = question.querySelector(".yes");
+    const noBtn = question.querySelector(".no");
+    const message = question.querySelector(".message");
+    let noMoves = 0;
 
-
-
-
-
-function animateConfetti(){
-
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-
-    confettiPieces.forEach((piece,index)=>{
-
-
-        piece.y += piece.speed;
-
-        piece.rotation += piece.rotationSpeed;
-
-
-
-        ctx.save();
-
-
-
-        ctx.translate(
-            piece.x,
-            piece.y
-        );
-
-
-
-        ctx.rotate(
-            piece.rotation*Math.PI/180
-        );
-
-
-
-        ctx.fillStyle =
-        piece.color;
-
-
-
-        ctx.fillRect(
-
-            -piece.size/2,
-
-            -piece.size/2,
-
-            piece.size,
-
-            piece.size
-
-        );
-
-
-
-        ctx.restore();
-
-
-
-
-        if(piece.y > canvas.height+50){
-
-
-            confettiPieces.splice(
-                index,
-                1
-            );
-
-
+    yesBtn.addEventListener("click", () => {
+      message.textContent = responses[index];
+      createHeartBurst();
+      setTimeout(() => {
+        question.classList.remove("active");
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          questions[currentQuestion].classList.add("active");
+        } else {
+          finalSection.classList.remove("hidden");
+          launchConfetti();
+          finalSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-
-
+      }, 1100);
     });
 
-
-
-    if(confettiPieces.length>0){
-
-
-        requestAnimationFrame(
-            animateConfetti
-        );
-
-
-    }
-    else{
-
-
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-
+    function escapeButton() {
+      noMoves++;
+      noBtn.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
+      const scale = Math.max(0.55, 1 - noMoves * 0.07);
+      const x = Math.random() * 160 - 80;
+      const y = Math.random() * 40 - 20;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${scale}) rotate(${Math.random() * 24 - 12}deg)`;
     }
 
-
-}
-
-
-
-
-
-// ==========================
-// RANDOM SPARKLES
-// ==========================
-
-
-function createSparkle(){
-
-
-    const sparkle =
-    document.createElement("div");
-
-
-
-    sparkle.innerHTML="✨";
-
-
-
-    sparkle.style.position="fixed";
-
-
-    sparkle.style.left =
-    Math.random()*window.innerWidth+"px";
-
-
-    sparkle.style.top =
-    Math.random()*window.innerHeight+"px";
-
-
-
-    sparkle.style.fontSize =
-    Math.random()*20+15+"px";
-
-
-
-    sparkle.style.pointerEvents="none";
-
-
-
-    sparkle.style.zIndex="9998";
-
-
-
-    sparkle.style.animation =
-    "sparkleFade 2s ease forwards";
-
-
-
-    document.body.appendChild(
-        sparkle
-    );
-
-
-
-    setTimeout(()=>{
-
-        sparkle.remove();
-
-    },2000);
-
-
-}
-
-
-
-
-
-setInterval(
-    createSparkle,
-    2500
-);
-
-
-
-
-
-// ==========================
-// SURPRISE BUTTON EFFECT
-// ==========================
-
-
-surpriseBtn.addEventListener(
-"mouseenter",
-()=>{
-
-
-    surpriseBtn.innerHTML =
-    "🎁 Open it... if you dare 😇";
-
-
-});
-
-
-
-
-surpriseBtn.addEventListener(
-"mouseleave",
-()=>{
-
-
-    surpriseBtn.innerHTML =
-    "🎁 Open Your Surprise";
-
-
-});
-
-
-
-
-
-// ==========================
-// PREVENT PAGE ZOOM ON RAPID TAPS
-// ==========================
-
-
-document.addEventListener(
-"gesturestart",
-(e)=>{
-
-    e.preventDefault();
-
-}
-
-);
-
-// ==========================
-// COUPON INTERACTIONS
-// ==========================
-
-
-const coupons =
-document.querySelectorAll(".coupon");
-
-
-
-const couponMessages = [
-
-    "🤗 Hug coupon activated! Save this for a special moment.",
-
-    "🍫 Chocolate permission granted forever.",
-
-    "🎬 Movie date unlocked! Choose wisely 😄",
-
-    "🍕 Food treat available whenever hunger attacks."
-
-];
-
-
-
-coupons.forEach((coupon,index)=>{
-
-
-    coupon.addEventListener(
-    "click",
-    ()=>{
-
-
-        coupon.style.transform =
-        "scale(1.08) rotate(2deg)";
-
-
-        setTimeout(()=>{
-
-            coupon.style.transform="";
-
-        },400);
-
-
-
-        createHeartBurst();
-
-
-
-        setTimeout(()=>{
-
-
-            alert(
-            couponMessages[index]
-            );
-
-
-        },200);
-
-
-
+    noBtn.addEventListener("mouseenter", escapeButton);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      escapeButton();
+    }, { passive: false });
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      escapeButton();
     });
-
-
-});
-
-
-
-
-
-// ==========================
-// SMOOTH FINAL ENTRY
-// ==========================
-
-
-const observer =
-new MutationObserver(()=>{
-
-
-    if(
-    !finalSection.classList.contains("hidden")
-    ){
-
-
-        finalSection.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-        });
-
-
-    }
-
-
-});
-
-
-
-observer.observe(
-finalSection,
-{
-
-    attributes:true,
-
-    attributeFilter:[
-        "class"
-    ]
-
-});
-
-
-
-
-
-// ==========================
-// RANDOM CUTE POPUPS
-// ==========================
-
-
-const cutePopups=[
-
-    "You are awesome ❤️",
-
-    "Keep smiling 😊",
-
-    "Today is your day 🎂",
-
-    "Someone is wishing you happiness 💖",
-
-    "You deserve all good things ✨"
-
-];
-
-
-
-setInterval(()=>{
-
-
-    if(
-    !finalSection.classList.contains("hidden")
-    ){
-
-
-        const toast =
-        document.createElement("div");
-
-
-        toast.innerHTML =
-        cutePopups[
-        Math.floor(
-        Math.random()*cutePopups.length
-        )
-        ];
-
-
-
-        toast.style.position="fixed";
-
-        toast.style.bottom="30px";
-
-        toast.style.left="50%";
-
-        toast.style.transform=
-        "translateX(-50%)";
-
-        toast.style.background=
-        "rgba(255,255,255,.25)";
-
-        toast.style.backdropFilter=
-        "blur(10px)";
-
-        toast.style.color="white";
-
-        toast.style.padding=
-        "12px 22px";
-
-        toast.style.borderRadius=
-        "30px";
-
-        toast.style.zIndex="9999";
-
-        toast.style.animation=
-        "fade .5s ease";
-
-
-
-        document.body.appendChild(toast);
-
-
-
-        setTimeout(()=>{
-
-            toast.remove();
-
-        },2500);
-
-
-    }
-
-
-},7000);
-
-// ==========================
-// IMPROVED NO BUTTON ESCAPE
-// ==========================
-
-
-questions.forEach((question)=>{
-
-
-const no =
-question.querySelector(".no");
-
-
-if(!no) return;
-
-
-
-no.addEventListener(
-"click",
-(e)=>{
-
-
-    e.preventDefault();
-
-
-    no.innerHTML =
-    "Haha nice try 😜";
-
-
-    no.style.transform =
-    `
-    translate(
-    ${Math.random()*120-60}px,
-    ${Math.random()*50-25}px
-    )
-    `;
-
-
-});
-
-
-
-});
-
-
-
-
-
-// ==========================
-// DOUBLE TAP HEART EFFECT
-// ==========================
-
-
-let lastTap=0;
-
-
-
-document.addEventListener(
-"touchend",
-(e)=>{
-
-
-const now =
-Date.now();
-
-
-if(now-lastTap<300){
-
-
-    const touch =
-    e.changedTouches[0];
-
-
-    for(let i=0;i<8;i++){
-
-
-        setTimeout(()=>{
-
-
-            createHeart(
-
-                touch.clientX+
-                Math.random()*80-40,
-
-
-                touch.clientY+
-                Math.random()*80-40
-
-            );
-
-
-        },i*50);
-
-
-    }
-
-
-}
-
-
-lastTap=now;
-
-
-});
-
-
-
-
-
-// ==========================
-// AUTO START LITTLE MAGIC
-// ==========================
-
-
-setTimeout(()=>{
-
-
-createHeart(
-
-    window.innerWidth/2,
-
-    window.innerHeight/2
-
-);
-
-
-},1500);
-
-
-
-
-
-// ==========================
-// SAFETY FOR SMALL SCREENS
-// ==========================
-
-
-window.addEventListener(
-"orientationchange",
-()=>{
-
-
-setTimeout(()=>{
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
+  });
+
+  // Coupons — no alert(), no transform fights
+  document.querySelectorAll(".coupon").forEach((coupon) => {
+    coupon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      coupon.classList.remove("is-pop");
+      void coupon.offsetWidth;
+      coupon.classList.add("is-pop", "is-redeemed");
+      showToast(coupon.dataset.msg || "Coupon redeemed ✨");
+      createHeartBurst();
     });
+  });
 
+  // Surprise — single clean open
+  surpriseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (surpriseOpened) return;
+    surpriseOpened = true;
+    surpriseBtn.disabled = true;
+    surpriseBtn.textContent = "🌊 Surprise unlocked";
+    letter.classList.add("is-open");
+    launchConfetti();
+    createHeartBurst();
+    setTimeout(() => {
+      letter.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 80);
+  });
 
-},300);
+  // Hearts only on empty background clicks (not buttons/coupons)
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("button, .coupon, a, input")) return;
+    createHeart(e.clientX, e.clientY);
+  });
 
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
-});
-
-// ==========================
-// EXTRA SPARKLE EFFECT
-// ==========================
-
-
-function createExtraSparkle(){
-
-
-const sparkle =
-document.createElement("div");
-
-
-sparkle.className="sparkle";
-
-
-sparkle.innerHTML =
-[
-    "✨",
-    "⭐",
-    "🌸"
-]
-[
-    Math.floor(
-        Math.random()*3
-    )
-];
-
-
-
-sparkle.style.left =
-Math.random()*window.innerWidth+"px";
-
-
-
-sparkle.style.top =
-Math.random()*window.innerHeight+"px";
-
-
-
-sparkle.style.fontSize =
-(Math.random()*15+15)+"px";
-
-
-
-document.body.appendChild(
-    sparkle
-);
-
-
-
-setTimeout(()=>{
-
-    sparkle.remove();
-
-},2000);
-
-
-}
-
-
-
-setInterval(
-createExtraSparkle,
-3000
-);
-
-
-
-
-
-// ==========================
-// FINAL FOOTER
-// ==========================
-
-
-const footer =
-document.createElement("div");
-
-
-footer.className =
-"birthday-footer";
-
-
-footer.innerHTML =
-"Made with ❤️ specially for your special day 🎂";
-
-
-
-finalSection.appendChild(
-footer
-);
-
-    </script>
-
-</div>
-
-</div>
-
+  setTimeout(() => {
+    createHeart(window.innerWidth / 2, window.innerHeight / 2);
+  }, 1200);
+})();
+</script>
 </body>
-
 </html>
