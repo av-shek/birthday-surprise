@@ -47,10 +47,12 @@ body {
     linear-gradient(
       180deg,
       #5ec8f0 0%,
-      #3bb4e8 28%,
-      #2a9fd4 48%,
-      #36cfc9 68%,
-      #f3e0a8 88%,
+      #3bb4e8 22%,
+      #2a9fd4 40%,
+      #1f8fc9 52%,
+      #2ec4b6 68%,
+      #7fdbda 82%,
+      #f3e0a8 94%,
       #efd48a 100%
     );
   position: relative;
@@ -75,13 +77,13 @@ body::before {
   to { transform: translateX(18px); }
 }
 
-/* wave band at bottom */
+/* layered ocean waves */
 .waves {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 120px;
+  height: 220px;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
@@ -89,19 +91,41 @@ body::before {
 
 .waves svg {
   position: absolute;
+  left: 0;
   bottom: 0;
   width: 200%;
-  height: 120px;
+  height: 100%;
+  min-height: 140px;
 }
 
-.wave-a {
-  animation: waveMove 10s linear infinite;
-  opacity: 0.55;
+.wave-1 {
+  height: 220px;
+  opacity: 0.28;
+  animation: waveMove 18s linear infinite;
 }
 
-.wave-b {
+.wave-2 {
+  height: 190px;
+  opacity: 0.38;
   animation: waveMove 14s linear infinite reverse;
-  opacity: 0.35;
+}
+
+.wave-3 {
+  height: 160px;
+  opacity: 0.5;
+  animation: waveMove 11s linear infinite;
+}
+
+.wave-4 {
+  height: 130px;
+  opacity: 0.62;
+  animation: waveMove 8s linear infinite reverse;
+}
+
+.wave-5 {
+  height: 100px;
+  opacity: 0.85;
+  animation: waveMove 6.5s linear infinite;
 }
 
 @keyframes waveMove {
@@ -146,11 +170,12 @@ body::before {
 
 .title {
   font-family: "Fraunces", serif;
-  font-size: 2.1rem;
+  font-size: clamp(1.55rem, 5.5vw, 2.1rem);
   font-weight: 700;
   color: #0f4c75;
   margin-bottom: 12px;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .subtitle {
@@ -413,35 +438,43 @@ button {
   z-index: 1;
 }
 
-#surpriseBtn:hover:not(:disabled) {
+#surpriseBtn:hover {
   transform: translateY(-2px) scale(1.04);
 }
 
-#surpriseBtn:disabled {
-  opacity: 0.55;
-  cursor: default;
-  transform: none;
-  box-shadow: none;
+.surprise-page {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  padding: 24px 16px;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -10%, #9ad8f5 0%, transparent 55%),
+    linear-gradient(180deg, #5ec8f0 0%, #3bb4e8 35%, #2ec4b6 70%, #f3e0a8 100%);
+  animation: pageAppear 0.4s ease;
 }
 
-#letter {
-  display: none;
-  margin-top: 22px;
-  padding: 22px 20px;
+.surprise-page.is-open {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.surprise-page-card {
+  width: 100%;
+  max-width: 440px;
+  margin: 12px auto 32px;
+  padding: 28px 22px 24px;
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.95), rgba(255, 244, 214, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 50px rgba(20, 70, 100, 0.22);
+  color: #1d4d63;
   text-align: left;
   line-height: 1.8;
-  color: #1d4d63;
-  background:
-    linear-gradient(160deg, rgba(255, 253, 248, 0.92), rgba(255, 244, 214, 0.85));
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 12px 30px rgba(20, 70, 100, 0.14);
-  transform-origin: top center;
-}
-
-#letter.is-open {
-  display: block;
-  animation: letterOpen 0.65s ease;
+  position: relative;
+  animation: letterOpen 0.55s ease;
 }
 
 @keyframes letterOpen {
@@ -449,16 +482,35 @@ button {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-#letter h2 {
+.surprise-page-card h2 {
   font-family: "Fraunces", serif;
   text-align: center;
   color: #0f4c75;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin-bottom: 14px;
 }
 
-#letter p {
-  font-size: 0.94rem;
+.surprise-page-card p {
+  font-size: 0.95rem;
+}
+
+#closeSurpriseBtn {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(232, 93, 58, 0.3);
+}
+
+#closeSurpriseBtn:hover {
+  transform: translateY(-2px);
+}
+
+body.surprise-open .card,
+body.surprise-open .waves {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .birthday-footer {
@@ -529,20 +581,32 @@ button {
 <body>
 
 <div class="waves" aria-hidden="true">
-  <svg class="wave-a" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path fill="#7fdbda" d="M0,64 C240,110 480,20 720,55 C960,90 1200,100 1440,50 L1440,120 L0,120 Z"></path>
-    <path fill="#7fdbda" d="M1440,64 C1680,110 1920,20 2160,55 C2400,90 2640,100 2880,50 L2880,120 L1440,120 Z"></path>
+  <svg class="wave-1" viewBox="0 0 1440 220" preserveAspectRatio="none">
+    <path fill="#0d6e9a" d="M0,120 C180,180 360,70 540,120 C720,170 900,90 1080,130 C1260,170 1350,110 1440,140 L1440,220 L0,220 Z"></path>
+    <path fill="#0d6e9a" d="M1440,120 C1620,180 1800,70 1980,120 C2160,170 2340,90 2520,130 C2700,170 2790,110 2880,140 L2880,220 L1440,220 Z"></path>
   </svg>
-  <svg class="wave-b" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path fill="#f6e2b3" d="M0,80 C200,40 400,100 720,70 C1040,40 1240,90 1440,65 L1440,120 L0,120 Z"></path>
-    <path fill="#f6e2b3" d="M1440,80 C1640,40 1840,100 2160,70 C2480,40 2680,90 2880,65 L2880,120 L1440,120 Z"></path>
+  <svg class="wave-2" viewBox="0 0 1440 190" preserveAspectRatio="none">
+    <path fill="#1a8bb8" d="M0,90 C200,150 400,50 720,100 C1040,150 1200,70 1440,110 L1440,190 L0,190 Z"></path>
+    <path fill="#1a8bb8" d="M1440,90 C1640,150 1840,50 2160,100 C2480,150 2640,70 2880,110 L2880,190 L1440,190 Z"></path>
+  </svg>
+  <svg class="wave-3" viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <path fill="#2eb8c9" d="M0,70 C240,130 480,30 720,80 C960,130 1200,50 1440,90 L1440,160 L0,160 Z"></path>
+    <path fill="#2eb8c9" d="M1440,70 C1680,130 1920,30 2160,80 C2400,130 2640,50 2880,90 L2880,160 L1440,160 Z"></path>
+  </svg>
+  <svg class="wave-4" viewBox="0 0 1440 130" preserveAspectRatio="none">
+    <path fill="#7fdbda" d="M0,55 C220,110 440,20 720,60 C1000,100 1220,35 1440,70 L1440,130 L0,130 Z"></path>
+    <path fill="#7fdbda" d="M1440,55 C1660,110 1880,20 2160,60 C2440,100 2660,35 2880,70 L2880,130 L1440,130 Z"></path>
+  </svg>
+  <svg class="wave-5" viewBox="0 0 1440 100" preserveAspectRatio="none">
+    <path fill="#f6e2b3" d="M0,45 C200,85 400,15 720,50 C1040,85 1240,25 1440,55 L1440,100 L0,100 Z"></path>
+    <path fill="#f6e2b3" d="M1440,45 C1640,85 1840,15 2160,50 C2480,85 2680,25 2880,55 L2880,100 L1440,100 Z"></path>
   </svg>
 </div>
 
 <div class="card">
   <div class="content">
-    <h1 class="title">🌊 Happy Birthday Gopal!!🌊</h1>
-    <p class="subtitle">
+    <h1 class="title">🌊 Happy Birthday Gopal!!</h1>
+    <p class="subtitle" id="introSubtitle">
       Today is all about celebrating you, someone truly special.
       <br><br>
       I have a few tiny questions for you...<br>
@@ -633,31 +697,35 @@ button {
 
       <div class="surprise-wrap">
         <button id="surpriseBtn" type="button">🎁 Open Your Surprise</button>
-        <div id="letter">
-          <h2>💌 A Little Message For You</h2>
-          <p>
-            Dear Gopal,
-            <br><br>
-            Today is a reminder that the world is a little brighter because you are in it.
-            <br><br>
-            Thank you for being the wonderful person you are.
-            Your presence makes ordinary moments special.
-            <br><br>
-            I hope this year gives you everything you wish for:
-            happiness, success, good health, unforgettable adventures,
-            and countless reasons to smile.
-            <br><br>
-            Never forget how special you are.
-            Keep shining, keep dreaming, and keep being yourself.
-            <br><br>
-            Happy Birthday ❤️🌊
-          </p>
-        </div>
       </div>
 
       <div class="birthday-footer">Made with ❤️ for your special day 🎂</div>
     </div>
   </div>
+</div>
+
+<div class="surprise-page" id="surprisePage" aria-hidden="true">
+  <div class="surprise-page-card">
+    <h2>💌 A Little Message For You</h2>
+    <p>
+      Dear Gopal,
+      <br><br>
+      Today is a reminder that the world is a little brighter because you are in it.
+      <br><br>
+      Thank you for being the wonderful person you are.
+      Your presence makes ordinary moments special.
+      <br><br>
+      I hope this year gives you everything you wish for:
+      happiness, success, good health, unforgettable adventures,
+      and countless reasons to smile.
+      <br><br>
+      Never forget how special you are.
+      Keep shining, keep dreaming, and keep being yourself.
+      <br><br>
+      Happy Birthday ❤️🌊
+    </p>
+    <button id="closeSurpriseBtn" type="button">←</button>
+</div>
 </div>
 
 <canvas id="confettiCanvas"></canvas>
@@ -668,7 +736,8 @@ button {
   const questions = document.querySelectorAll(".question");
   const finalSection = document.querySelector(".final");
   const surpriseBtn = document.getElementById("surpriseBtn");
-  const letter = document.getElementById("letter");
+  const surprisePage = document.getElementById("surprisePage");
+  const closeSurpriseBtn = document.getElementById("closeSurpriseBtn");
   const toastEl = document.getElementById("toast");
   const canvas = document.getElementById("confettiCanvas");
   const ctx = canvas.getContext("2d");
@@ -676,7 +745,6 @@ button {
   let currentQuestion = 0;
   let confettiPieces = [];
   let toastTimer = null;
-  let surpriseOpened = false;
 
   const responses = [
     "Awww 🥹 I knew you would say yes! ❤️",
@@ -778,6 +846,7 @@ button {
         if (currentQuestion < questions.length) {
           questions[currentQuestion].classList.add("active");
         } else {
+          document.getElementById("introSubtitle")?.classList.add("hidden");
           finalSection.classList.remove("hidden");
           launchConfetti();
           finalSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -817,24 +886,38 @@ button {
     });
   });
 
-  // Surprise — single clean open
-  surpriseBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (surpriseOpened) return;
-    surpriseOpened = true;
-    surpriseBtn.disabled = true;
-    surpriseBtn.textContent = "🌊 Surprise unlocked";
-    letter.classList.add("is-open");
+  // Surprise — full separate page, close returns to coupons
+  function openSurprise() {
+    document.body.classList.add("surprise-open");
+    surprisePage.classList.add("is-open");
+    surprisePage.setAttribute("aria-hidden", "false");
     launchConfetti();
     createHeartBurst();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function closeSurprise() {
+    document.body.classList.remove("surprise-open");
+    surprisePage.classList.remove("is-open");
+    surprisePage.setAttribute("aria-hidden", "true");
     setTimeout(() => {
-      letter.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 80);
+      document.querySelector(".coupons")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  }
+
+  surpriseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openSurprise();
+  });
+
+  closeSurpriseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeSurprise();
   });
 
   // Hearts only on empty background clicks (not buttons/coupons)
   document.addEventListener("click", (e) => {
-    if (e.target.closest("button, .coupon, a, input")) return;
+    if (e.target.closest("button, .coupon, a, input, .surprise-page-card")) return;
     createHeart(e.clientX, e.clientY);
   });
 
