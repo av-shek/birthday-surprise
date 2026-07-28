@@ -36,7 +36,16 @@ body.theme-night {
   color: #e8eefc;
 }
 
-body.theme-night .waves { display: none; }
+body.theme-cozy {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 196, 120, .35), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(180, 90, 40, .2), transparent 50%),
+    linear-gradient(180deg, #3d2a1f 0%, #5c3d2e 28%, #7a5240 55%, #2a1c16 100%);
+  color: #f7ebe0;
+}
+
+body.theme-night .waves,
+body.theme-cozy .waves { display: none; }
 
 .waves {
   position: fixed; inset: auto 0 0 0; height: 180px;
@@ -1045,51 +1054,351 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   to { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.4); }
 }
 
-/* gifts */
-.gifts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 18px 0 8px;
-}
-.gift {
-  aspect-ratio: 1;
-  border-radius: 18px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
+/* ===== Cozy gift room ===== */
+#screen-gifts {
+  padding: 16px 12px 36px;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: #fff;
-  font-weight: 700;
-  box-shadow: 0 10px 24px rgba(20,70,100,.2);
-  transition: transform .25s ease, filter .25s ease;
-  position: relative;
-  overflow: hidden;
 }
-.gift:nth-child(1) { background: linear-gradient(145deg, #ff7a59, #e85d3a); }
-.gift:nth-child(2) { background: linear-gradient(145deg, #4db8e8, #1f8fc9); }
-.gift:nth-child(3) { background: linear-gradient(145deg, #2ec4b6, #1a9a8e); }
-.gift .bow {
-  position: absolute; inset: 0;
+#screen-gifts .cozy-room {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: min(720px, 92vh);
+  margin: 0 auto;
+  padding: 22px 18px 20px;
+  border-radius: 28px;
+  overflow: hidden;
+  text-align: center;
+  color: #f7ebe0;
   background:
-    linear-gradient(#fff8, #fff8) center/100% 10px no-repeat,
-    linear-gradient(#fff8, #fff8) center/10px 100% no-repeat;
+    linear-gradient(180deg, rgba(255,220,170,.08), transparent 18%),
+    linear-gradient(180deg, #4a3428 0%, #6b4636 38%, #8b5e45 62%, #3a261c 100%);
+  border: 1px solid rgba(255, 220, 170, .18);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, .45),
+    inset 0 0 80px rgba(0, 0, 0, .22);
+}
+.cozy-room::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 46px,
+      rgba(0,0,0,.06) 46px 48px
+    );
+  opacity: .35;
+  pointer-events: none;
+  z-index: 0;
+}
+.cozy-room::after {
+  /* soft floor glow */
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 8%;
+  height: 28%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 180, 90, .22), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cozy-fairylights {
+  position: absolute;
+  top: 10px;
+  left: 6%;
+  right: 6%;
+  height: 36px;
+  z-index: 2;
   pointer-events: none;
 }
-.gift .emoji { font-size: 2rem; position: relative; z-index: 1; }
-.gift .label { font-size: .78rem; position: relative; z-index: 1; }
-.gift:hover { transform: translateY(-5px) scale(1.04); }
-.gift.opened { filter: saturate(.7) brightness(.92); }
-.gift.opened::after {
-  content: "Opened";
+.cozy-fairylights .wire {
   position: absolute;
-  bottom: 8px;
-  font-size: .65rem;
-  background: rgba(0,0,0,.25);
-  padding: 2px 8px;
-  border-radius: 999px;
+  left: 0; right: 0; top: 8px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,220,160,.35), transparent);
+  border-radius: 2px;
+}
+.cozy-fairylights .bulb {
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 14px;
+  border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(circle at 40% 30%, #fff8e8, var(--c, #ffd27a) 55%, #e8a040);
+  box-shadow:
+    0 0 10px var(--c, #ffd27a),
+    0 0 22px rgba(255, 180, 80, .55);
+  animation: fairyGlow 2.4s ease-in-out infinite;
+}
+@keyframes fairyGlow {
+  0%, 100% { opacity: .75; filter: brightness(.9); }
+  50% { opacity: 1; filter: brightness(1.25); }
+}
+
+.cozy-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cozy-particles span {
+  position: absolute;
+  font-size: 10px;
+  opacity: .55;
+  animation: cozyFloat var(--dur, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--x);
+  top: var(--y);
+  color: #ffe9a8;
+  text-shadow: 0 0 8px rgba(255, 210, 120, .6);
+}
+@keyframes cozyFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: .35; }
+  50% { transform: translateY(-18px) scale(1.15); opacity: .8; }
+}
+
+.cozy-wall {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 42px 4px 8px;
+  min-height: 88px;
+}
+.cozy-frame {
+  position: relative;
+  width: 72px;
+  height: 86px;
+  padding: 5px 5px 14px;
+  background: linear-gradient(145deg, #d4a574, #a67045);
+  border-radius: 4px;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.2);
+  transform: rotate(var(--rot, -4deg));
+  animation: frameSway 5.5s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.cozy-frame::before {
+  /* string */
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 1.5px;
+  height: 16px;
+  background: rgba(255, 230, 190, .45);
+  transform: translateX(-50%);
+}
+.cozy-frame img {
+  width: 100%;
+  height: 62px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+  background: #2a1c16;
+}
+.cozy-frame:nth-child(2) { width: 78px; height: 92px; margin-top: -6px; }
+.cozy-frame:nth-child(2) img { height: 68px; }
+@keyframes frameSway {
+  0%, 100% { transform: rotate(var(--rot, -4deg)); }
+  50% { transform: rotate(calc(var(--rot, -4deg) + 2deg)); }
+}
+
+.cozy-header {
+  position: relative;
+  z-index: 3;
+  margin: 10px 0 6px;
+}
+.cozy-header h1 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.45rem, 5vw, 1.85rem);
+  font-weight: 700;
+  color: #ffe9c8;
+  text-shadow: 0 2px 16px rgba(0,0,0,.35);
+  margin-bottom: 6px;
+}
+.cozy-header p {
+  font-size: .88rem;
+  color: rgba(255, 236, 214, .78);
+  line-height: 1.55;
+}
+
+.cozy-stage {
+  position: relative;
+  z-index: 3;
+  height: 280px;
+  margin: 8px 0 4px;
+}
+.room-gift {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 92px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: #fff8ee;
+  font-family: inherit;
+  font-weight: 700;
+  z-index: 1;
+  animation: giftBob var(--bob, 3.6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: filter .3s ease;
+}
+.room-gift:focus-visible {
+  outline: 2px solid #ffd27a;
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+@keyframes giftBob {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-12px) rotate(calc(var(--tilt, 0deg) + 2deg)); }
+}
+.room-gift .gift-visual {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  margin: 0 auto 6px;
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,.4));
+  transform-style: preserve-3d;
+  perspective: 420px;
+  transition: transform .55s cubic-bezier(.22, 1, .36, 1), filter .35s ease;
+}
+.room-gift .box-body {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 4px;
+  height: 42px;
+  border-radius: 6px 6px 8px 8px;
+  background: linear-gradient(160deg, var(--g1), var(--g2));
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.25);
+}
+.room-gift .box-lid {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 12px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(160deg, var(--g1), var(--g2));
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.3),
+    0 4px 8px rgba(0,0,0,.25);
+  transform-origin: top center;
+  transition: transform .55s cubic-bezier(.34, 1.4, .64, 1), top .55s ease;
+  z-index: 2;
+}
+.room-gift .box-lid::before,
+.room-gift .box-body::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.45);
+}
+.room-gift .box-lid::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  width: 22px;
+  height: 14px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 30% 50%, rgba(255,255,255,.7), transparent 50%),
+    radial-gradient(circle at 70% 50%, rgba(255,255,255,.7), transparent 50%),
+    linear-gradient(180deg, #fff6, #fff2);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+.room-gift .box-glow {
+  position: absolute;
+  inset: 20% 18% 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 230, 160, .55), transparent 70%);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.room-gift .gift-label {
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .02em;
+  text-shadow: 0 2px 8px rgba(0,0,0,.45);
+}
+.room-gift:nth-child(1) { --g1: #ff7a59; --g2: #c4452d; --tilt: -6deg; }
+.room-gift:nth-child(2) { --g1: #5ec8f0; --g2: #1f7fb0; --tilt: 4deg; }
+.room-gift:nth-child(3) { --g1: #3dd6c3; --g2: #1a8f82; --tilt: -3deg; }
+
+.room-gift:hover .gift-visual,
+.room-gift:focus-visible .gift-visual {
+  transform: translateY(-6px) scale(1.06);
+  filter: drop-shadow(0 16px 20px rgba(0,0,0,.45)) brightness(1.08);
+}
+.room-gift.is-rising {
+  animation: none;
+  z-index: 8;
+}
+.room-gift.is-rising .gift-visual {
+  transform: translateY(-48px) scale(1.28);
+  filter: drop-shadow(0 22px 28px rgba(0,0,0,.5)) brightness(1.12);
+}
+.room-gift.is-rising .box-glow { opacity: 1; }
+.room-gift.is-opening .box-lid,
+.room-gift.opened .box-lid {
+  top: -6px;
+  transform: rotateX(-118deg) translateY(-4px);
+}
+.room-gift.opened .gift-visual {
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,.35)) saturate(.75) brightness(.92);
+}
+.room-gift.opened .gift-label::after {
+  content: " · opened";
+  opacity: .75;
+  font-weight: 600;
+}
+
+#screen-gifts .nav-row {
+  position: relative;
+  z-index: 4;
+  margin-top: 8px;
+}
+#screen-gifts .btn-ghost {
+  background: rgba(255, 240, 220, .12);
+  color: #ffe9c8;
+  border: 1px solid rgba(255, 220, 170, .28);
+}
+#screen-gifts .btn-secondary {
+  background: linear-gradient(135deg, #e8a04a, #c46a2e);
+  color: #fff8ee;
+  border: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,.28);
+}
+
+.overlay.gift-cozy {
+  background: rgba(28, 16, 10, .62);
+}
+.overlay-card.cozy {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 210, 140, .28), transparent 45%),
+    linear-gradient(165deg, #fff4e6, #f3d7b0);
+  color: #3a261c;
+  border: 1px solid rgba(180, 120, 60, .25);
+}
+.overlay-card.cozy h2 {
+  color: #7a3f1e;
 }
 
 /* constellation */
@@ -1896,8 +2205,13 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 
 @media (max-width: 480px) {
-  .gifts { grid-template-columns: 1fr 1fr; }
-  .gifts .gift:last-child { grid-column: 1 / -1; max-width: 180px; margin: 0 auto; width: 100%; }
+  .cozy-stage { height: 300px; }
+  .room-gift { width: 86px; }
+  .room-gift .gift-visual { width: 72px; height: 72px; }
+  .cozy-frame { width: 64px; height: 78px; }
+  .cozy-frame img { height: 54px; }
+  .cozy-frame:nth-child(2) { width: 70px; height: 84px; }
+  .cozy-frame:nth-child(2) img { height: 60px; }
   .cake-scene { height: 260px; }
 }
 </style>
@@ -2213,28 +2527,80 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   </div>
 </section>
 
-<!-- 4. Gift boxes -->
+<!-- 4. Gift boxes — cozy room -->
 <section class="screen" id="screen-gifts">
-  <div class="card">
-    <h1 class="title" style="font-size:1.55rem;">Gift Boxes to Open</h1>
-    <p class="section-hint">Tap each wrapped gift — anticipation is half the fun ✨</p>
-    <div class="gifts">
-      <button class="gift" type="button" data-gift="1">
-        <span class="bow"></span>
-        <span class="emoji">🎁</span>
-        <span class="label">Gift 1</span>
+  <div class="cozy-room">
+    <div class="cozy-fairylights" aria-hidden="true">
+      <div class="wire"></div>
+      <span class="bulb" style="left:4%;--c:#ffd27a;animation-delay:0s"></span>
+      <span class="bulb" style="left:16%;--c:#ff9a9a;animation-delay:.3s"></span>
+      <span class="bulb" style="left:28%;--c:#a8e6ff;animation-delay:.6s"></span>
+      <span class="bulb" style="left:40%;--c:#ffe08a;animation-delay:.15s"></span>
+      <span class="bulb" style="left:52%;--c:#c5f5a8;animation-delay:.45s"></span>
+      <span class="bulb" style="left:64%;--c:#ffb3d9;animation-delay:.75s"></span>
+      <span class="bulb" style="left:76%;--c:#ffd27a;animation-delay:.2s"></span>
+      <span class="bulb" style="left:88%;--c:#b8c7ff;animation-delay:.5s"></span>
+    </div>
+
+    <div class="cozy-particles" aria-hidden="true">
+      <span style="--x:8%;--y:22%;--dur:7s;--delay:0s">✦</span>
+      <span style="--x:22%;--y:58%;--dur:9s;--delay:1s">✧</span>
+      <span style="--x:38%;--y:34%;--dur:8s;--delay:.4s">·</span>
+      <span style="--x:55%;--y:18%;--dur:6.5s;--delay:1.4s">✦</span>
+      <span style="--x:70%;--y:48%;--dur:10s;--delay:.8s">✧</span>
+      <span style="--x:84%;--y:28%;--dur:7.5s;--delay:1.8s">·</span>
+      <span style="--x:14%;--y:78%;--dur:8.5s;--delay:.2s">✦</span>
+      <span style="--x:48%;--y:72%;--dur:9.5s;--delay:1.1s">✧</span>
+      <span style="--x:78%;--y:80%;--dur:7s;--delay:.6s">·</span>
+    </div>
+
+    <div class="cozy-wall" aria-hidden="true">
+      <div class="cozy-frame" style="--rot:-7deg;--d:0s">
+        <img src="birthday-photos/clark_quay.jpeg" alt="">
+      </div>
+      <div class="cozy-frame" style="--rot:3deg;--d:.4s">
+        <img src="birthday-photos/merlion.jpeg" alt="">
+      </div>
+      <div class="cozy-frame" style="--rot:6deg;--d:.8s">
+        <img src="birthday-photos/sentosa_beach.jpeg" alt="">
+      </div>
+    </div>
+
+    <div class="cozy-header">
+      <h1>A room full of gifts</h1>
+      <p>Warm lights, soft memories — tap a floating box to open it</p>
+    </div>
+
+    <div class="cozy-stage">
+      <button class="room-gift" type="button" data-gift="1"
+        style="--x:8%;--y:42%;--delay:0s;--bob:3.8s" aria-label="Open gift 1">
+        <span class="gift-visual">
+          <span class="box-glow"></span>
+          <span class="box-lid"></span>
+          <span class="box-body"></span>
+        </span>
+        <span class="gift-label">Gift 1</span>
       </button>
-      <button class="gift" type="button" data-gift="2">
-        <span class="bow"></span>
-        <span class="emoji">🎁</span>
-        <span class="label">Gift 2</span>
+      <button class="room-gift" type="button" data-gift="2"
+        style="--x:38%;--y:18%;--delay:.5s;--bob:4.2s" aria-label="Open gift 2">
+        <span class="gift-visual">
+          <span class="box-glow"></span>
+          <span class="box-lid"></span>
+          <span class="box-body"></span>
+        </span>
+        <span class="gift-label">Gift 2</span>
       </button>
-      <button class="gift" type="button" data-gift="3">
-        <span class="bow"></span>
-        <span class="emoji">🎁</span>
-        <span class="label">Gift 3</span>
+      <button class="room-gift" type="button" data-gift="3"
+        style="--x:66%;--y:48%;--delay:1s;--bob:3.5s" aria-label="Open gift 3">
+        <span class="gift-visual">
+          <span class="box-glow"></span>
+          <span class="box-lid"></span>
+          <span class="box-body"></span>
+        </span>
+        <span class="gift-label">Gift 3</span>
       </button>
     </div>
+
     <div class="nav-row">
       <button class="btn-ghost" type="button" data-go="celebrate">←</button>
       <button class="btn-secondary" type="button" data-go="constellation">→</button>
@@ -2257,8 +2623,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 </section>
 
 <!-- Gift overlays -->
-<div class="overlay" id="giftOverlay">
-  <div class="overlay-card" id="giftOverlayCard">
+<div class="overlay gift-cozy" id="giftOverlay">
+  <div class="overlay-card cozy" id="giftOverlayCard">
     <h2 id="giftTitle">🎁 Gift</h2>
     <div id="giftBody"></div>
     <div class="nav-row">
@@ -2447,6 +2813,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   function setTheme(screenId) {
     document.body.classList.toggle("theme-night", screenId === "constellation");
+    document.body.classList.toggle("theme-cozy", screenId === "gifts");
   }
 
   function showScreen(id) {
@@ -2496,7 +2863,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       goTo(navBtn.getAttribute("data-go"));
       return;
     }
-    if (e.target.closest("button, .coupon, .gift, .star, .overlay-card, .cinematic, .story-stage, a, input")) return;
+    if (e.target.closest("button, .coupon, .room-gift, .star, .overlay-card, .cinematic, .story-stage, a, input")) return;
     createHeart(e.clientX, e.clientY);
   });
 
@@ -2785,23 +3152,37 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   });
   updateCouponProgress();
 
-  // Gifts
+  // Gifts — cozy room open animation
   const giftOverlay = document.getElementById("giftOverlay");
-  document.querySelectorAll(".gift").forEach((gift) => {
+  let giftOpenTimer = null;
+  document.querySelectorAll(".room-gift").forEach((gift) => {
     gift.addEventListener("click", () => {
       const id = gift.dataset.gift;
       const data = gifts[id];
-      if (!data) return;
-      gift.classList.add("opened");
-      document.getElementById("giftTitle").textContent = data.title;
-      document.getElementById("giftBody").innerHTML = data.html;
-      bindPhotoLoaders(document.getElementById("giftBody"));
-      giftOverlay.classList.add("active");
+      if (!data || gift.classList.contains("is-rising")) return;
+
+      clearTimeout(giftOpenTimer);
+      document.querySelectorAll(".room-gift.is-rising").forEach((g) => {
+        g.classList.remove("is-rising", "is-opening");
+      });
+
+      gift.classList.add("is-rising", "is-opening", "opened");
       createHeartBurst();
+
+      giftOpenTimer = setTimeout(() => {
+        document.getElementById("giftTitle").textContent = data.title;
+        document.getElementById("giftBody").innerHTML = data.html;
+        bindPhotoLoaders(document.getElementById("giftBody"));
+        giftOverlay.classList.add("active");
+        gift.classList.remove("is-rising");
+      }, 720);
     });
   });
   document.getElementById("closeGift").addEventListener("click", () => {
     giftOverlay.classList.remove("active");
+    document.querySelectorAll(".room-gift.is-rising, .room-gift.is-opening").forEach((g) => {
+      g.classList.remove("is-rising", "is-opening");
+    });
   });
 
   // Constellation stars
