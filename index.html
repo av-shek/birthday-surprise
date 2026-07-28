@@ -6367,7 +6367,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function updateSlideChrome() {
-    slideCounter.textContent = `Memory ${slideIndex + 1} of ${SLIDES.length}`;
+    slideCounter.textContent = `${slideIndex + 1} of ${SLIDES.length}`;
     slidePrev.disabled = slideIndex <= 0;
     slideNext.disabled = slideIndex >= SLIDES.length - 1;
     slideDots.querySelectorAll(".slide-dot").forEach((dot, i) => {
