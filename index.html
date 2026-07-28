@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;700&family=Nunito:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;700&family=Nunito:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 :root {
   --sky: #5abeec;
@@ -52,7 +52,23 @@ body.theme-chalk .waves,
 body.theme-paper .waves,
 body.theme-cinema .waves,
 body.theme-qa .waves,
-body.theme-ticket .waves { display: none; }
+body.theme-ticket .waves,
+body.theme-typewriter .waves,
+body.theme-welcome .waves { display: none; }
+
+body.theme-welcome {
+  background: #07060f;
+  color: #f7efd8;
+  overflow-x: hidden;
+}
+
+body.theme-typewriter {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 8%, rgba(255, 190, 120, .22), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 85% 90%, rgba(80, 40, 20, .35), transparent 50%),
+    linear-gradient(180deg, #3a2a1c 0%, #221810 42%, #120e0a 100%);
+  color: #f3e6d0;
+}
 
 body.theme-ticket {
   background:
@@ -227,6 +243,240 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 @keyframes pulse {
   0%, 100% { opacity: .55; transform: translateY(0); }
   50% { opacity: 1; transform: translateY(3px); }
+}
+
+/* ===== Grand welcome premiere ===== */
+#screen-welcome {
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+}
+.welcome-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 18%, rgba(212, 175, 110, .28), transparent 58%),
+    radial-gradient(ellipse 55% 40% at 15% 85%, rgba(180, 110, 70, .14), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 88% 75%, rgba(90, 140, 160, .14), transparent 50%),
+    linear-gradient(180deg, #120e1c 0%, #0a0814 42%, #05040a 100%);
+}
+.welcome-aurora {
+  position: absolute;
+  inset: -20% -10% 30%;
+  background:
+    conic-gradient(from 210deg at 50% 60%,
+      transparent 0deg,
+      rgba(255, 214, 150, .14) 55deg,
+      transparent 110deg,
+      rgba(180, 210, 255, .1) 180deg,
+      transparent 240deg,
+      rgba(255, 180, 140, .12) 300deg,
+      transparent 360deg);
+  filter: blur(28px);
+  animation: welcomeAurora 18s ease-in-out infinite alternate;
+  opacity: .9;
+}
+@keyframes welcomeAurora {
+  from { transform: rotate(-8deg) scale(1.05); }
+  to { transform: rotate(10deg) scale(1.15); }
+}
+.welcome-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,245,220,.9), transparent),
+    radial-gradient(1.5px 1.5px at 28% 42%, rgba(255,245,220,.7), transparent),
+    radial-gradient(2px 2px at 48% 12%, rgba(255,230,180,.95), transparent),
+    radial-gradient(1px 1px at 67% 28%, rgba(255,245,220,.65), transparent),
+    radial-gradient(1.5px 1.5px at 82% 16%, rgba(255,245,220,.85), transparent),
+    radial-gradient(1px 1px at 91% 48%, rgba(255,245,220,.55), transparent),
+    radial-gradient(2px 2px at 18% 72%, rgba(255,230,180,.7), transparent),
+    radial-gradient(1px 1px at 38% 88%, rgba(255,245,220,.5), transparent),
+    radial-gradient(1.5px 1.5px at 58% 64%, rgba(255,245,220,.75), transparent),
+    radial-gradient(1px 1px at 74% 82%, rgba(255,245,220,.55), transparent),
+    radial-gradient(2px 2px at 8% 52%, rgba(255,230,180,.65), transparent),
+    radial-gradient(1px 1px at 95% 78%, rgba(255,245,220,.6), transparent);
+  animation: welcomeTwinkle 4.5s ease-in-out infinite alternate;
+}
+@keyframes welcomeTwinkle {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+.welcome-ring {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(520px, 120vw);
+  height: min(520px, 120vw);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 214, 160, .18);
+  box-shadow:
+    0 0 60px rgba(255, 200, 140, .08),
+    inset 0 0 60px rgba(255, 200, 140, .05);
+  animation: welcomeRingSpin 28s linear infinite;
+}
+.welcome-ring::before,
+.welcome-ring::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 214, 160, .1);
+}
+.welcome-ring::after {
+  inset: 24%;
+  border-color: rgba(255, 214, 160, .06);
+  animation: welcomeRingInner 40s linear infinite reverse;
+}
+@keyframes welcomeRingSpin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes welcomeRingInner {
+  to { transform: rotate(360deg); }
+}
+.welcome-spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6e0 0%, #e8c080 45%, transparent 70%);
+  box-shadow: 0 0 12px rgba(255, 210, 140, .8);
+  animation: welcomeFloat var(--dur, 7s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--x);
+  bottom: -8%;
+  opacity: 0;
+}
+@keyframes welcomeFloat {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  15% { opacity: .85; }
+  100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+}
+.welcome-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, transparent 30%, rgba(5, 4, 10, .55) 100%),
+    linear-gradient(180deg, rgba(5,4,10,.25) 0%, transparent 25%, transparent 70%, rgba(5,4,10,.5) 100%);
+}
+.welcome-hero {
+  position: relative;
+  z-index: 2;
+  width: min(560px, calc(100vw - 36px));
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 12px 48px;
+  animation: welcomeRise 1.2s ease both;
+}
+@keyframes welcomeRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.welcome-name {
+  margin: 0;
+  font-family: "Cinzel", "Fraunces", serif;
+  font-weight: 700;
+  font-size: clamp(3.4rem, 16vw, 5.6rem);
+  line-height: .95;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    115deg,
+    #8a6a3a 0%,
+    #f4e2b0 18%,
+    #fff8e8 32%,
+    #d4b06a 48%,
+    #fff0c8 62%,
+    #c9a050 78%,
+    #f7e4b4 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: welcomeShimmer 5.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 28px rgba(255, 200, 120, .28));
+}
+@keyframes welcomeShimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+.welcome-title {
+  margin: 14px 0 0;
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.35rem, 4.8vw, 1.85rem);
+  font-weight: 500;
+  color: #f3e6c8;
+  letter-spacing: .04em;
+}
+.welcome-line {
+  margin: 18px 0 0;
+  max-width: 22em;
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(.95rem, 3.2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(247, 236, 210, .72);
+}
+.welcome-cta {
+  margin-top: 34px;
+  position: relative;
+  padding: 16px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 214, 150, .55);
+  background:
+    linear-gradient(180deg, rgba(255, 230, 180, .18), rgba(180, 130, 60, .12)),
+    rgba(20, 14, 28, .55);
+  color: #fff4dc;
+  font-family: "Cinzel", "Fraunces", serif;
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 0 1px rgba(255, 220, 160, .08),
+    0 12px 36px rgba(0, 0, 0, .35),
+    0 0 40px rgba(255, 190, 100, .18);
+  animation: welcomeCta 2.8s ease-in-out infinite;
+}
+.welcome-cta::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent, rgba(255, 240, 200, .45), transparent);
+  opacity: .35;
+  pointer-events: none;
+  animation: welcomeCtaSheen 3.2s ease-in-out infinite;
+}
+@keyframes welcomeCta {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255, 220, 160, .08), 0 12px 36px rgba(0,0,0,.35), 0 0 32px rgba(255,190,100,.15); }
+  50% { box-shadow: 0 0 0 1px rgba(255, 220, 160, .16), 0 14px 40px rgba(0,0,0,.4), 0 0 52px rgba(255,190,100,.32); }
+}
+@keyframes welcomeCtaSheen {
+  0%, 100% { transform: translateX(-30%); opacity: .15; }
+  50% { transform: translateX(30%); opacity: .45; }
+}
+.welcome-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  color: #fffaf0;
+  border-color: rgba(255, 230, 180, .8);
+}
+.welcome-promise {
+  margin-top: 18px;
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: .88rem;
+  color: rgba(247, 236, 210, .45);
+  letter-spacing: .02em;
 }
 
 .hidden { display: none !important; }
@@ -2252,11 +2502,20 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 /* Typewriter letter scene */
 .cinematic.is-typewriter {
   background:
-    radial-gradient(ellipse 80% 50% at 50% 15%, #4a3424 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 12%, rgba(255, 186, 120, .18), transparent 52%),
+    radial-gradient(ellipse 60% 40% at 50% 15%, #4a3424 0%, transparent 55%),
     linear-gradient(180deg, #2a1c14 0%, #16100c 48%, #0c0907 100%);
 }
 .cinematic.is-typewriter #particleCanvas {
-  opacity: .35;
+  opacity: .28;
+}
+.cinematic.is-typewriter .cine-skip,
+.cinematic.is-typewriter .cine-close {
+  font-family: "Special Elite", "Courier New", monospace;
+  border-color: rgba(255, 220, 170, .28);
+  background: rgba(40, 28, 18, .72);
+  color: #f4e8d0;
+  border-radius: 10px;
 }
 .typewriter-desk {
   width: 100%;
@@ -2395,6 +2654,190 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 .cine-next:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #1a120c, inset 0 1px 0 rgba(255,255,255,.08);
+}
+.typewriter-hint {
+  margin: 0;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: .78rem;
+  letter-spacing: .06em;
+  color: rgba(244, 232, 208, .55);
+  min-height: 1.2em;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.typewriter-hint.show { opacity: 1; }
+
+/* Personal memory scrapbook (photo + caption) */
+.cinematic.is-album {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(255, 210, 180, .45), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(255, 140, 160, .22), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 90% 70%, rgba(255, 200, 120, .2), transparent 48%),
+    linear-gradient(165deg, #4a2a38 0%, #6b3a48 28%, #8b5560 58%, #3d2430 100%);
+}
+.cinematic.is-album #particleCanvas {
+  opacity: .2;
+  filter: sepia(.25) hue-rotate(-10deg);
+}
+.cinematic.is-album .cine-skip,
+.cinematic.is-album .cine-close {
+  font-family: "Caveat", cursive;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-color: rgba(255, 220, 210, .35);
+  background: rgba(60, 30, 40, .55);
+  color: #ffe8e0;
+  border-radius: 999px;
+  padding: 8px 16px;
+}
+.cinematic.is-album .cine-stage {
+  width: min(480px, calc(100vw - 28px));
+}
+
+.memory-album {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.memory-kicker {
+  margin: 0 0 4px;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.35rem, 5vw, 1.85rem);
+  font-weight: 600;
+  color: #ffe6dc;
+  letter-spacing: .02em;
+  text-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+.memory-kicker span {
+  opacity: .75;
+  font-size: .85em;
+}
+.memory-card {
+  position: relative;
+  width: min(400px, 92vw);
+  padding: 14px 14px 10px;
+  border-radius: 4px 4px 6px 6px;
+  background:
+    linear-gradient(180deg, #fffaf4 0%, #f7ebe0 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.7) inset,
+    0 18px 40px rgba(20, 8, 16, .45),
+    0 0 0 1px rgba(90, 50, 40, .12);
+  transform: rotate(-0.6deg);
+}
+.memory-card::before,
+.memory-card::after {
+  content: "";
+  position: absolute;
+  width: 54px;
+  height: 18px;
+  top: -6px;
+  background: linear-gradient(180deg, rgba(255, 220, 170, .55), rgba(255, 180, 140, .4));
+  box-shadow: 0 1px 2px rgba(0,0,0,.12);
+  opacity: .85;
+}
+.memory-card::before {
+  left: 18px;
+  transform: rotate(-8deg);
+}
+.memory-card::after {
+  right: 22px;
+  transform: rotate(6deg);
+  width: 48px;
+}
+.memory-card .slide-frame {
+  width: 100%;
+  margin: 0;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgba(40, 20, 20, .08),
+    0 2px 8px rgba(40, 20, 20, .12);
+  background: #2a1820;
+}
+.memory-card .slide-caption {
+  margin: 14px 6px 4px;
+  min-height: 2.4em;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.2rem, 4.2vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #4a2a30;
+  text-align: center;
+  letter-spacing: .01em;
+  opacity: 1;
+}
+.memory-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(400px, 92vw);
+  padding: 0 4px;
+  margin-top: 2px;
+}
+.memory-meta .slide-counter {
+  margin: 0;
+  font-family: "Caveat", cursive;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255, 230, 220, .8);
+  opacity: 1;
+  letter-spacing: .04em;
+}
+.memory-heart {
+  font-size: .95rem;
+  opacity: .7;
+  animation: memoryPulse 2.8s ease-in-out infinite;
+}
+@keyframes memoryPulse {
+  0%, 100% { transform: scale(1); opacity: .55; }
+  50% { transform: scale(1.12); opacity: .9; }
+}
+.cinematic.is-album .slide-nav {
+  margin-top: 8px;
+  gap: 12px;
+}
+.cinematic.is-album .slide-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 236, 228, .18);
+  border: 1px solid rgba(255, 220, 210, .35);
+  color: #ffe8e0;
+  backdrop-filter: blur(6px);
+}
+.cinematic.is-album .slide-arrow:hover {
+  background: rgba(255, 236, 228, .3);
+}
+.cinematic.is-album .slide-dot {
+  background: rgba(255, 230, 220, .35);
+}
+.cinematic.is-album .slide-dot.active {
+  background: #ff9eb0;
+  box-shadow: 0 0 12px rgba(255, 140, 160, .55);
+}
+.cinematic.is-album .slide-continue {
+  margin-top: 12px;
+  font-family: "Caveat", cursive;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 220, 210, .4);
+  background: linear-gradient(135deg, #e8788a, #d45a6a);
+  color: #fff8f6;
+  padding: 10px 26px;
+  box-shadow: 0 8px 22px rgba(180, 60, 80, .35);
+}
+.cinematic.is-album .slide-continue:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+.cinematic.is-album .slide-loader {
+  background: linear-gradient(160deg, rgba(60, 30, 40, .92), rgba(90, 45, 55, .9));
+  font-family: "Caveat", cursive;
+  font-size: 1.15rem;
 }
 
 .slide-frame {
@@ -3189,7 +3632,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 </style>
 </head>
-<body>
+<body class="theme-welcome">
 
 <div class="waves" aria-hidden="true">
   <svg class="wave-1" viewBox="0 0 1440 180" preserveAspectRatio="none">
@@ -3208,16 +3651,25 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
 <!-- 1. Welcome -->
 <section class="screen active" id="screen-welcome">
-  <div class="card">
-    <h1 class="title">Happy Birthday Gopal!</h1>
-    <p class="wish">
-      May your year be filled with calm seas, bright skies,
-      and every reason to smile. You deserve the world. ❤️
-    </p>
-    <p class="subtitle">A little journey made just for you.</p>
-    <div class="click-begin">
-      <button class="btn-primary" type="button" id="beginBtn" data-go="story">Click to begin</button>
-    </div>
+  <div class="welcome-stage" aria-hidden="true">
+    <div class="welcome-aurora"></div>
+    <div class="welcome-stars"></div>
+    <div class="welcome-ring"></div>
+    <span class="welcome-spark" style="--x:8%;--dur:8s;--delay:0s"></span>
+    <span class="welcome-spark" style="--x:22%;--dur:10s;--delay:1.4s"></span>
+    <span class="welcome-spark" style="--x:37%;--dur:7.5s;--delay:2.8s"></span>
+    <span class="welcome-spark" style="--x:51%;--dur:9s;--delay:.6s"></span>
+    <span class="welcome-spark" style="--x:66%;--dur:11s;--delay:3.2s"></span>
+    <span class="welcome-spark" style="--x:78%;--dur:8.5s;--delay:1.8s"></span>
+    <span class="welcome-spark" style="--x:91%;--dur:9.5s;--delay:4s"></span>
+    <div class="welcome-vignette"></div>
+  </div>
+  <div class="welcome-hero">
+    <h1 class="welcome-name">Gopal</h1>
+    <p class="welcome-title">Happy Birthday</p>
+    <p class="welcome-line">A private celebration of you — stories, gifts, games, and a finale waiting at the end.</p>
+    <button class="welcome-cta" type="button" id="beginBtn" data-go="story">Begin the journey</button>
+    <p class="welcome-promise">Made only for this night</p>
   </div>
 </section>
 
@@ -3474,7 +3926,6 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       <div class="celebrate-emoji" aria-hidden="true">🎟✨</div>
       <h1 class="title">Voucher wallet</h1>
       <p class="subtitle">
-        I knew you would say yes. 😌❤️<br>
         Tap a ticket to redeem a birthday treat.
       </p>
       <span class="ticket-valid">Valid · Birthday only · No expiry</span>
@@ -3745,24 +4196,33 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
           </div>
         </div>
         <button type="button" class="cine-next" id="typeContinue" aria-label="Continue">→</button>
+        <p class="typewriter-hint" id="typeHint"></p>
       </div>
     </div>
     <div class="cine-phase" id="phaseSlideshow">
-      <div class="slide-frame is-loading" id="slideFrame">
-        <div class="slide-loader" id="slideLoader" aria-live="polite">
-          <div class="media-spinner"></div>
-          <span>Loading photo…</span>
+      <div class="memory-album">
+        <p class="memory-kicker">Little moments with you <span>♡</span></p>
+        <div class="memory-card">
+          <div class="slide-frame is-loading" id="slideFrame">
+            <div class="slide-loader" id="slideLoader" aria-live="polite">
+              <div class="media-spinner"></div>
+              <span>Opening a memory…</span>
+            </div>
+            <div class="slide-track" id="slideTrack"></div>
+          </div>
+          <p class="slide-caption" id="slideCaption"></p>
         </div>
-        <div class="slide-track" id="slideTrack"></div>
+        <div class="memory-meta">
+          <p class="slide-counter" id="slideCounter"></p>
+          <span class="memory-heart" aria-hidden="true">💌</span>
+        </div>
+        <div class="slide-nav">
+          <button type="button" class="slide-arrow" id="slidePrev" aria-label="Previous photo">‹</button>
+          <div class="slide-dots" id="slideDots"></div>
+          <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
+        </div>
+        <button type="button" class="slide-continue" id="slideContinue">Lets cut the cake →</button>
       </div>
-      <p class="slide-caption" id="slideCaption"></p>
-      <p class="slide-counter" id="slideCounter"></p>
-      <div class="slide-nav">
-        <button type="button" class="slide-arrow" id="slidePrev" aria-label="Previous photo">‹</button>
-        <div class="slide-dots" id="slideDots"></div>
-        <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
-      </div>
-      <button type="button" class="slide-continue" id="slideContinue">Lets cut the cake →</button>
     </div>
     <div class="cine-phase" id="phaseCake">
       <div class="cake-wrap">
@@ -3906,6 +4366,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   }
 
   function setTheme(screenId) {
+    document.body.classList.toggle("theme-welcome", screenId === "welcome");
     document.body.classList.toggle("theme-night", screenId === "constellation");
     document.body.classList.toggle("theme-cozy", screenId === "gifts");
     document.body.classList.toggle("theme-neon", screenId === "arrows");
@@ -4916,6 +5377,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   const typeGreeting = document.getElementById("typeGreeting");
   const typeBody = document.getElementById("typeBody");
   const typeContinue = document.getElementById("typeContinue");
+  const typeHint = document.getElementById("typeHint");
   const phaseTypewriter = document.getElementById("phaseTypewriter");
   const phaseSlideshow = document.getElementById("phaseSlideshow");
   const phaseCake = document.getElementById("phaseCake");
@@ -4990,6 +5452,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   let slideLastT = 0;
   let slideVelocity = 0;
   let typeContinueResolve = null;
+  let cineGen = 0;
 
   function cineWait(ms) {
     return new Promise((resolve) => {
@@ -5004,19 +5467,48 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function hideTypeContinue() {
-    if (!typeContinue) return;
-    typeContinue.classList.remove("show");
-    typeContinueResolve = null;
+    if (typeContinue) typeContinue.classList.remove("show");
+    if (typeHint) {
+      typeHint.classList.remove("show");
+      typeHint.textContent = "";
+    }
+    if (typeContinueResolve) {
+      const done = typeContinueResolve;
+      typeContinueResolve = null;
+      done(false); // cancelled / replaced
+    }
   }
 
-  function waitForTypeContinue() {
+  function waitForTypeContinue(hintText) {
     return new Promise((resolve) => {
-      if (!typeContinue) return resolve();
-      hideTypeContinue();
+      if (!typeContinue) return resolve(true);
+      // Resolve any prior waiter so only one proceed gate is live
+      if (typeContinueResolve) {
+        const prev = typeContinueResolve;
+        typeContinueResolve = null;
+        prev(false);
+      }
       typeContinueResolve = resolve;
       typeContinue.classList.add("show");
+      if (typeHint) {
+        typeHint.textContent = hintText || "Press → to continue";
+        typeHint.classList.add("show");
+      }
     });
   }
+
+  typeContinue?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!typeContinueResolve) return;
+    const done = typeContinueResolve;
+    typeContinueResolve = null;
+    typeContinue.classList.remove("show");
+    if (typeHint) {
+      typeHint.classList.remove("show");
+      typeHint.textContent = "";
+    }
+    done(true);
+  });
 
   function showPhase(phase) {
     [phaseTypewriter, phaseSlideshow, phaseCake, phaseFinale].forEach((el) => {
@@ -5024,6 +5516,8 @@ Keep shining, keep dreaming, and keep being yourself.`;
     });
     if (phase) phase.classList.add("visible");
     cinematic.classList.toggle("is-typewriter", phase === phaseTypewriter);
+    cinematic.classList.toggle("is-album", phase === phaseSlideshow);
+    document.body.classList.toggle("theme-typewriter", phase === phaseTypewriter || phase === phaseSlideshow);
     if (phase !== phaseTypewriter) hideTypeContinue();
   }
 
@@ -5444,7 +5938,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function updateSlideChrome() {
-    slideCounter.textContent = `${slideIndex + 1} / ${SLIDES.length}`;
+    slideCounter.textContent = `Memory ${slideIndex + 1} of ${SLIDES.length}`;
     slidePrev.disabled = slideIndex <= 0;
     slideNext.disabled = slideIndex >= SLIDES.length - 1;
     slideDots.querySelectorAll(".slide-dot").forEach((dot, i) => {
@@ -5453,7 +5947,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (slideIndex >= SLIDES.length - 1) {
       slideContinue.textContent = "Lets cut the cake →";
     } else {
-      slideContinue.textContent = "Skip photos →";
+      slideContinue.textContent = "Skip to cake →";
     }
   }
 
@@ -5572,6 +6066,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
 
   async function runCinematicSequence(skipToCake = false) {
+    const gen = ++cineGen;
     if (skipToCake) {
       hideTypeContinue();
       finishSlideshow();
@@ -5580,24 +6075,31 @@ Keep shining, keep dreaming, and keep being yourself.`;
     }
 
     showPhase(phaseTypewriter);
+    typeGreeting.textContent = "";
+    typeBody.textContent = "";
     typeGreeting.classList.add("cine-cursor");
     await typeText(typeGreeting, GREETING, 70);
     typeGreeting.classList.remove("cine-cursor");
-    await cineWait(400);
-    if (!cineRunning) return;
+    if (!cineRunning || gen !== cineGen) return;
+
+    // Step 1: proceed after greeting
+    const afterGreeting = await waitForTypeContinue("Press → for the letter");
+    if (!afterGreeting || !cineRunning || gen !== cineGen) return;
+
     typeBody.classList.add("cine-cursor");
     await typeText(typeBody, LETTER, 26);
     typeBody.classList.remove("cine-cursor");
-    if (!cineRunning) return;
+    if (!cineRunning || gen !== cineGen) return;
 
-    // Wait for → — do not auto-open slides
-    await waitForTypeContinue();
-    if (!cineRunning) return;
+    // Step 2: proceed only on → — never auto-open slides
+    const afterLetter = await waitForTypeContinue("Press → for the photos");
+    if (!afterLetter || !cineRunning || gen !== cineGen) return;
 
     await runSlideshow();
-    if (!cineRunning) return;
+    if (!cineRunning || gen !== cineGen) return;
 
     await cineWait(300);
+    if (!cineRunning || gen !== cineGen) return;
     showCakePhase();
   }
 
@@ -5627,7 +6129,11 @@ Keep shining, keep dreaming, and keep being yourself.`;
   function startCinematic() {
     stopCinematicExtras();
     allowCinematicAudio = true;
-    document.body.classList.add("cinematic-on");
+    document.body.classList.add("cinematic-on", "theme-typewriter");
+    document.body.classList.remove(
+      "theme-welcome", "theme-night", "theme-cozy", "theme-neon", "theme-chalk",
+      "theme-paper", "theme-cinema", "theme-qa", "theme-ticket"
+    );
     cinematic.classList.add("active");
     cinematic.setAttribute("aria-hidden", "false");
     giftOverlay.classList.remove("active");
@@ -5650,6 +6156,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     cineRunning = true;
     startParticles();
     preloadSlides();
+    playSoftSong();
     runCinematicSequence(false);
   }
 
@@ -5657,9 +6164,9 @@ Keep shining, keep dreaming, and keep being yourself.`;
     // Explicitly silence everything before returning to sudoku
     allowCinematicAudio = false;
     stopCinematicExtras();
-    cinematic.classList.remove("active");
+    cinematic.classList.remove("active", "is-typewriter", "is-album");
     cinematic.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("cinematic-on");
+    document.body.classList.remove("cinematic-on", "theme-typewriter");
     showPhase(null);
     showScreen("sudoku");
     initSudoku(false);
@@ -5672,6 +6179,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     heartInterval = null;
     cancelAnimationFrame(fireworksRAF);
     rockets = []; sparks = [];
+    hideTypeContinue();
     cineRunning = true;
     typeGreeting.textContent = GREETING;
     typeBody.textContent = LETTER;
