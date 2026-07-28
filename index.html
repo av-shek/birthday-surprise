@@ -5794,6 +5794,13 @@ Keep shining, keep dreaming, and keep being yourself.`;
     cinematic.classList.toggle("is-finale", phase === phaseFinale);
     document.body.classList.toggle("theme-typewriter", phase === phaseTypewriter || phase === phaseSlideshow);
     if (phase !== phaseTypewriter) hideTypeContinue();
+
+    // Back: typewriter → sudoku, finale → typewriter
+    if (phase === phaseTypewriter || phase === phaseFinale) {
+      cineClose.classList.add("show");
+    } else {
+      cineClose.classList.remove("show");
+    }
   }
 
   function typeText(el, text, speed = 38) {
@@ -6357,16 +6364,15 @@ Keep shining, keep dreaming, and keep being yourself.`;
     typeGreeting.classList.remove("cine-cursor");
     if (!cineRunning || gen !== cineGen) return;
 
-    // Step 1: proceed after greeting
-    const afterGreeting = await waitForTypeContinue();
-    if (!afterGreeting || !cineRunning || gen !== cineGen) return;
+    await cineWait(350);
+    if (!cineRunning || gen !== cineGen) return;
 
     typeBody.classList.add("cine-cursor");
     await typeText(typeBody, LETTER, 26);
     typeBody.classList.remove("cine-cursor");
     if (!cineRunning || gen !== cineGen) return;
 
-    // Step 2: proceed only on → — never auto-open slides
+    // Full letter done — → to open photos
     const afterLetter = await waitForTypeContinue();
     if (!afterLetter || !cineRunning || gen !== cineGen) return;
 
@@ -6425,7 +6431,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     slideCaption.classList.remove("is-fading");
     if (slideCounter) slideCounter.textContent = "";
     cineSkip.style.display = "";
-    cineClose.classList.remove("show");
+    cineClose.classList.add("show");
     resetCandles();
     resizeCineCanvases();
     cineRunning = true;
@@ -6451,7 +6457,6 @@ Keep shining, keep dreaming, and keep being yourself.`;
     hideTypeContinue();
     finishSlideshow();
     cakeDone = false;
-    cineClose.classList.remove("show");
     cineSkip.style.display = "";
     allowCinematicAudio = true;
     cineRunning = true;
@@ -6461,7 +6466,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function closeCinematic() {
-    // Full exit from cinematic (if ever needed)
+    // Full exit from cinematic back to sudoku
     allowCinematicAudio = false;
     stopCinematicExtras();
     cinematic.classList.remove("active", "is-typewriter", "is-album", "is-finale");
@@ -6489,7 +6494,11 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
   cineClose.addEventListener("click", (e) => {
     e.stopPropagation();
-    backToTypewriter();
+    if (phaseFinale.classList.contains("visible")) {
+      backToTypewriter();
+    } else {
+      closeCinematic();
+    }
   });
   window.addEventListener("resize", () => {
     if (cinematic.classList.contains("active")) resizeCineCanvases();
