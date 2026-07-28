@@ -510,6 +510,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 
 .slide-frame {
+  position: relative;
   width: min(420px, 86vw);
   margin: 0 auto;
   aspect-ratio: 4/3;
@@ -519,7 +520,45 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     0 0 0 1px rgba(255,255,255,.18),
     0 20px 60px rgba(0,0,0,.55),
     0 0 40px rgba(255,122,89,.25);
-  background: #111;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,180,120,.18), transparent 55%),
+    #141414;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.slide-frame:active { cursor: grabbing; }
+.slide-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(12, 12, 16, .55);
+  color: rgba(255, 246, 232, .9);
+  font-size: .85rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.slide-frame.is-loading .slide-loader {
+  opacity: 1;
+}
+.slide-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.2);
+  border-top-color: #ffb347;
+  animation: slideSpin .7s linear infinite;
+}
+@keyframes slideSpin {
+  to { transform: rotate(360deg); }
 }
 .slide-frame img {
   width: 100%;
@@ -528,18 +567,96 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   display: block;
   opacity: 0;
   transform: scale(1.08);
-  transition: opacity 1s ease, transform 5.5s ease;
+  transition: opacity .45s ease, transform 5.5s ease;
+  pointer-events: none;
 }
 .slide-frame img.show {
   opacity: 1;
   transform: scale(1);
 }
-.slide-caption {
-  margin-top: 18px;
-  font-size: .95rem;
-  opacity: .85;
-  letter-spacing: .04em;
+.slide-frame img.slide-out-left {
+  opacity: 0;
+  transform: translateX(-28%) scale(1.02);
+  transition: opacity .35s ease, transform .35s ease;
 }
+.slide-frame img.slide-out-right {
+  opacity: 0;
+  transform: translateX(28%) scale(1.02);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.slide-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+.slide-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.28);
+  font-size: 1.25rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.slide-arrow:hover { background: rgba(255,255,255,.26); transform: none; }
+.slide-arrow:disabled { opacity: .35; cursor: default; }
+.slide-dots {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 180px;
+}
+.slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255,255,255,.35);
+  cursor: pointer;
+}
+.slide-dot.active {
+  background: #ffb347;
+  box-shadow: 0 0 10px rgba(255,179,71,.7);
+  transform: scale(1.25);
+}
+.slide-caption {
+  margin-top: 14px;
+  font-size: .95rem;
+  opacity: .9;
+  letter-spacing: .02em;
+  min-height: 2.6em;
+  line-height: 1.4;
+}
+.slide-counter {
+  margin-top: 6px;
+  font-size: .78rem;
+  opacity: .65;
+}
+.slide-hint {
+  margin-top: 8px;
+  font-size: .8rem;
+  opacity: .65;
+}
+.slide-continue {
+  margin-top: 16px;
+  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(232, 93, 58, .35);
+}
+.slide-continue:hover { transform: translateY(-1px); }
 
 .cine-finale-text {
   font-family: "Fraunces", serif;
@@ -884,7 +1001,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <p class="subtitle">A little journey made just for you.</p>
     <div class="click-begin">
       <button class="btn-primary" type="button" id="beginBtn" data-go="questions">Click to begin</button>
-      <span>↓</span>
+   
     </div>
   </div>
 </section>
@@ -1042,8 +1159,22 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       <p class="cine-message" id="typeBody"></p>
     </div>
     <div class="cine-phase" id="phaseSlideshow">
-      <div class="slide-frame"><img id="slideImg" alt="Memory"></div>
+      <div class="slide-frame" id="slideFrame">
+        <div class="slide-loader" id="slideLoader" aria-hidden="true">
+          <div class="slide-spinner"></div>
+          <span>Loading photo…</span>
+        </div>
+        <img id="slideImg" alt="Memory">
+      </div>
       <p class="slide-caption" id="slideCaption"></p>
+      <p class="slide-counter" id="slideCounter"></p>
+      <div class="slide-nav">
+        <button type="button" class="slide-arrow" id="slidePrev" aria-label="Previous photo">‹</button>
+        <div class="slide-dots" id="slideDots"></div>
+        <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
+      </div>
+      <p class="slide-hint">Swipe left / right · or use the arrows</p>
+      <button type="button" class="slide-continue" id="slideContinue">Lets cut the cake →</button>
     </div>
     <div class="cine-phase" id="phaseCake">
       <div class="cake-wrap">
@@ -1291,8 +1422,14 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   const phaseSlideshow = document.getElementById("phaseSlideshow");
   const phaseCake = document.getElementById("phaseCake");
   const phaseFinale = document.getElementById("phaseFinale");
+  const slideFrame = document.getElementById("slideFrame");
   const slideImg = document.getElementById("slideImg");
   const slideCaption = document.getElementById("slideCaption");
+  const slideCounter = document.getElementById("slideCounter");
+  const slideDots = document.getElementById("slideDots");
+  const slidePrev = document.getElementById("slidePrev");
+  const slideNext = document.getElementById("slideNext");
+  const slideContinue = document.getElementById("slideContinue");
   const cineSkip = document.getElementById("cineSkip");
   const cineClose = document.getElementById("cineClose");
   const finaleAudio = document.getElementById("finaleAudio");
@@ -1320,11 +1457,16 @@ Never forget how special you are.
 Keep shining, keep dreaming, and keep being yourself.`;
 
   const SLIDES = [
-    { src: "birthday-photos/harry_potter.jpeg", caption: "Favourite frames ✨" },
-    { src: "birthday-photos/roller-coaster.jpeg", caption: "Wild rides & big laughs" },
-    { src: "birthday-photos/traces.jpeg", caption: "Beautiful traces" },
-    { src: "birthday-photos/cashless_moment.jpeg", caption: "Unforgettable moments" },
-    { src: "birthday-photos/bright-you.jpeg", caption: "How bright you already are" },
+    { src: "birthday-photos/ijooz.jpeg", caption: "Good frame with sour juice 😋" },
+    { src: "birthday-photos/police_station1.jpeg", caption: "Never seen myself happy outside a Police Station 😂" },
+    { src: "birthday-photos/police_station2.jpeg", caption: "Could get arrested for posing weirdly 😂" },
+    { src: "birthday-photos/clark_quay.jpeg", caption: "Beautiful view and a pretty person" },
+    { src: "birthday-photos/canning_park.jpeg", caption: "Which one is more green, the park or me?" },
+    { src: "birthday-photos/merlion.jpeg", caption: "Someone did know how to pose for a photo 😂" },
+    { src: "birthday-photos/marina_bay.jpeg", caption: "Best frame with Marina Bay Sands as back" },
+    { src: "birthday-photos/butter_beer.jpeg", caption: "How Butter Beer tastes like?" },
+    { src: "birthday-photos/oceanarium.jpeg", caption: "Is that whale watching me?" },
+    { src: "birthday-photos/sentosa_beach.jpeg", caption: "❤️" },
   ];
 
   let cineTimers = [];
@@ -1344,6 +1486,11 @@ Keep shining, keep dreaming, and keep being yourself.`;
   let micAnalyser = null;
   let micData = null;
   let blowStreak = 0;
+  let slideIndex = 0;
+  let slideBusy = false;
+  let slideResolve = null;
+  let slidePointerX = 0;
+  let slideDragging = false;
 
   function cineWait(ms) {
     return new Promise((resolve) => {
@@ -1725,20 +1872,154 @@ Keep shining, keep dreaming, and keep being yourself.`;
 
   async function runSlideshow() {
     showPhase(phaseSlideshow);
-    for (const slide of SLIDES) {
-      if (!cineRunning) return;
-      slideCaption.textContent = slide.caption;
-      slideImg.classList.remove("show");
-      await cineWait(180);
-      slideImg.src = slide.src;
-      void slideImg.offsetWidth;
-      slideImg.classList.add("show");
-      await cineWait(3200);
+    slideIndex = 0;
+    slideBusy = false;
+    buildSlideDots();
+    preloadSlides();
+    await renderSlide(true);
+
+    return new Promise((resolve) => {
+      slideResolve = resolve;
+    });
+  }
+
+  function preloadSlides() {
+    SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.src;
+    });
+  }
+
+  function setSlideLoading(on) {
+    slideFrame.classList.toggle("is-loading", on);
+  }
+
+  function waitForImage(src) {
+    return new Promise((resolve) => {
+      if (slideImg.getAttribute("src") === src && slideImg.complete && slideImg.naturalWidth > 0) {
+        resolve();
+        return;
+      }
+      const onDone = () => {
+        slideImg.removeEventListener("load", onDone);
+        slideImg.removeEventListener("error", onDone);
+        resolve();
+      };
+      slideImg.addEventListener("load", onDone);
+      slideImg.addEventListener("error", onDone);
+      if (slideImg.getAttribute("src") !== src) {
+        slideImg.src = src;
+      } else if (slideImg.complete) {
+        onDone();
+      }
+    });
+  }
+
+  function buildSlideDots() {
+    slideDots.innerHTML = "";
+    SLIDES.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "slide-dot" + (i === slideIndex ? " active" : "");
+      dot.setAttribute("aria-label", "Photo " + (i + 1));
+      dot.addEventListener("click", (e) => {
+        e.stopPropagation();
+        goToSlide(i);
+      });
+      slideDots.appendChild(dot);
+    });
+  }
+
+  function updateSlideChrome() {
+    slideCounter.textContent = `${slideIndex + 1} / ${SLIDES.length}`;
+    slidePrev.disabled = slideIndex <= 0;
+    slideNext.disabled = slideIndex >= SLIDES.length - 1;
+    slideDots.querySelectorAll(".slide-dot").forEach((dot, i) => {
+      dot.classList.toggle("active", i === slideIndex);
+    });
+    if (slideIndex >= SLIDES.length - 1) {
+      slideContinue.textContent = "Continue to cake →";
+    } else {
+      slideContinue.textContent = "Skip photos →";
     }
   }
 
+  async function renderSlide() {
+    const slide = SLIDES[slideIndex];
+    if (!slide) return;
+    slideCaption.textContent = slide.caption;
+    updateSlideChrome();
+    slideImg.classList.remove("show", "slide-out-left", "slide-out-right");
+    setSlideLoading(true);
+    await waitForImage(slide.src);
+    if (!cineRunning) return;
+    void slideImg.offsetWidth;
+    slideImg.classList.add("show");
+    setSlideLoading(false);
+  }
+
+  async function goToSlide(nextIndex, direction = 0) {
+    if (slideBusy || !cineRunning) return;
+    if (nextIndex < 0 || nextIndex >= SLIDES.length || nextIndex === slideIndex) return;
+    slideBusy = true;
+    const dir = direction || (nextIndex > slideIndex ? 1 : -1);
+    slideImg.classList.remove("show");
+    slideImg.classList.add(dir > 0 ? "slide-out-left" : "slide-out-right");
+    await cineWait(280);
+    if (!cineRunning) { slideBusy = false; return; }
+    slideIndex = nextIndex;
+    slideImg.classList.remove("slide-out-left", "slide-out-right");
+    await renderSlide();
+    slideBusy = false;
+  }
+
+  function finishSlideshow() {
+    if (slideResolve) {
+      const done = slideResolve;
+      slideResolve = null;
+      done();
+    }
+  }
+
+  slidePrev.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goToSlide(slideIndex - 1, -1);
+  });
+  slideNext.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goToSlide(slideIndex + 1, 1);
+  });
+  slideContinue.addEventListener("click", (e) => {
+    e.stopPropagation();
+    finishSlideshow();
+  });
+
+  slideFrame.addEventListener("pointerdown", (e) => {
+    if (!phaseSlideshow.classList.contains("visible")) return;
+    slideDragging = true;
+    slidePointerX = e.clientX;
+    slideFrame.setPointerCapture?.(e.pointerId);
+  });
+  slideFrame.addEventListener("pointerup", (e) => {
+    if (!slideDragging) return;
+    slideDragging = false;
+    const dx = e.clientX - slidePointerX;
+    if (Math.abs(dx) < 42) return;
+    if (dx < 0) goToSlide(slideIndex + 1, 1);
+    else goToSlide(slideIndex - 1, -1);
+  });
+  slideFrame.addEventListener("pointercancel", () => { slideDragging = false; });
+
+  document.addEventListener("keydown", (e) => {
+    if (!phaseSlideshow.classList.contains("visible") || !cineRunning) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); goToSlide(slideIndex - 1, -1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); goToSlide(slideIndex + 1, 1); }
+    if (e.key === "Enter") { e.preventDefault(); finishSlideshow(); }
+  });
+
   async function runCinematicSequence(skipToCake = false) {
     if (skipToCake) {
+      finishSlideshow();
       showCakePhase();
       return;
     }
@@ -1757,13 +2038,14 @@ Keep shining, keep dreaming, and keep being yourself.`;
     await runSlideshow();
     if (!cineRunning) return;
 
-    await cineWait(500);
+    await cineWait(300);
     showCakePhase();
   }
 
   function stopCinematicExtras() {
     cineRunning = false;
     cakeDone = true;
+    finishSlideshow();
     clearCineTimers();
     cancelAnimationFrame(particleRAF);
     cancelAnimationFrame(fireworksRAF);
@@ -1792,14 +2074,18 @@ Keep shining, keep dreaming, and keep being yourself.`;
     typeGreeting.textContent = "";
     typeBody.textContent = "";
     slideImg.removeAttribute("src");
-    slideImg.classList.remove("show");
+    slideImg.classList.remove("show", "slide-out-left", "slide-out-right");
+    slideFrame.classList.remove("is-loading");
     slideCaption.textContent = "";
+    if (slideCounter) slideCounter.textContent = "";
     cineSkip.style.display = "";
     cineClose.classList.remove("show");
     resetCandles();
     resizeCineCanvases();
     cineRunning = true;
     startParticles();
+    // Warm cache while letter types
+    preloadSlides();
     runCinematicSequence(false);
   }
 
