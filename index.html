@@ -349,8 +349,13 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   backdrop-filter: blur(8px);
   justify-content: center;
   align-items: flex-start;
+  pointer-events: none;
 }
-.overlay.active { display: flex; animation: fadeIn .35s ease; }
+.overlay.active {
+  display: flex;
+  pointer-events: auto;
+  animation: fadeIn .35s ease;
+}
 .overlay-card {
   width: 100%;
   max-width: 420px;
@@ -444,15 +449,14 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 <!-- 1. Welcome -->
 <section class="screen active" id="screen-welcome">
   <div class="card">
-    <div style="font-size:48px;margin-bottom:8px;">🌊</div>
-    <h1 class="title">Happy Birthday, Gopal</h1>
+    <h1 class="title">Happy Birthday Gopal!</h1>
     <p class="wish">
       May your year be filled with calm seas, bright skies,
       and every reason to smile. You deserve the world. ❤️
     </p>
     <p class="subtitle">A little journey made just for you.</p>
     <div class="click-begin">
-      <button class="btn-primary" type="button" data-go="questions">Click to begin</button>
+      <button class="btn-primary" type="button" id="beginBtn" data-go="questions">Click to begin</button>
       <span>↓</span>
     </div>
   </div>
@@ -662,12 +666,10 @@ button:hover { transform: translateY(-2px) scale(1.03); }
     { x: 18, y: 22, title: "⭐ Compliment", html: "<p>You have a way of making people feel seen and safe. That rare kindness is your superpower. 🌊</p>" },
     { x: 42, y: 16, title: "📷 Memory", html: "<div class='photo-frame'><span>📷 Memory photo<br><small>A day that still feels warm</small></span></div><p>Remember that easy, sunlit moment? Keep it close.</p>" },
     { x: 68, y: 28, title: "⭐ Compliment", html: "<p>Your laugh is contagious. The room gets lighter the second you walk in. ✨</p>" },
-    { x: 82, y: 48, title: "🧠 Memory", html: "<p>That random conversation that went on forever…
-        one of those nights that quietly became a favourite.</p>" },
+    { x: 82, y: 48, title: "🧠 Memory", html: "<p>That random conversation that went on forever… one of those nights that quietly became a favourite.</p>" },
     { x: 30, y: 48, title: "📷 Photo", html: "<div class='photo-frame'><span>📷 Another favourite<br><small>Add your picture here</small></span></div><p>Proof that good times leave beautiful traces.</p>" },
     { x: 55, y: 58, title: "⭐ Compliment", html: "<p>You are stronger and softer than you realize — a rare combination. 💙</p>" },
-    { x: 15, y: 70, title: "🧠 Memory", html: "<p>The little adventures, the silly plans, the shared snacks —
-        they added up to something beautiful.</p>" },
+    { x: 15, y: 70, title: "🧠 Memory", html: "<p>The little adventures, the silly plans, the shared snacks — they added up to something beautiful.</p>" },
     { x: 75, y: 72, title: "⭐ Compliment", html: "<p>The world is luckier with you in it. Happy birthday, Gopal. 🎂🌊</p>" },
     { x: 48, y: 36, title: "📷 Photo", html: "<div class='photo-frame'><span>📷 Smile archive<br><small>Drop a photo in later</small></span></div><p>A reminder of how bright you already are.</p>" },
   ];
@@ -686,23 +688,42 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   function showScreen(id) {
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     const screen = document.getElementById("screen-" + id);
-    if (!screen) return;
+    if (!screen) {
+      console.warn("Missing screen:", id);
+      return;
+    }
     screen.classList.add("active");
     setTheme(id);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  document.querySelectorAll("[data-go]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-go");
-      if (target === "letter") {
-        document.getElementById("letterOverlay").classList.add("active");
-        launchConfetti();
-        return;
-      }
-      showScreen(target);
-      if (target === "celebrate") launchConfetti();
-    });
+  function goTo(target) {
+    if (target === "letter") {
+      document.getElementById("letterOverlay").classList.add("active");
+      launchConfetti();
+      return;
+    }
+    showScreen(target);
+    if (target === "celebrate") launchConfetti();
+  }
+
+  // Event delegation so navigation always works
+  document.addEventListener("click", (e) => {
+    const navBtn = e.target.closest("[data-go]");
+    if (navBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      goTo(navBtn.getAttribute("data-go"));
+      return;
+    }
+    if (e.target.closest("button, .coupon, .gift, .star, .overlay-card, a, input")) return;
+    createHeart(e.clientX, e.clientY);
+  });
+
+  document.getElementById("beginBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goTo("questions");
   });
 
   // Questions
@@ -856,11 +877,6 @@ button:hover { transform: translateY(-2px) scale(1.03); }
     });
     if (confettiPieces.length) requestAnimationFrame(animateConfetti);
   }
-
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("button, .coupon, .gift, .star, .overlay-card, a, input")) return;
-    createHeart(e.clientX, e.clientY);
-  });
 
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
