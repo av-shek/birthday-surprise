@@ -3,19 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Gopal!!</title>
+<title>Happy Birthday Gopal</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --sky: #4db8e8;
-  --sea: #2ec4b6;
-  --coral: #ff7a59;
-  --coral-deep: #e85d3a;
-  --ink: #14364a;
-  --night: #070b1a;
-  --star: #ffe9a8;
+  --sky: #5abeec;
+  --sea: #043c84;
+  --coral: #e87254;
+  --coral-deep: #ea5a36;
+  --ink: #113042;
+  --night: #0a1849;
+  --star: #f3d98b;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2379,7 +2380,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   .cozy-frame:nth-child(2) { width: 70px; height: 84px; }
   .cozy-frame:nth-child(2) img { height: 60px; }
   .cake-scene { height: 260px; }
-  .arrow-grid { width: min(300px, 92vw); }
+  .arrow-grid { max-width: min(300px, 100%); }
   .sudoku-grid { width: min(280px, 88vw); }
 }
 
@@ -2450,27 +2451,40 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 #screen-arrows .game-sub { color: #b8c7ff; }
 .arrow-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
-  width: min(320px, 88vw);
+  width: 100%;
+  max-width: 300px;
   margin: 0 auto 8px;
   padding: 10px;
+  box-sizing: border-box;
   border-radius: 18px;
   background:
     radial-gradient(circle at 50% 50%, rgba(0, 255, 200, .08), transparent 60%),
     rgba(0, 0, 0, .35);
-  border: 1px solid rgba(0, 255, 200, .2);
-  box-shadow: inset 0 0 24px rgba(255, 0, 170, .08);
+  border: 1px solid rgba(0, 255, 200, .35);
+  box-shadow:
+    0 0 16px rgba(0, 255, 200, .12),
+    inset 0 0 24px rgba(255, 0, 170, .08);
 }
 .arrow-cell {
   aspect-ratio: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
   border: none;
   border-radius: 12px;
   background: rgba(255, 255, 255, .04);
   color: #00ffc8;
-  font-size: 1.35rem;
+  font-size: clamp(1rem, 4.5vw, 1.35rem);
+  line-height: 1;
   cursor: default;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
 }
 .arrow-cell.has-arrow {
@@ -2533,13 +2547,17 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 #screen-ttt .game-sub { color: #cfe6d4; }
 .ttt-board {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   width: min(280px, 78vw);
   margin: 12px auto;
 }
 .ttt-cell {
   aspect-ratio: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
   border: 2px dashed rgba(255, 248, 220, .35);
   border-radius: 14px;
   background: rgba(0, 0, 0, .18);
@@ -2548,6 +2566,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   cursor: pointer;
   transition: background .2s ease, transform .15s ease;
   font-family: "Fraunces", serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .ttt-cell:hover:not(:disabled) {
   background: rgba(255, 255, 255, .1);
@@ -2608,17 +2629,23 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 #screen-sudoku .game-sub { color: #6a5640; }
 .sudoku-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   width: min(300px, 84vw);
   margin: 10px auto 12px;
   border: 2px solid #3d2a18;
   background: #fffdf8;
   box-shadow: 0 8px 20px rgba(60, 40, 20, .12);
+  box-sizing: border-box;
 }
 .sudoku-cell {
   aspect-ratio: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
   border: 1px solid rgba(60, 40, 20, .22);
+  border-radius: 0;
   background: transparent;
   font-family: "Fraunces", serif;
   font-size: 1.35rem;
@@ -2626,6 +2653,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   color: #2c2418;
   cursor: pointer;
   transition: background .15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .sudoku-cell:nth-child(4n+1) { border-left: 2px solid #3d2a18; }
 .sudoku-cell:nth-child(-n+4) { border-top: 2px solid #3d2a18; }
@@ -3006,8 +3036,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <section class="screen" id="screen-arrows">
   <div class="game-shell">
     <h1>Arrow Escape ⚡</h1>
-    <p class="game-sub">Tap an arrow to slide it out — path must be clear. Clear the board!</p>
-    <p class="arrow-hint">Tip: free the ones that can exit first</p>
+    <p class="game-sub">Tap an arrow to slide it out — path must be clear. Clear the board, or take 3 tries.</p>
+    <p class="arrow-hint">Tip: free the ones that can exit first · Reset counts as a try</p>
     <div class="arrow-grid" id="arrowGrid" aria-label="Arrow puzzle"></div>
     <p class="game-status" id="arrowStatus">Arrows left: —</p>
     <div class="game-actions">
@@ -3150,7 +3180,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <section class="screen" id="screen-ttt">
   <div class="game-shell">
     <h1>Birthday Tic-Tac-Toe 🎯</h1>
-    <p class="game-sub">Beat me on the chalkboard to unlock the night sky</p>
+    <p class="game-sub">Win, draw, or play 3 rounds — then the night sky unlocks</p>
     <div class="ttt-legend">
       <span>You = ❤️</span>
       <span>Me = ⭐</span>
@@ -3185,7 +3215,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <section class="screen" id="screen-sudoku">
   <div class="game-shell">
     <h1>Mini Sudoku 🧩</h1>
-    <p class="game-sub">A cozy 4×4 — fill every row, column &amp; box with 1–4</p>
+    <p class="game-sub">Fill every row, column &amp; box with 1–4 — or unlock after 3 tries</p>
     <div class="sudoku-grid" id="sudokuGrid" aria-label="Sudoku grid"></div>
     <div class="sudoku-pad" id="sudokuPad">
       <button type="button" data-num="1">1</button>
@@ -3462,7 +3492,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       if (navBtn.classList.contains("game-continue") && !navBtn.classList.contains("is-ready")) {
         e.preventDefault();
         e.stopPropagation();
-        showToast("Finish the game first 🎮");
+        showToast("Play a bit more — or finish a few tries 🎮");
         return;
       }
       e.preventDefault();
@@ -3793,6 +3823,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   });
 
   /* ===== Mini-games ===== */
+  const GAME_TRIALS = 3; // rounds/attempts before continue unlocks
+
   function unlockContinue(btn) {
     if (!btn) return;
     btn.classList.add("is-ready");
@@ -3801,12 +3833,14 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     if (!btn) return;
     btn.classList.remove("is-ready");
   }
+  function trialLabel(n, max) {
+    return `Try ${Math.min(n, max)}/${max}`;
+  }
 
   // --- Arrow Escape ---
   const ARROW_SIZE = 5;
   const ARROW_GLYPH = { R: "→", L: "←", D: "↓", U: "↑" };
   const ARROW_DIR = { R: [0, 1], L: [0, -1], D: [1, 0], U: [-1, 0] };
-  // Solvable starter layout (null = empty)
   const ARROW_PUZZLE = [
     [null, "D", null, null, null],
     [null, null, null, "L", null],
@@ -3817,6 +3851,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   let arrowBoard = [];
   let arrowBusy = false;
   let arrowSolved = false;
+  let arrowUnlocked = false;
+  let arrowAttempt = 1; // current try number
+  let arrowMovesThisTry = 0;
   const arrowGrid = document.getElementById("arrowGrid");
   const arrowStatus = document.getElementById("arrowStatus");
   const arrowContinue = document.getElementById("arrowContinue");
@@ -3827,6 +3864,27 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   function countArrows() {
     return arrowBoard.flat().filter(Boolean).length;
+  }
+
+  function syncArrowUnlock(msg) {
+    if (arrowUnlocked) {
+      unlockContinue(arrowContinue);
+      return;
+    }
+    if (arrowSolved || arrowAttempt >= GAME_TRIALS) {
+      arrowUnlocked = true;
+      unlockContinue(arrowContinue);
+      if (msg) showToast(msg);
+      createHeartBurst();
+      if (arrowSolved) launchConfetti();
+    }
+  }
+
+  function arrowStatusText() {
+    if (arrowSolved) return "Board cleared — you did it! ⚡";
+    if (arrowUnlocked) return "Continue unlocked — keep playing or move on ⚡";
+    const left = countArrows();
+    return `${trialLabel(arrowAttempt, GAME_TRIALS)} · Arrows left: ${left}`;
   }
 
   function renderArrowBoard() {
@@ -3846,12 +3904,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
         arrowGrid.appendChild(btn);
       }
     }
-    const left = countArrows();
-    if (arrowStatus) {
-      arrowStatus.textContent = left === 0
-        ? "Board cleared — you did it! ⚡"
-        : `Arrows left: ${left}`;
-    }
+    if (arrowStatus) arrowStatus.textContent = arrowStatusText();
   }
 
   function pathClear(r, c, dir) {
@@ -3867,7 +3920,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   }
 
   function tryMoveArrow(r, c) {
-    if (arrowBusy || arrowSolved) return;
+    if (arrowBusy) return;
     const dir = arrowBoard[r][c];
     if (!dir) return;
     if (!pathClear(r, c, dir)) {
@@ -3881,33 +3934,43 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     setTimeout(() => {
       arrowBoard[r][c] = null;
       arrowBusy = false;
-      renderArrowBoard();
+      arrowMovesThisTry++;
       if (countArrows() === 0) {
         arrowSolved = true;
-        unlockContinue(arrowContinue);
-        showToast("Arrow board cleared! ⚡");
-        createHeartBurst();
-        launchConfetti();
+        syncArrowUnlock("Arrow board cleared! ⚡");
       }
+      renderArrowBoard();
     }, 380);
   }
 
   function initArrowPuzzle(forceReset) {
-    if (!forceReset && arrowSolved && countArrows() === 0) {
+    if (!forceReset && arrowUnlocked) {
       unlockContinue(arrowContinue);
+      if (!arrowBoard.length) arrowBoard = cloneArrowPuzzle();
       renderArrowBoard();
       return;
+    }
+    if (forceReset) {
+      if (!arrowUnlocked && !arrowSolved) {
+        arrowAttempt++;
+        syncArrowUnlock(arrowAttempt >= GAME_TRIALS ? "3 tries done — continue unlocked 🎮" : null);
+      }
+    } else {
+      arrowAttempt = Math.max(1, arrowAttempt);
     }
     arrowBoard = cloneArrowPuzzle();
     arrowBusy = false;
     arrowSolved = false;
-    lockContinue(arrowContinue);
+    arrowMovesThisTry = 0;
+    if (!arrowUnlocked) lockContinue(arrowContinue);
+    else unlockContinue(arrowContinue);
     renderArrowBoard();
   }
 
   document.getElementById("arrowReset")?.addEventListener("click", () => {
     initArrowPuzzle(true);
-    showToast("Puzzle reset");
+    if (!arrowUnlocked) showToast(`Reset · ${trialLabel(arrowAttempt, GAME_TRIALS)}`);
+    else showToast("Puzzle reset");
   });
 
   // --- Tic Tac Toe ---
@@ -3916,7 +3979,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   const tttContinue = document.getElementById("tttContinue");
   let tttCells = Array(9).fill(null);
   let tttOver = false;
-  let tttWon = false;
+  let tttUnlocked = false;
+  let tttRounds = 0; // completed games
   let tttTurn = "X";
 
   const TTT_WINS = [
@@ -3936,27 +4000,27 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   }
 
   function tttBestMove(board) {
-    // Win if possible
+    // Always take the win if available
     for (let i = 0; i < 9; i++) {
       if (board[i]) continue;
       const next = board.slice();
       next[i] = "O";
       if (tttWinner(next)?.player === "O") return i;
     }
-    // Block player
-    for (let i = 0; i < 9; i++) {
-      if (board[i]) continue;
-      const next = board.slice();
-      next[i] = "X";
-      if (tttWinner(next)?.player === "X") return i;
+    // Only block sometimes — keeps it beatable / birthday-friendly
+    if (Math.random() < 0.45) {
+      for (let i = 0; i < 9; i++) {
+        if (board[i]) continue;
+        const next = board.slice();
+        next[i] = "X";
+        if (tttWinner(next)?.player === "X") return i;
+      }
     }
-    // Prefer center, then corners, then sides — with a little randomness so it's beatable
-    const prefs = [4, 0, 2, 6, 8, 1, 3, 5, 7].filter((i) => !board[i]);
-    if (!prefs.length) return -1;
-    if (Math.random() < 0.35) {
-      return prefs[Math.floor(Math.random() * prefs.length)];
-    }
-    return prefs[0];
+    const empty = [];
+    for (let i = 0; i < 9; i++) if (!board[i]) empty.push(i);
+    if (!empty.length) return -1;
+    // Prefer random empties most of the time
+    return empty[Math.floor(Math.random() * empty.length)];
   }
 
   function renderTtt(winLine) {
@@ -3996,62 +4060,78 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       }
       tttTurn = "X";
       renderTtt();
-      if (tttStatus) tttStatus.textContent = "Your turn — place a ❤️";
+      if (tttStatus) tttStatus.textContent = `${trialLabel(tttRounds + 1, GAME_TRIALS)} · Your turn — place a ❤️`;
     }, 420);
+  }
+
+  function syncTttUnlock(reason) {
+    if (tttUnlocked) {
+      unlockContinue(tttContinue);
+      return;
+    }
+    if (tttRounds >= GAME_TRIALS) {
+      tttUnlocked = true;
+      unlockContinue(tttContinue);
+      showToast(reason || "3 rounds played — continue unlocked 🎮");
+      createHeartBurst();
+    }
   }
 
   function endTtt(result) {
     tttOver = true;
+    tttRounds++;
     renderTtt(result.line);
     if (result.player === "X") {
-      tttWon = true;
-      if (tttStatus) tttStatus.textContent = "You win! Night sky unlocked 🌌";
+      tttUnlocked = true;
       unlockContinue(tttContinue);
+      if (tttStatus) tttStatus.textContent = "You win! Night sky unlocked 🌌";
       createHeartBurst();
       launchConfetti();
       showToast("Victory! ❤️");
-    } else if (result.player === "O") {
-      if (tttStatus) tttStatus.textContent = "I won this round — rematch? ⭐";
-      showToast("So close — try again!");
+    } else if (result.player === "draw") {
+      // Draw counts as soft success
+      tttUnlocked = true;
+      unlockContinue(tttContinue);
+      if (tttStatus) tttStatus.textContent = "Draw! That's enough — continue unlocked 🤝";
+      createHeartBurst();
+      showToast("Draw — continue unlocked!");
     } else {
-      if (tttStatus) tttStatus.textContent = "Draw! Rematch for the win 🤝";
-      showToast("Draw — one more round?");
+      syncTttUnlock();
+      if (tttUnlocked) {
+        if (tttStatus) tttStatus.textContent = `Nice try! (${trialLabel(tttRounds, GAME_TRIALS)}) — continue when ready ⭐`;
+      } else {
+        if (tttStatus) tttStatus.textContent = `I won · ${trialLabel(tttRounds, GAME_TRIALS)} — rematch? ⭐`;
+        showToast(`Round over · ${trialLabel(tttRounds, GAME_TRIALS)}`);
+      }
     }
   }
 
   function initTtt(forceReset) {
-    if (!forceReset && tttWon) {
+    if (!forceReset && tttUnlocked && tttOver) {
       unlockContinue(tttContinue);
       renderTtt();
-      if (tttStatus) tttStatus.textContent = "You already won — continue whenever ❤️";
+      if (tttStatus) tttStatus.textContent = "Continue unlocked — rematch anytime ❤️";
       return;
     }
     tttCells = Array(9).fill(null);
     tttOver = false;
     tttTurn = "X";
-    if (forceReset) tttWon = false;
-    if (!tttWon) lockContinue(tttContinue);
+    if (!tttUnlocked) lockContinue(tttContinue);
+    else unlockContinue(tttContinue);
     renderTtt();
-    if (tttStatus) tttStatus.textContent = "Your turn — place a ❤️";
+    if (tttStatus) {
+      tttStatus.textContent = tttUnlocked
+        ? "Your turn — or continue whenever ❤️"
+        : `${trialLabel(Math.min(tttRounds + 1, GAME_TRIALS), GAME_TRIALS)} · Your turn — place a ❤️`;
+    }
   }
 
   document.getElementById("tttReset")?.addEventListener("click", () => {
-    const keepUnlock = tttWon;
     initTtt(true);
-    if (keepUnlock) {
-      tttWon = true;
-      unlockContinue(tttContinue);
-    }
+    showToast(tttUnlocked ? "Rematch!" : `New round · ${trialLabel(Math.min(tttRounds + 1, GAME_TRIALS), GAME_TRIALS)}`);
   });
 
   // --- Mini Sudoku 4x4 ---
-  const SUDOKU_SOLUTION = [
-    1, 2, 3, 4,
-    3, 4, 1, 2,
-    2, 1, 4, 3,
-    4, 3, 2, 1,
-  ];
-  // 0 = empty for player
   const SUDOKU_GIVEN = [
     1, 0, 0, 4,
     0, 4, 0, 0,
@@ -4061,6 +4141,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   let sudokuValues = [];
   let sudokuSelected = -1;
   let sudokuSolved = false;
+  let sudokuUnlocked = false;
+  let sudokuAttempt = 1;
   const sudokuGrid = document.getElementById("sudokuGrid");
   const sudokuStatus = document.getElementById("sudokuStatus");
   const sudokuContinue = document.getElementById("sudokuContinue");
@@ -4118,8 +4200,21 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     return sudokuConflicts(sudokuValues).size === 0;
   }
 
+  function syncSudokuUnlock(msg) {
+    if (sudokuUnlocked) {
+      unlockContinue(sudokuContinue);
+      return;
+    }
+    if (sudokuSolved || sudokuAttempt >= GAME_TRIALS) {
+      sudokuUnlocked = true;
+      unlockContinue(sudokuContinue);
+      if (msg) showToast(msg);
+      createHeartBurst();
+      if (sudokuSolved) launchConfetti();
+    }
+  }
+
   function placeSudokuNum(num) {
-    if (sudokuSolved) return;
     if (sudokuSelected < 0 || SUDOKU_GIVEN[sudokuSelected] !== 0) {
       if (sudokuStatus) sudokuStatus.textContent = "Select an empty cell first";
       return;
@@ -4131,31 +4226,48 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       sudokuSelected = -1;
       renderSudoku();
       if (sudokuStatus) sudokuStatus.textContent = "Puzzle complete — finale unlocked! 🎂";
-      unlockContinue(sudokuContinue);
-      createHeartBurst();
-      launchConfetti();
-      showToast("Sudoku solved! 🧩");
+      syncSudokuUnlock("Sudoku solved! 🧩");
     } else if (sudokuStatus) {
       const left = sudokuValues.filter((v) => !v).length;
-      sudokuStatus.textContent = left
-        ? `${left} cell${left === 1 ? "" : "s"} left`
-        : "Check for conflicts…";
+      if (sudokuUnlocked) {
+        sudokuStatus.textContent = left
+          ? `Continue unlocked · ${left} left`
+          : "Check for conflicts…";
+      } else {
+        sudokuStatus.textContent = left
+          ? `${trialLabel(sudokuAttempt, GAME_TRIALS)} · ${left} cell${left === 1 ? "" : "s"} left`
+          : "Check for conflicts…";
+      }
     }
   }
 
   function initSudoku(forceReset) {
-    if (!forceReset && sudokuSolved) {
+    if (!forceReset && sudokuUnlocked) {
       unlockContinue(sudokuContinue);
+      if (!sudokuValues.length) sudokuValues = SUDOKU_GIVEN.slice();
       renderSudoku();
-      if (sudokuStatus) sudokuStatus.textContent = "Already solved — continue to the finale 🎂";
+      if (sudokuStatus) sudokuStatus.textContent = sudokuSolved
+        ? "Already solved — continue to the finale 🎂"
+        : "Continue unlocked — keep puzzling or move on";
       return;
+    }
+    if (forceReset) {
+      if (!sudokuUnlocked && !sudokuSolved) {
+        sudokuAttempt++;
+        syncSudokuUnlock(sudokuAttempt >= GAME_TRIALS ? "3 tries done — continue unlocked 🎮" : null);
+      }
     }
     sudokuValues = SUDOKU_GIVEN.slice();
     sudokuSelected = -1;
     sudokuSolved = false;
-    lockContinue(sudokuContinue);
+    if (!sudokuUnlocked) lockContinue(sudokuContinue);
+    else unlockContinue(sudokuContinue);
     renderSudoku();
-    if (sudokuStatus) sudokuStatus.textContent = "Pick a cell, then a number";
+    if (sudokuStatus) {
+      sudokuStatus.textContent = sudokuUnlocked
+        ? "Pick a cell — or continue whenever"
+        : `${trialLabel(sudokuAttempt, GAME_TRIALS)} · Pick a cell, then a number`;
+    }
   }
 
   document.getElementById("sudokuPad")?.addEventListener("click", (e) => {
@@ -4165,7 +4277,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   });
   document.getElementById("sudokuReset")?.addEventListener("click", () => {
     initSudoku(true);
-    showToast("Sudoku reset");
+    if (!sudokuUnlocked) showToast(`Reset · ${trialLabel(sudokuAttempt, GAME_TRIALS)}`);
+    else showToast("Sudoku reset");
   });
 
   // Constellation stars
