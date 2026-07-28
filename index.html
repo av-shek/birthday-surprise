@@ -384,18 +384,16 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   aspect-ratio: 4/3;
   border-radius: 16px;
   margin: 12px 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
-  font-weight: 700;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,.2), transparent),
-    linear-gradient(145deg, #4db8e8, #2ec4b6);
+  overflow: hidden;
+  background: #0f4c75;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
 }
-.photo-frame span { opacity: .95; padding: 12px; line-height: 1.4; }
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 .toast {
   position: fixed; left: 50%; bottom: 28px;
@@ -649,29 +647,28 @@ button:hover { transform: translateY(-2px) scale(1.03); }
     },
     2: {
       title: "🎁 Gift 2 — Favourite Photo",
-      html: `<div class="photo-frame"><span>📷 Favourite photo goes here<br><small style="font-weight:600;opacity:.85">Swap this box with a real photo anytime</small></span></div>
+      html: `<div class="photo-frame"><img src="birthday-photos/harry_potter.jpeg" alt="Favourite photo"></div>
         <p>This is the spot for your favourite memory snapshot —
         the kind that makes you grin without even trying.</p>`
     },
     3: {
-      title: "🎁 Gift 3 — Inside Joke",
-      html: `<p>You know the one. 😏<br><br>
-        That ridiculous shared joke that makes zero sense to anyone else
-        and somehow still gets funnier every year.<br><br>
-        If you're laughing already… yes. That one. 🤫✨</p>`
+      title: "🎁 Gift 3 — Unforgettable/Cashless Moment",
+      html: `<div class="photo-frame"><img src="birthday-photos/cashless_moment.jpeg" alt="Cashless moment"></div>
+        <p>This is the spot for your favourite memory snapshot —
+        the kind that makes you grin without even trying.</p>`
     }
   };
 
   const stars = [
     { x: 18, y: 22, title: "⭐ Compliment", html: "<p>You have a way of making people feel seen and safe. That rare kindness is your superpower. 🌊</p>" },
-    { x: 42, y: 16, title: "📷 Memory", html: "<div class='photo-frame'><span>📷 Memory photo<br><small>A day that still feels warm</small></span></div><p>Remember that easy, sunlit moment? Keep it close.</p>" },
+    { x: 42, y: 16, title: "📷 Memory", html: "<div class='photo-frame'><img src='birthday-photos/roller-coaster.jpeg' alt='Memory photo'></div><p>Remember that roller coaster ride? It was fun! I mean, who goes on a roller coaster and doesn't spin? You did! 🤩</p>" },
     { x: 68, y: 28, title: "⭐ Compliment", html: "<p>Your laugh is contagious. The room gets lighter the second you walk in. ✨</p>" },
     { x: 82, y: 48, title: "🧠 Memory", html: "<p>That random conversation that went on forever… one of those nights that quietly became a favourite.</p>" },
-    { x: 30, y: 48, title: "📷 Photo", html: "<div class='photo-frame'><span>📷 Another favourite<br><small>Add your picture here</small></span></div><p>Proof that good times leave beautiful traces.</p>" },
+    { x: 30, y: 48, title: "📷 Photo", html: "<div class='photo-frame'><img src='birthday-photos/traces.jpeg' alt='Another favourite'></div><p>Proof that good times leave beautiful traces.</p>" },
     { x: 55, y: 58, title: "⭐ Compliment", html: "<p>You are stronger and softer than you realize — a rare combination. 💙</p>" },
     { x: 15, y: 70, title: "🧠 Memory", html: "<p>The little adventures, the silly plans, the shared snacks — they added up to something beautiful.</p>" },
     { x: 75, y: 72, title: "⭐ Compliment", html: "<p>The world is luckier with you in it. Happy birthday, Gopal. 🎂🌊</p>" },
-    { x: 48, y: 36, title: "📷 Photo", html: "<div class='photo-frame'><span>📷 Smile archive<br><small>Drop a photo in later</small></span></div><p>A reminder of how bright you already are.</p>" },
+    { x: 48, y: 36, title: "📷 Photo", html: "<div class='photo-frame'><img src='birthday-photos/bright-you.jpeg' alt='Smile archive'></div><p>A reminder of how bright you already are.</p>" },
   ];
 
   function showToast(text) {
