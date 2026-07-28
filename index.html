@@ -167,32 +167,197 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .hidden { display: none !important; }
 
 /* questions */
-.question { display: none; animation: fadeIn .4s ease; }
+#screen-questions .card {
+  overflow: hidden;
+}
+.questions-hero {
+  position: relative;
+  margin: -8px -10px 20px;
+  padding: 22px 18px 18px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.4), transparent 42%),
+    radial-gradient(circle at 90% 0%, rgba(255,122,89,.3), transparent 38%),
+    linear-gradient(145deg, #4db8e8 0%, #2ec4b6 52%, #7fdbda 100%);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(20, 90, 120, .22);
+  overflow: hidden;
+  text-align: center;
+}
+.questions-hero::before {
+  content: "";
+  position: absolute;
+  width: 140px; height: 140px;
+  right: -40px; top: -50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  pointer-events: none;
+}
+.questions-hero-emoji {
+  font-size: 2.2rem;
+  display: inline-block;
+  animation: celebrateBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+}
+.questions-hero .title {
+  color: #fff;
+  margin: 8px 0 4px;
+  font-size: clamp(1.35rem, 5vw, 1.7rem);
+  text-shadow: 0 2px 12px rgba(0,0,0,.12);
+}
+.questions-hero .subtitle {
+  color: rgba(255,255,255,.95);
+  margin: 0;
+  font-size: .9rem;
+}
+.question-steps {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.question-step {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(15,76,117,.18);
+  transition: width .35s ease, background .35s ease, box-shadow .35s ease;
+}
+.question-step.done {
+  background: #2ec4b6;
+}
+.question-step.active {
+  width: 28px;
+  background: linear-gradient(90deg, #ff7a59, #ffb347);
+  box-shadow: 0 0 12px rgba(255,122,89,.45);
+}
+.question-shell {
+  position: relative;
+  min-height: 260px;
+}
+.question {
+  display: none;
+  animation: questionIn .45s cubic-bezier(.22,1,.36,1);
+}
 .question.active { display: block; }
+@keyframes questionIn {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.question-card {
+  position: relative;
+  padding: 22px 18px 20px;
+  border-radius: 22px;
+  background:
+    linear-gradient(165deg, rgba(255,255,255,.72), rgba(255,248,230,.55));
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow:
+    0 12px 28px rgba(20,70,100,.12),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  overflow: hidden;
+}
+.question-card::after {
+  content: "";
+  position: absolute;
+  width: 90px; height: 90px;
+  right: -20px; bottom: -30px;
+  border-radius: 50%;
+  background: rgba(78,184,232,.12);
+  pointer-events: none;
+}
+.question-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #0f4c75;
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.9);
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
 .question h2 {
   font-family: "Fraunces", serif;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 4.8vw, 1.4rem);
   color: #134e6f;
   line-height: 1.45;
   margin-bottom: 22px;
+  position: relative;
+  z-index: 1;
 }
 .buttons {
-  display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; min-height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  min-height: 64px;
+  position: relative;
+  z-index: 2;
 }
 .yes {
   background: linear-gradient(135deg, var(--coral), var(--coral-deep));
   color: #fff;
-  box-shadow: 0 8px 20px rgba(232,93,58,.35);
+  box-shadow: 0 10px 24px rgba(232,93,58,.38);
+  padding: 14px 28px;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
 }
+.yes::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform .55s ease;
+}
+.yes:hover::after { transform: translateX(120%); }
 .no {
-  background: rgba(255,255,255,.75);
-  color: #3a6a82;
-  border: 1px solid rgba(255,255,255,.9);
+  background: rgba(255,255,255,.78);
+  color: #5a7a8c;
+  border: 1px solid rgba(255,255,255,.95);
   touch-action: none;
   position: relative;
   z-index: 5;
+  padding: 11px 18px;
+  font-size: .88rem;
+  opacity: .9;
+  box-shadow: 0 4px 12px rgba(20,70,100,.08);
 }
-.message { margin-top: 18px; min-height: 28px; font-weight: 600; color: #0f5c6e; }
+.question-hint {
+  margin-top: 14px;
+  font-size: .75rem;
+  color: #5a7f93;
+  opacity: .85;
+  position: relative;
+  z-index: 1;
+}
+.message {
+  margin-top: 16px;
+  min-height: 32px;
+  font-weight: 700;
+  color: #0f5c6e;
+  font-size: .95rem;
+  position: relative;
+  z-index: 1;
+}
+.message:not(:empty) {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(46,196,182,.14);
+  border: 1px solid rgba(46,196,182,.25);
+  animation: messagePop .35s cubic-bezier(.22,1,.36,1);
+}
+@keyframes messagePop {
+  from { opacity: 0; transform: translateY(8px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.question.answered .buttons { opacity: .55; pointer-events: none; }
 
 .section-title {
   font-family: "Fraunces", serif;
@@ -213,44 +378,240 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   margin-top: 22px;
 }
 
-/* coupons */
+/* coupons / celebrate */
+#screen-celebrate .card {
+  overflow: hidden;
+}
+.celebrate-hero {
+  position: relative;
+  margin: -8px -10px 18px;
+  padding: 22px 16px 20px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.45), transparent 45%),
+    radial-gradient(circle at 85% 10%, rgba(255,122,89,.28), transparent 40%),
+    linear-gradient(135deg, #5ec8f0 0%, #2ec4b6 55%, #ff9a76 120%);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(20, 90, 120, .22);
+  overflow: hidden;
+}
+.celebrate-hero::before,
+.celebrate-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.celebrate-hero::before {
+  width: 120px; height: 120px;
+  right: -30px; top: -40px;
+  background: rgba(255,255,255,.16);
+}
+.celebrate-hero::after {
+  width: 80px; height: 80px;
+  left: -20px; bottom: -30px;
+  background: rgba(255,255,255,.12);
+}
+.celebrate-emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+  animation: celebrateBounce 1.8s ease-in-out infinite;
+  display: inline-block;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,.18));
+}
+@keyframes celebrateBounce {
+  0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+  50% { transform: translateY(-6px) rotate(4deg) scale(1.06); }
+}
+.celebrate-hero .title {
+  color: #fff;
+  margin: 8px 0 6px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.celebrate-hero .subtitle {
+  color: rgba(255,255,255,.95);
+  margin: 0;
+  text-align: center !important;
+  font-size: .92rem;
+  line-height: 1.55;
+}
+.coupon-progress {
+  margin: 4px 0 14px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.4);
+  border: 1px solid rgba(255,255,255,.55);
+}
+.coupon-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #0f4c75;
+  margin-bottom: 8px;
+}
+.coupon-progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(15,76,117,.12);
+  overflow: hidden;
+}
+.coupon-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2ec4b6, #ff7a59);
+  box-shadow: 0 0 12px rgba(46,196,182,.45);
+  transition: width .45s cubic-bezier(.22,1,.36,1);
+}
 .coupons {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
   margin-top: 8px;
 }
 .coupon {
   position: relative;
-  background: linear-gradient(180deg, #fffdf8, #fff6e0);
-  border-radius: 16px;
-  padding: 16px 12px;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 12px 50%, transparent 7px, #fffdf8 8px) left / 16px 100% no-repeat,
+    radial-gradient(circle at calc(100% - 12px) 50%, transparent 7px, #fff6e0 8px) right / 16px 100% no-repeat,
+    linear-gradient(165deg, #fffefb 0%, #fff4df 100%);
+  border-radius: 18px;
+  padding: 18px 14px 16px;
   cursor: pointer;
-  border: 1.5px dashed rgba(46,196,182,.45);
-  box-shadow: 0 8px 18px rgba(20,70,100,.12);
-  min-height: 120px;
+  border: 1.5px dashed rgba(46,196,182,.4);
+  box-shadow:
+    0 10px 24px rgba(20,70,100,.14),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  min-height: 138px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transition: transform .25s ease;
+  gap: 5px;
+  transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease, border-color .28s ease;
+  animation: couponIn .55s ease both;
+  overflow: hidden;
 }
-.coupon:hover { transform: translateY(-4px); border-color: var(--coral); }
-.coupon h3 { font-size: .92rem; color: #0f4c75; }
-.coupon p { font-size: .72rem; color: #4a7084; }
+.coupon:nth-child(1) { animation-delay: .05s; }
+.coupon:nth-child(2) { animation-delay: .12s; }
+.coupon:nth-child(3) { animation-delay: .19s; }
+.coupon:nth-child(4) { animation-delay: .26s; }
+@keyframes couponIn {
+  from { opacity: 0; transform: translateY(16px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.coupon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.coupon:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--coral);
+  box-shadow: 0 16px 30px rgba(232, 93, 58, .2);
+}
+.coupon:hover::before { transform: translateX(120%); }
+.coupon:active { transform: translateY(-2px) scale(.98); }
+.coupon .coupon-icon {
+  font-size: 1.85rem;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  transition: transform .3s ease;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.12));
+}
+.coupon:hover .coupon-icon { transform: scale(1.15) rotate(-8deg); }
+.coupon h3 {
+  font-size: .95rem;
+  color: #0f4c75;
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+}
+.coupon p {
+  font-size: .72rem;
+  color: #4a7084;
+  position: relative;
+  z-index: 1;
+  line-height: 1.35;
+}
+.coupon .coupon-tap {
+  margin-top: 4px;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #e85d3a;
+  position: relative;
+  z-index: 1;
+  opacity: .85;
+}
 .coupon.is-redeemed {
-  background: linear-gradient(180deg, #e8fbf8, #d5f5ef);
+  background:
+    radial-gradient(circle at 12px 50%, transparent 7px, #e9fbf7 8px) left / 16px 100% no-repeat,
+    radial-gradient(circle at calc(100% - 12px) 50%, transparent 7px, #d7f5ef 8px) right / 16px 100% no-repeat,
+    linear-gradient(165deg, #eafbf8 0%, #d4f3ec 100%);
   border-style: solid;
   border-color: var(--sea);
+  cursor: default;
 }
+.coupon.is-redeemed:hover {
+  transform: none;
+  box-shadow: 0 10px 24px rgba(20,70,100,.14);
+}
+.coupon.is-redeemed .coupon-tap { display: none; }
+.coupon.is-redeemed .coupon-icon { transform: scale(1.05); filter: grayscale(.15) saturate(1.2); }
 .coupon .redeemed-badge {
   display: none;
-  position: absolute; top: 8px; right: 10px;
-  font-size: .65rem; font-weight: 800; color: #0f7a6e;
-  background: rgba(46,196,182,.2); padding: 2px 7px; border-radius: 999px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: .62rem;
+  font-weight: 800;
+  color: #0f7a6e;
+  background: rgba(46,196,182,.22);
+  padding: 3px 8px;
+  border-radius: 999px;
+  z-index: 2;
+  letter-spacing: .03em;
 }
-.coupon.is-redeemed .redeemed-badge { display: inline-block; }
+.coupon.is-redeemed .redeemed-badge { display: inline-block; animation: stampIn .35s cubic-bezier(.22,1,.36,1); }
+@keyframes stampIn {
+  from { opacity: 0; transform: scale(1.6) rotate(-12deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+.coupon.pop {
+  animation: couponPop .45s cubic-bezier(.22,1,.36,1);
+}
+@keyframes couponPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.08) rotate(-2deg); }
+  100% { transform: scale(1); }
+}
+.coupon-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.coupon-sparks span {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  font-size: 14px;
+  animation: sparkFly .7s ease-out forwards;
+}
+@keyframes sparkFly {
+  to { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.4); }
+}
 
 /* gifts */
 .gifts {
@@ -335,10 +696,9 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   z-index: 1;
 }
 .sky-lines line {
-  stroke: rgba(255, 233, 168, .28);
-  stroke-width: 1;
+  stroke: rgba(255, 240, 200, .35);
+  stroke-width: 0.25;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 2px rgba(255, 233, 168, .25));
 }
 .star {
   position: absolute;
@@ -1146,40 +1506,68 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <!-- 2. Questions -->
 <section class="screen" id="screen-questions">
   <div class="card">
-    <h1 class="title" style="font-size:1.5rem;">A few tiny questions 😇</h1>
-    <p class="subtitle">Answer carefully…</p>
+    <div class="questions-hero">
+      <div class="questions-hero-emoji" aria-hidden="true">😇✨</div>
+      <h1 class="title">A few tiny questions</h1>
+      <p class="subtitle">Warm up your heart — answer carefully…</p>
+    </div>
 
-    <div class="question active">
-      <h2>Will you make a wonderful birthday wish today? 🎂</h2>
-      <div class="buttons">
-        <button class="yes" type="button">YES 💖</button>
-        <button class="no" type="button">No</button>
-      </div>
-      <div class="message"></div>
+    <div class="question-steps" id="questionSteps" aria-label="Question progress">
+      <span class="question-step active" data-step="0"></span>
+      <span class="question-step" data-step="1"></span>
+      <span class="question-step" data-step="2"></span>
+      <span class="question-step" data-step="3"></span>
     </div>
-    <div class="question">
-      <h2>Will you promise to smile a little more today? 😊</h2>
-      <div class="buttons">
-        <button class="yes" type="button">Of Course ❤️</button>
-        <button class="no" type="button">No</button>
+
+    <div class="question-shell">
+      <div class="question active">
+        <div class="question-card">
+          <div class="question-badge">Question 1 of 4 · 🎂</div>
+          <h2>Will you make a wonderful birthday wish today?</h2>
+          <div class="buttons">
+            <button class="yes" type="button">YES 💖</button>
+            <button class="no" type="button">No</button>
+          </div>
+          <p class="question-hint">Psst… the No button is a little shy 👀</p>
+          <div class="message"></div>
+        </div>
       </div>
-      <div class="message"></div>
-    </div>
-    <div class="question">
-      <h2>Can I steal one cute smile from you today? 😋</h2>
-      <div class="buttons">
-        <button class="yes" type="button">Take It 💕</button>
-        <button class="no" type="button">No</button>
+      <div class="question">
+        <div class="question-card">
+          <div class="question-badge">Question 2 of 4 · 😊</div>
+          <h2>Will you promise to smile a little more today?</h2>
+          <div class="buttons">
+            <button class="yes" type="button">Of Course ❤️</button>
+            <button class="no" type="button">No</button>
+          </div>
+          <p class="question-hint">Trying No is cute… but Yes is cuter</p>
+          <div class="message"></div>
+        </div>
       </div>
-      <div class="message"></div>
-    </div>
-    <div class="question">
-      <h2>Will you always remember how amazing you are? 🌸</h2>
-      <div class="buttons">
-        <button class="yes" type="button">Always ❤️</button>
-        <button class="no" type="button">No</button>
+      <div class="question">
+        <div class="question-card">
+          <div class="question-badge">Question 3 of 4 · 😋</div>
+          <h2>Can I steal one cute smile from you today?</h2>
+          <div class="buttons">
+            <button class="yes" type="button">Take It 💕</button>
+            <button class="no" type="button">No</button>
+          </div>
+          <p class="question-hint">Go on — make it easy for both of us</p>
+          <div class="message"></div>
+        </div>
       </div>
-      <div class="message"></div>
+      <div class="question">
+        <div class="question-card">
+          <div class="question-badge">Question 4 of 4 · 🌸</div>
+          <h2>Will you always remember how amazing you are?</h2>
+          <div class="buttons">
+            <button class="yes" type="button">Always ❤️</button>
+            <button class="no" type="button">No</button>
+          </div>
+          <p class="question-hint">Last one — then the fun really begins</p>
+          <div class="message"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1187,33 +1575,57 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <!-- 3. Celebration + coupons -->
 <section class="screen" id="screen-celebrate">
   <div class="card">
-    <div style="font-size:56px;">🌴</div>
-    <h1 class="title">Yayyyy!! 🎉</h1>
-    <p class="subtitle" style="text-align:left;">
-      I knew you would say yes. 😌❤️<br><br>
-      Today is your day — celebrate your smile, your kindness,
-      and everything that makes you special.<br><br>
-      You deserve all the love and happiness in the world.
-    </p>
+    <div class="celebrate-hero">
+      <div class="celebrate-emoji" aria-hidden="true">🌴🎉</div>
+      <h1 class="title">Yayyyy!!</h1>
+      <p class="subtitle">
+        I knew you would say yes. 😌❤️<br>
+        Today is your day — smile, kindness, and everything that makes you special.
+      </p>
+    </div>
+
     <h2 class="section-title">🎟 Birthday Coupons</h2>
-    <p class="section-hint">Tap a coupon to redeem it</p>
+    <p class="section-hint">Tap each ticket to redeem a little treat</p>
+
+    <div class="coupon-progress" aria-live="polite">
+      <div class="coupon-progress-label">
+        <span>Redeemed</span>
+        <span id="couponCount">0 / 4</span>
+      </div>
+      <div class="coupon-progress-bar">
+        <div class="coupon-progress-fill" id="couponProgressFill"></div>
+      </div>
+    </div>
+
     <div class="coupons">
-      <div class="coupon" data-msg="🤗 Hug coupon activated! Save this for a special moment.">
-        <span class="redeemed-badge">Redeemed</span>
-        <span>🤗</span><h3>One Free Hug</h3><p>Redeem whenever you need one.</p>
-      </div>
-      <div class="coupon" data-msg="🍫 Chocolate permission granted forever.">
-        <span class="redeemed-badge">Redeemed</span>
-        <span>🍫</span><h3>Unlimited Chocolates</h3><p>Birthday calories don't count.</p>
-      </div>
-      <div class="coupon" data-msg="🎬 Movie date unlocked! Choose wisely 😄">
-        <span class="redeemed-badge">Redeemed</span>
-        <span>🎬</span><h3>Movie Date</h3><p>Your choice, my company.</p>
-      </div>
-      <div class="coupon" data-msg="🍕 Food treat available whenever hunger attacks.">
-        <span class="redeemed-badge">Redeemed</span>
-        <span>🍕</span><h3>Food Treat</h3><p>A delicious day awaits.</p>
-      </div>
+      <button type="button" class="coupon" data-msg="🤗 Hug coupon activated! Save this for a special moment.">
+        <span class="redeemed-badge">REDEEMED</span>
+        <span class="coupon-icon">🤗</span>
+        <h3>One Free Hug</h3>
+        <p>Redeem whenever you need one.</p>
+        <span class="coupon-tap">Tap to redeem</span>
+      </button>
+      <button type="button" class="coupon" data-msg="🍫 Chocolate permission granted forever.">
+        <span class="redeemed-badge">REDEEMED</span>
+        <span class="coupon-icon">🍫</span>
+        <h3>Unlimited Chocolates</h3>
+        <p>Birthday calories don't count.</p>
+        <span class="coupon-tap">Tap to redeem</span>
+      </button>
+      <button type="button" class="coupon" data-msg="🎬 Movie date unlocked! Choose wisely 😄">
+        <span class="redeemed-badge">REDEEMED</span>
+        <span class="coupon-icon">🎬</span>
+        <h3>Movie Date</h3>
+        <p>Your choice, my company.</p>
+        <span class="coupon-tap">Tap to redeem</span>
+      </button>
+      <button type="button" class="coupon" data-msg="🍕 Food treat available whenever hunger attacks.">
+        <span class="redeemed-badge">REDEEMED</span>
+        <span class="coupon-icon">🍕</span>
+        <h3>Food Treat</h3>
+        <p>A delicious day awaits.</p>
+        <span class="coupon-tap">Tap to redeem</span>
+      </button>
     </div>
     <div class="nav-row">
       <button class="btn-secondary" type="button" data-go="gifts">Open Gift Boxes →</button>
@@ -1244,8 +1656,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </button>
     </div>
     <div class="nav-row">
-      <button class="btn-ghost" type="button" data-go="celebrate">← Coupons</button>
-      <button class="btn-secondary" type="button" data-go="constellation">Constellation →</button>
+      <button class="btn-ghost" type="button" data-go="celebrate">←</button>
+      <button class="btn-secondary" type="button" data-go="constellation">→</button>
     </div>
   </div>
 </section>
@@ -1270,7 +1682,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <h2 id="giftTitle">🎁 Gift</h2>
     <div id="giftBody"></div>
     <div class="nav-row">
-      <button class="btn-primary" type="button" id="closeGift">Close gift</button>
+      <button class="btn-primary" type="button" id="closeGift">←</button>
     </div>
   </div>
 </div>
@@ -1281,7 +1693,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <h2 id="starTitle">✨ Star</h2>
     <div id="starBody"></div>
     <div class="nav-row">
-      <button class="btn-secondary" type="button" id="closeStar">Back to sky</button>
+      <button class="btn-secondary" type="button" id="closeStar">←</button>
     </div>
   </div>
 </div>
@@ -1315,8 +1727,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <div class="cine-phase" id="phaseCake">
       <div class="cake-wrap">
         <p class="cake-prompt">Make a wish… then blow out the candles</p>
-        <p class="cake-hint">Tap · swipe across · or <strong>blow into the mic</strong></p>
-        <p class="mic-status" id="micStatus"></p>
+        <p class="cake-hint">Tap candles or swipe across the flames</p>
         <div class="cake-scene" id="cakeScene">
           <div class="candles" id="candles" aria-label="Birthday candles">
             <button type="button" class="candle" aria-label="Candle 1"><span class="stick"></span><span class="wick"></span><span class="flame"></span><span class="smoke"></span></button>
@@ -1339,7 +1750,6 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
           </div>
           <div class="cake-plate" aria-hidden="true"></div>
         </div>
-        <button type="button" class="blow-btn" id="micBlowBtn">Enable mic blow 🎤</button>
       </div>
     </div>
     <div class="cine-phase" id="phaseFinale">
@@ -1348,7 +1758,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
   </div>
   <button type="button" class="cine-skip" id="cineSkip">Skip</button>
-  <button type="button" class="cine-close" id="cineClose">← Back</button>
+  <button type="button" class="cine-close" id="cineClose">←</button>
   <audio id="finaleAudio" preload="auto" loop>
     <source src="birthday-photos/favourite-song.mp3" type="audio/mpeg">
   </audio>
@@ -1438,7 +1848,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   const stars = [
     { x: 18, y: 22, title: "⭐ Compliment", html: "<p>You have a way of making people feel seen and safe. That rare kindness is your superpower. 🌊</p>" },
-    { x: 42, y: 16, title: "📷 Memory", html: `${photoHTML("birthday-photos/roller-coaster.jpeg", "Memory photo")}<p>Remember that roller coaster ride? It was fun! I mean, who goes on a roller coaster and doesn't spin? You did! 🤩</p>` },
+    { x: 42, y: 16, title: "📷 Memory", html: `${photoHTML("birthday-photos/roller-coaster.jpeg", "Memory photo")}<p>Remember that roller coaster ride? It was unforgettable! Most people just scream... but you managed to get dizzy enough to throw up. Now that's commitment to the experience! 🤩</p>` },
     { x: 68, y: 28, title: "⭐ Compliment", html: "<p>Your laugh is contagious. The room gets lighter the second you walk in. ✨</p>" },
     { x: 82, y: 48, title: "🧠 Memory", html: "<p>That random conversation that went on forever… one of those nights that quietly became a favourite.</p>" },
     { x: 30, y: 48, title: "📷 Photo", html: `${photoHTML("birthday-photos/traces.jpeg", "Another favourite")}<p>Proof that good times leave beautiful traces.</p>` },
@@ -1501,6 +1911,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   // Questions
   const questions = document.querySelectorAll("#screen-questions .question");
+  const questionSteps = document.querySelectorAll("#questionSteps .question-step");
   const responses = [
     "Awww 🥹 I knew you would say yes! ❤️",
     "That smile just made this day better 🌸",
@@ -1512,6 +1923,13 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     "Nope 😂", "Can't catch me 😜", "Nice try 🤭", "The YES button is waiting ❤️",
   ];
 
+  function syncQuestionSteps(activeIndex) {
+    questionSteps.forEach((step, i) => {
+      step.classList.toggle("active", i === activeIndex);
+      step.classList.toggle("done", i < activeIndex);
+    });
+  }
+
   questions.forEach((question, index) => {
     const yesBtn = question.querySelector(".yes");
     const noBtn = question.querySelector(".no");
@@ -1519,18 +1937,21 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     let noMoves = 0;
 
     yesBtn.addEventListener("click", () => {
+      question.classList.add("answered");
       message.textContent = responses[index];
       createHeartBurst();
       setTimeout(() => {
-        question.classList.remove("active");
+        question.classList.remove("active", "answered");
         currentQuestion++;
         if (currentQuestion < questions.length) {
           questions[currentQuestion].classList.add("active");
+          syncQuestionSteps(currentQuestion);
         } else {
+          syncQuestionSteps(questions.length);
           showScreen("celebrate");
           launchConfetti();
         }
-      }, 1000);
+      }, 1100);
     });
 
     function escapeButton() {
@@ -1543,16 +1964,57 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); escapeButton(); }, { passive: false });
     noBtn.addEventListener("click", (e) => { e.preventDefault(); escapeButton(); });
   });
+  syncQuestionSteps(0);
 
   // Coupons
-  document.querySelectorAll(".coupon").forEach((coupon) => {
+  const couponEls = document.querySelectorAll(".coupon");
+  const couponCountEl = document.getElementById("couponCount");
+  const couponFillEl = document.getElementById("couponProgressFill");
+
+  function updateCouponProgress() {
+    const total = couponEls.length;
+    const done = document.querySelectorAll(".coupon.is-redeemed").length;
+    if (couponCountEl) couponCountEl.textContent = `${done} / ${total}`;
+    if (couponFillEl) couponFillEl.style.width = `${(done / total) * 100}%`;
+    if (done === total && total > 0) {
+      showToast("All coupons redeemed — you legend! 🎉");
+      launchConfetti();
+    }
+  }
+
+  function sparkCoupon(coupon) {
+    const layer = document.createElement("div");
+    layer.className = "coupon-sparks";
+    const bits = ["✨", "💖", "⭐", "🎊", "💫"];
+    for (let i = 0; i < 6; i++) {
+      const span = document.createElement("span");
+      span.textContent = bits[i % bits.length];
+      const angle = (Math.PI * 2 * i) / 6;
+      span.style.setProperty("--tx", Math.cos(angle) * 46 + "px");
+      span.style.setProperty("--ty", Math.sin(angle) * 36 + "px");
+      span.style.animationDelay = i * 0.03 + "s";
+      layer.appendChild(span);
+    }
+    coupon.appendChild(layer);
+    setTimeout(() => layer.remove(), 750);
+  }
+
+  couponEls.forEach((coupon) => {
     coupon.addEventListener("click", (e) => {
       e.stopPropagation();
-      coupon.classList.add("is-redeemed");
+      if (coupon.classList.contains("is-redeemed")) {
+        showToast("Already redeemed — still valid forever 💫");
+        return;
+      }
+      coupon.classList.add("is-redeemed", "pop");
+      sparkCoupon(coupon);
       showToast(coupon.dataset.msg || "Coupon redeemed ✨");
       createHeartBurst();
+      updateCouponProgress();
+      setTimeout(() => coupon.classList.remove("pop"), 450);
     });
   });
+  updateCouponProgress();
 
   // Gifts
   const giftOverlay = document.getElementById("giftOverlay");
@@ -1642,8 +2104,6 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   const partyAudio = document.getElementById("partyAudio");
   const cakeScene = document.getElementById("cakeScene");
   const candleEls = Array.from(document.querySelectorAll("#candles .candle"));
-  const micBlowBtn = document.getElementById("micBlowBtn");
-  const micStatus = document.getElementById("micStatus");
   const particleCanvas = document.getElementById("particleCanvas");
   const fireworksCanvas = document.getElementById("fireworksCanvas");
   const pctx = particleCanvas.getContext("2d");
@@ -1663,15 +2123,15 @@ Never forget how special you are.
 Keep shining, keep dreaming, and keep being yourself.`;
 
   const SLIDES = [
-    { src: "birthday-photos/ijooz.jpeg", caption: "Good frame with sour juice 😋" },
-    { src: "birthday-photos/police_station1.jpeg", caption: "Never seen myself happy outside a Police Station 😂" },
-    { src: "birthday-photos/police_station2.jpeg", caption: "Could get arrested for posing weirdly 😂" },
-    { src: "birthday-photos/clark_quay.jpeg", caption: "Beautiful view and a pretty person" },
-    { src: "birthday-photos/canning_park.jpeg", caption: "Which one is more green, the park or me?" },
+    { src: "birthday-photos/ijooz.jpeg", caption: "One sip. Zero regrets. (Maybe a few.) 😋" },
+    { src: "birthday-photos/police_station1.jpeg", caption: "The only crime here was stealing a good photo. 📸" },
+    { src: "birthday-photos/police_station2.jpeg", caption: "Probably the happiest anyone has ever looked outside a police station 🚓😂" },
+    { src: "birthday-photos/clark_quay.jpeg", caption: "The view was beautiful, but you made it memorable. " },
+    { src: "birthday-photos/canning_park.jpeg", caption: "Surrounded by green… trying to blend in." },
     { src: "birthday-photos/merlion.jpeg", caption: "Someone did know how to pose for a photo 😂" },
-    { src: "birthday-photos/marina_bay.jpeg", caption: "Best frame with Marina Bay Sands as back" },
-    { src: "birthday-photos/butter_beer.jpeg", caption: "How Butter Beer tastes like?" },
-    { src: "birthday-photos/oceanarium.jpeg", caption: "Is that whale watching me?" },
+    { src: "birthday-photos/marina_bay.jpeg", caption: "Best frame with Marina Bay Sands in the background." },
+    { src: "birthday-photos/butter_beer.jpeg", caption: "Butter Beer is love." },
+    { src: "birthday-photos/oceanarium.jpeg", caption: "Me: watching the whale. The whale: judging me. 🐋😆" },
     { src: "birthday-photos/sentosa_beach.jpeg", caption: "❤️" },
   ];
 
@@ -1687,11 +2147,6 @@ Keep shining, keep dreaming, and keep being yourself.`;
   let melodyNodes = [];
   let cakeDone = false;
   let swiping = false;
-  let micStream = null;
-  let micRAF = null;
-  let micAnalyser = null;
-  let micData = null;
-  let blowStreak = 0;
   let slideIndex = 0;
   let slideBusy = false;
   let slideResolve = null;
@@ -1903,16 +2358,6 @@ Keep shining, keep dreaming, and keep being yourself.`;
     } catch (_) { /* ignore */ }
   }
 
-  async function playSoftSong() {
-    try {
-      partyAudio.pause();
-      finaleAudio.currentTime = 0;
-      await finaleAudio.play();
-    } catch (_) {
-      playMelody("soft");
-    }
-  }
-
   async function playPartySong() {
     try {
       finaleAudio.pause();
@@ -1925,12 +2370,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
 
   function resetCandles() {
     cakeDone = false;
-    blowStreak = 0;
     candleEls.forEach((c) => c.classList.remove("out"));
-    micStatus.textContent = "";
-    micStatus.classList.remove("on");
-    micBlowBtn.disabled = false;
-    micBlowBtn.textContent = "Enable mic blow 🎤";
   }
 
   function litCount() {
@@ -1957,19 +2397,9 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (best) extinguishCandle(best);
   }
 
-  function extinguishAllRapid() {
-    candleEls.forEach((c, i) => {
-      setTimeout(() => extinguishCandle(c), i * 90);
-    });
-  }
-
   function onAllCandlesOut() {
     if (cakeDone) return;
     cakeDone = true;
-    stopMicListen();
-    micBlowBtn.disabled = true;
-    micStatus.textContent = "Wish granted ✨";
-    micStatus.classList.add("on");
     setTimeout(() => {
       if (!cineRunning) return;
       showPhase(phaseFinale);
@@ -1986,73 +2416,12 @@ Keep shining, keep dreaming, and keep being yourself.`;
     resetCandles();
     showPhase(phaseCake);
     cineSkip.style.display = "none";
-    cineClose.classList.remove("show");
-    playSoftSong();
-  }
-
-  function stopMicListen() {
-    cancelAnimationFrame(micRAF);
-    micRAF = null;
-    if (micStream) {
-      micStream.getTracks().forEach((t) => t.stop());
-      micStream = null;
-    }
-    micAnalyser = null;
-    micData = null;
-  }
-
-  async function startMicBlow() {
-    try {
-      if (!navigator.mediaDevices?.getUserMedia) {
-        micStatus.textContent = "Mic not supported — tap or swipe candles";
-        return;
-      }
-      micStream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true },
-        video: false,
-      });
-      if (!audioCtx || audioCtx.state === "closed") {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === "suspended") await audioCtx.resume();
-      const source = audioCtx.createMediaStreamSource(micStream);
-      micAnalyser = audioCtx.createAnalyser();
-      micAnalyser.fftSize = 512;
-      source.connect(micAnalyser);
-      micData = new Uint8Array(micAnalyser.fftSize);
-      micStatus.textContent = "Listening… blow toward the candles 💨";
-      micStatus.classList.add("on");
-      micBlowBtn.textContent = "Mic listening…";
-      micBlowBtn.disabled = true;
-
-      const tick = () => {
-        if (!micAnalyser || cakeDone) return;
-        micAnalyser.getByteTimeDomainData(micData);
-        let sum = 0;
-        for (let i = 0; i < micData.length; i++) {
-          const v = (micData[i] - 128) / 128;
-          sum += v * v;
-        }
-        const rms = Math.sqrt(sum / micData.length);
-        if (rms > 0.12) {
-          blowStreak++;
-          if (blowStreak === 4) extinguishAllRapid();
-          else if (blowStreak > 1 && blowStreak % 3 === 0) {
-            const lit = candleEls.find((c) => !c.classList.contains("out"));
-            extinguishCandle(lit);
-          }
-        } else {
-          blowStreak = Math.max(0, blowStreak - 1);
-        }
-        micRAF = requestAnimationFrame(tick);
-      };
-      tick();
-    } catch (_) {
-      micStatus.textContent = "Mic blocked — tap or swipe instead";
-      micStatus.classList.remove("on");
-      micBlowBtn.disabled = false;
-      micBlowBtn.textContent = "Enable mic blow 🎤";
-    }
+    // Allow leaving cake without starting music
+    cineClose.classList.add("show");
+    // Stop any leftover soft track from earlier
+    finaleAudio.pause();
+    finaleAudio.currentTime = 0;
+    stopMelody();
   }
 
   // Candle interactions
@@ -2076,10 +2445,6 @@ Keep shining, keep dreaming, and keep being yourself.`;
   const endSwipe = () => { swiping = false; };
   cakeScene.addEventListener("pointerup", endSwipe);
   cakeScene.addEventListener("pointercancel", endSwipe);
-  micBlowBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    startMicBlow();
-  });
 
   async function runSlideshow() {
     showPhase(phaseSlideshow);
@@ -2373,7 +2738,6 @@ Keep shining, keep dreaming, and keep being yourself.`;
     cancelAnimationFrame(fireworksRAF);
     clearInterval(heartInterval);
     heartInterval = null;
-    stopMicListen();
     pctx && pctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
     fctx && fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
     rockets = []; sparks = [];
