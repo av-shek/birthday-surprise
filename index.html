@@ -3152,13 +3152,14 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 /* Birthday cake — grand party moment */
 .cinematic.is-cake {
   background:
-    radial-gradient(ellipse 90% 55% at 50% 12%, rgba(255, 200, 140, .38), transparent 55%),
-    radial-gradient(ellipse 45% 40% at 12% 78%, rgba(255, 110, 150, .22), transparent 50%),
-    radial-gradient(ellipse 40% 35% at 88% 70%, rgba(120, 180, 255, .16), transparent 48%),
-    linear-gradient(180deg, #2a1524 0%, #140c18 48%, #08060c 100%);
+    radial-gradient(ellipse 95% 60% at 50% 8%, rgba(255, 210, 150, .45), transparent 52%),
+    radial-gradient(ellipse 50% 45% at 8% 85%, rgba(255, 100, 140, .28), transparent 52%),
+    radial-gradient(ellipse 48% 40% at 92% 75%, rgba(100, 170, 255, .22), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 50% 100%, rgba(255, 160, 80, .18), transparent 55%),
+    linear-gradient(180deg, #3a1c2e 0%, #1a1020 42%, #0a0610 100%) !important;
 }
 .cinematic.is-cake #particleCanvas {
-  opacity: .4;
+  opacity: .45;
 }
 .cinematic.is-cake .cine-stage {
   width: min(440px, calc(100vw - 28px));
@@ -3169,8 +3170,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   font-size: .82rem;
   letter-spacing: .1em;
   text-transform: uppercase;
-  border-color: rgba(255, 220, 180, .35);
-  background: rgba(30, 16, 28, .65);
+  border-color: rgba(255, 220, 180, .4);
+  background: rgba(30, 16, 28, .7);
   color: #f7efd8;
   border-radius: 999px;
   padding: 8px 16px;
@@ -3180,7 +3181,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   user-select: none;
   -webkit-user-select: none;
   animation: cakeEnter 1s ease both;
@@ -3192,54 +3193,81 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 .cake-glow {
   position: absolute;
   left: 50%;
-  top: 58%;
-  width: min(340px, 85vw);
-  height: min(340px, 85vw);
+  top: 62%;
+  width: min(380px, 90vw);
+  height: min(380px, 90vw);
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 180, 100, .35), transparent 68%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgba(255, 190, 110, .42), rgba(255, 120, 150, .12) 45%, transparent 70%);
+  filter: blur(12px);
   pointer-events: none;
   z-index: 0;
   animation: cakeGlowPulse 2.8s ease-in-out infinite;
 }
 @keyframes cakeGlowPulse {
-  0%, 100% { opacity: .65; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  0%, 100% { opacity: .7; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
-.cake-kicker {
+.cake-sparkles {
+  position: absolute;
+  inset: 0 -10% 20%;
+  pointer-events: none;
+  z-index: 0;
+}
+.cake-sparkles span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  color: rgba(255, 230, 180, .75);
+  font-size: .85rem;
+  animation: cakeSpark 2.8s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+@keyframes cakeSpark {
+  0%, 100% { opacity: .25; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+.cake-name {
   position: relative;
   z-index: 1;
   margin: 0;
   font-family: "Cinzel", "Fraunces", serif;
-  font-size: .7rem;
-  font-weight: 600;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: rgba(255, 230, 190, .7);
-}
-.cake-title {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  font-family: "Fraunces", serif;
-  font-size: clamp(1.55rem, 6vw, 2.1rem);
   font-weight: 700;
-  color: #fff6e8;
-  text-shadow: 0 0 24px rgba(255, 180, 120, .45);
-  letter-spacing: .02em;
+  font-size: clamp(2rem, 9vw, 3rem);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    115deg,
+    #8a6a3a 0%,
+    #f4e2b0 22%,
+    #fff8e8 38%,
+    #d4b06a 55%,
+    #fff0c8 72%,
+    #f7e4b4 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: welcomeShimmer 5.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(255, 190, 110, .3));
 }
-.cake-sub {
+.cake-line {
   position: relative;
   z-index: 1;
-  margin: 0 0 6px;
-  font-family: "Caveat", cursive;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: rgba(255, 220, 190, .8);
+  margin: 0 0 8px;
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 500;
+  color: #ffe8d4;
+  letter-spacing: .04em;
 }
-.cake-hint {
-  display: none;
+.cake-kicker,
+.cake-title,
+.cake-sub,
+.cake-hint,
+.cake-prompt {
+  display: none !important;
 }
 .mic-status {
   font-size: .8rem;
@@ -3261,16 +3289,16 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   pointer-events: none;
   z-index: 0;
   background-image:
-    radial-gradient(circle, rgba(255, 200, 140, .35) 0 35%, transparent 40%),
-    radial-gradient(circle, rgba(255, 140, 180, .28) 0 35%, transparent 40%),
-    radial-gradient(circle, rgba(140, 200, 255, .25) 0 35%, transparent 40%),
-    radial-gradient(circle, rgba(255, 230, 150, .3) 0 35%, transparent 40%);
+    radial-gradient(circle, rgba(255, 200, 140, .4) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(255, 140, 180, .32) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(140, 200, 255, .28) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(255, 230, 150, .35) 0 35%, transparent 40%);
   background-size: 18px 18px, 14px 14px, 22px 22px, 12px 12px;
   background-position: 12% 30%, 78% 22%, 30% 70%, 85% 65%;
   background-repeat: no-repeat;
   filter: blur(1px);
   animation: cakeBokeh 5s ease-in-out infinite alternate;
-  opacity: .85;
+  opacity: .9;
 }
 @keyframes cakeBokeh {
   from { transform: translateY(0); opacity: .65; }
@@ -4515,9 +4543,15 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <div class="cine-phase" id="phaseCake">
       <div class="cake-wrap">
         <div class="cake-glow" aria-hidden="true"></div>
-        <p class="cake-kicker">Tonight</p>
-        <h2 class="cake-title">Make a wish</h2>
-        <p class="cake-sub">for Gopal</p>
+        <div class="cake-sparkles" aria-hidden="true">
+          <span style="--x:8%;--y:18%;--d:0s">✦</span>
+          <span style="--x:88%;--y:22%;--d:.4s">✧</span>
+          <span style="--x:14%;--y:70%;--d:.8s">·</span>
+          <span style="--x:82%;--y:68%;--d:1.2s">✦</span>
+          <span style="--x:48%;--y:8%;--d:.2s">✧</span>
+        </div>
+        <p class="cake-name">Gopal</p>
+        <p class="cake-line">Happy Birthday</p>
         <div class="cake-scene" id="cakeScene">
           <div class="cake-bokeh" aria-hidden="true"></div>
           <div class="candles" id="candles" aria-label="Birthday candles">
@@ -6164,6 +6198,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     resetCandles();
     showPhase(phaseCake);
     cineSkip.style.display = "none";
+    cineClose.classList.add("show");
   }
 
   function backToSlideshow() {
