@@ -49,7 +49,26 @@ body.theme-night .waves,
 body.theme-cozy .waves,
 body.theme-neon .waves,
 body.theme-chalk .waves,
-body.theme-paper .waves { display: none; }
+body.theme-paper .waves,
+body.theme-cinema .waves,
+body.theme-qa .waves { display: none; }
+
+body.theme-qa {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 120, 200, .35), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgba(120, 200, 255, .35), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(255, 220, 80, .28), transparent 45%),
+    linear-gradient(180deg, #5b2d8e 0%, #2d5bb8 45%, #1a3a7a 100%);
+  color: #fff8ff;
+}
+
+body.theme-cinema {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(180, 40, 40, .35), transparent 45%),
+    radial-gradient(ellipse at 20% 100%, rgba(80, 20, 20, .4), transparent 40%),
+    linear-gradient(180deg, #1a0a0c 0%, #2a1014 35%, #12080a 100%);
+  color: #f7e8d8;
+}
 
 body.theme-neon {
   background:
@@ -199,55 +218,117 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 
 .hidden { display: none !important; }
 
-/* ===== How we met story ===== */
+/* ===== How we met story — animated cinema ===== */
+#screen-story {
+  padding-top: 20px;
+}
 #screen-story .card {
-  max-width: 480px;
-  overflow: visible;
-  padding: 26px 20px 24px;
+  max-width: 500px;
+  overflow: hidden;
+  padding: 0;
+  background: linear-gradient(165deg, #2a1418 0%, #1a0c10 55%, #12080a 100%);
+  border: 1px solid rgba(255, 210, 140, .22);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, .55),
+    inset 0 0 0 1px rgba(255, 255, 255, .04);
+  color: #f7e8d8;
+  position: relative;
+}
+#screen-story .card::before {
+  /* soft curtain wash */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(120, 20, 30, .55), transparent 18%, transparent 82%, rgba(120, 20, 30, .55)),
+    radial-gradient(ellipse at 50% -10%, rgba(255, 200, 120, .12), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+#screen-story .cinema-inner {
+  position: relative;
+  z-index: 1;
+  padding: 22px 18px 20px;
+}
+.cinema-marquee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.cinema-marquee .bulb {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffd27a;
+  box-shadow: 0 0 8px rgba(255, 210, 120, .9);
+  animation: cinemaBulb 1.2s ease-in-out infinite;
+}
+.cinema-marquee .bulb:nth-child(odd) { animation-delay: .4s; }
+@keyframes cinemaBulb {
+  0%, 100% { opacity: .45; }
+  50% { opacity: 1; }
+}
+.cinema-badge {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #1a0a0c;
+  background: linear-gradient(135deg, #ffd27a, #f0a040);
+  padding: 5px 12px;
+  border-radius: 4px;
+  box-shadow: 0 0 16px rgba(255, 180, 80, .35);
 }
 .story-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .story-top-text { text-align: left; }
 .story-top h1 {
   font-family: "Fraunces", serif;
-  font-size: clamp(1.25rem, 4.5vw, 1.5rem);
-  color: #0f4c75;
+  font-size: clamp(1.35rem, 5vw, 1.7rem);
+  color: #ffe9c8;
   margin: 0 0 4px;
+  text-shadow: 0 2px 18px rgba(255, 140, 80, .35);
+  letter-spacing: -.01em;
 }
 .story-top-sub {
   margin: 0;
-  font-size: .8rem;
-  color: #3d6f86;
+  font-size: .78rem;
+  color: #d4b49a;
+  letter-spacing: .04em;
 }
 .story-skip {
   flex-shrink: 0;
-  background: rgba(255,255,255,.75);
-  color: #3a6a82;
-  border: 1px solid rgba(255,255,255,.95);
+  background: rgba(255, 255, 255, .08);
+  color: #ffd7a8;
+  border: 1px solid rgba(255, 210, 140, .28);
   padding: 8px 12px;
-  font-size: .75rem;
+  font-size: .72rem;
   white-space: nowrap;
+  border-radius: 999px;
 }
 .story-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .story-counter {
-  font-size: .78rem;
+  font-size: .72rem;
   font-weight: 800;
-  color: #0f4c75;
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(255,255,255,.9);
+  color: #ffe9c8;
+  background: rgba(0, 0, 0, .35);
+  border: 1px solid rgba(255, 210, 140, .25);
   padding: 4px 10px;
   border-radius: 999px;
+  letter-spacing: .04em;
 }
 .story-progress {
   display: flex;
@@ -256,20 +337,21 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 .story-progress span {
   flex: 1;
-  height: 5px;
+  height: 4px;
   border-radius: 999px;
-  background: rgba(15,76,117,.14);
+  background: rgba(255, 255, 255, .12);
   overflow: hidden;
   position: relative;
 }
-.story-progress span.done { background: #2ec4b6; }
+.story-progress span.done { background: #e8a04a; }
 .story-progress span.active::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #ff7a59, #ffb347);
+  background: linear-gradient(90deg, #ff7a59, #ffd27a);
   animation: storyBar var(--story-dur, 5s) linear forwards;
   transform-origin: left;
+  box-shadow: 0 0 8px rgba(255, 180, 80, .6);
 }
 .story-progress.is-paused span.active::after {
   animation-play-state: paused;
@@ -278,67 +360,130 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+/* Film frame / theater screen */
 .story-stage {
   position: relative;
-  min-height: 390px;
-  border-radius: 24px;
+  min-height: 400px;
+  border-radius: 6px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 12% 10%, rgba(255,255,255,.5), transparent 35%),
-    radial-gradient(circle at 90% 85%, rgba(255,122,89,.12), transparent 40%),
-    linear-gradient(165deg, #eaf8fc 0%, #e3f7f2 48%, #fff6ea 100%);
-  border: 1px solid rgba(255,255,255,.75);
+    radial-gradient(ellipse at 50% 30%, rgba(60, 40, 70, .5), transparent 55%),
+    linear-gradient(180deg, #1e1528 0%, #14101c 50%, #0e0a14 100%);
+  border: 3px solid #2a1c14;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.85),
-    0 12px 28px rgba(20,70,100,.1);
+    inset 0 0 0 1px rgba(255, 220, 160, .15),
+    inset 0 0 40px rgba(0, 0, 0, .45),
+    0 12px 28px rgba(0, 0, 0, .4);
 }
-.story-stage.is-paused::after {
-  content: "Paused";
+.story-stage::before,
+.story-stage::after {
+  /* film strip edges */
+  content: "";
   position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 5;
-  font-size: .7rem;
-  font-weight: 800;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: #0f4c75;
-  background: rgba(255,255,255,.85);
-  border: 1px solid rgba(255,255,255,.95);
-  padding: 4px 9px;
-  border-radius: 999px;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  z-index: 4;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #1a1210 0 10px,
+      #1a1210 10px 14px,
+      #0c0806 14px 18px,
+      #1a1210 18px 22px
+    );
+  box-shadow: inset 0 0 0 1px rgba(255, 220, 160, .12);
 }
+.story-stage::before { left: 0; }
+.story-stage::after { right: 0; }
+.film-holes {
+  display: none;
+}
+.story-stage .pause-tag {
+  display: none;
+}
+.story-stage.is-paused .pause-tag {
+  display: block;
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  z-index: 6;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #1a0a0c;
+  background: linear-gradient(135deg, #ffd27a, #f0a040);
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+/* film grain */
+.story-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grainShift 0.4s steps(2) infinite;
+  mix-blend-mode: overlay;
+}
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-2%, 1%); }
+}
+/* letterbox bars */
+.story-letterbox {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  height: 10px;
+  z-index: 4;
+  pointer-events: none;
+  background: #050308;
+}
+.story-letterbox.top { top: 0; }
+.story-letterbox.bottom { bottom: 0; }
+
 .story-scene {
   display: none;
   height: 100%;
-  min-height: 390px;
-  padding: 22px 18px 20px;
+  min-height: 400px;
+  padding: 28px 28px 24px;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   box-sizing: border-box;
-  animation: storyIn .45s cubic-bezier(.22,1,.36,1);
+  animation: storyReel .55s cubic-bezier(.22,1,.36,1);
+  position: relative;
+  z-index: 1;
 }
 .story-scene.active { display: flex; }
-@keyframes storyIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes storyReel {
+  from { opacity: 0; transform: scale(1.04) translateY(8px); filter: brightness(1.4); }
+  to { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); }
 }
 .story-caption {
   font-family: "Fraunces", serif;
-  font-size: clamp(1.1rem, 4.2vw, 1.3rem);
-  color: #0f4c75;
+  font-size: clamp(1.15rem, 4.4vw, 1.4rem);
+  color: #fff6e8;
   text-align: center;
   line-height: 1.35;
   margin: 0;
   flex-shrink: 0;
+  text-shadow: 0 2px 16px rgba(0,0,0,.55);
+  letter-spacing: .01em;
 }
 .story-sub {
   text-align: center;
-  font-size: .84rem;
-  color: #3d6f86;
+  font-size: .82rem;
+  color: #c9b4a0;
   margin: 0;
   line-height: 1.45;
   flex-shrink: 0;
+  font-style: italic;
 }
 .story-art {
   flex: 1;
@@ -347,7 +492,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   justify-content: center;
   position: relative;
   min-height: 0;
-  padding: 6px 0 4px;
+  padding: 8px 0 6px;
 }
 .story-controls {
   display: grid;
@@ -360,29 +505,50 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .story-controls .story-pause { justify-self: center; }
 .story-controls .story-next { justify-self: end; }
 .story-btn {
-  background: rgba(255,255,255,.8);
-  color: #0f4c75;
-  border: 1px solid rgba(255,255,255,.95);
+  background: rgba(255, 255, 255, .08);
+  color: #ffe9c8;
+  border: 1px solid rgba(255, 210, 140, .28);
   padding: 11px 16px;
   font-size: .88rem;
-  box-shadow: 0 6px 14px rgba(20,70,100,.1);
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
 }
 .story-btn:disabled {
-  opacity: .4;
+  opacity: .35;
   cursor: default;
   transform: none !important;
   box-shadow: none;
 }
 .story-btn.primary {
-  background: linear-gradient(135deg, #1f8fc9, #2ec4b6);
+  background: linear-gradient(135deg, #e85d3a, #c4452d);
   color: #fff;
   border: none;
-  box-shadow: 0 8px 18px rgba(31,143,201,.28);
+  box-shadow: 0 8px 18px rgba(200, 60, 40, .35);
 }
 .story-btn.pause-on {
-  background: linear-gradient(135deg, #ff7a59, #e85d3a);
-  color: #fff;
+  background: linear-gradient(135deg, #ffd27a, #e8a04a);
+  color: #1a0a0c;
   border: none;
+}
+
+/* Cinema-tinted scene chrome */
+#screen-story .person .label { color: #ffe9c8; }
+#screen-story .meetup-note {
+  color: #ffe9c8;
+  background: rgba(0, 0, 0, .4);
+  border: 1px solid rgba(255, 210, 140, .2);
+}
+#screen-story .gift-exchange {
+  background: rgba(0, 0, 0, .35);
+  border: 1px solid rgba(255, 210, 140, .18);
+}
+#screen-story .place-card {
+  box-shadow: 0 14px 30px rgba(0,0,0,.4);
+  border: 1px solid rgba(255,255,255,.12);
+}
+#screen-story .chat-phone {
+  box-shadow: 0 18px 36px rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.08);
 }
 
 /* Chat scene */
@@ -628,77 +794,161 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   .story-controls .story-pause,
   .story-controls .story-next { justify-self: stretch; width: 100%; }
   .story-stage,
-  .story-scene { min-height: 360px; }
+  .story-scene { min-height: 370px; }
+  .story-scene { padding: 24px 22px 20px; }
 }
 
-/* questions */
+/* questions — fun Q&A session */
 #screen-questions .card {
   overflow: hidden;
+  max-width: 460px;
+  padding: 0;
+  background: linear-gradient(165deg, #3d1f6e 0%, #2a3f9e 48%, #1e2f78 100%);
+  border: 1px solid rgba(255, 255, 255, .2);
+  box-shadow:
+    0 24px 50px rgba(20, 20, 80, .45),
+    inset 0 0 0 1px rgba(255, 255, 255, .06);
+  color: #fff8ff;
+  position: relative;
+}
+#screen-questions .qa-inner {
+  position: relative;
+  z-index: 1;
+  padding: 22px 18px 20px;
+}
+#screen-questions .qa-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+#screen-questions .qa-confetti i {
+  position: absolute;
+  font-size: 12px;
+  opacity: .55;
+  animation: qaFloat var(--d, 5s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--x);
+  top: var(--y);
+}
+@keyframes qaFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: .35; }
+  50% { transform: translateY(-14px) rotate(12deg); opacity: .8; }
+}
+.qa-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .28);
+  border: 1px solid rgba(255, 255, 255, .2);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.qa-live .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4d6d;
+  box-shadow: 0 0 10px rgba(255, 77, 109, .9);
+  animation: qaLive 1s ease-in-out infinite;
+}
+@keyframes qaLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.85); }
 }
 .questions-hero {
   position: relative;
-  margin: -8px -10px 20px;
-  padding: 22px 18px 18px;
-  border-radius: 22px;
+  margin: 0 0 16px;
+  padding: 20px 16px 16px;
+  border-radius: 20px;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,.4), transparent 42%),
-    radial-gradient(circle at 90% 0%, rgba(255,122,89,.3), transparent 38%),
-    linear-gradient(145deg, #4db8e8 0%, #2ec4b6 52%, #7fdbda 100%);
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,.35), transparent 40%),
+    radial-gradient(circle at 90% 20%, rgba(255, 210, 80, .35), transparent 40%),
+    linear-gradient(135deg, #ff6bcb 0%, #7b5cff 50%, #4cc9f0 100%);
   color: #fff;
-  box-shadow: 0 14px 34px rgba(20, 90, 120, .22);
+  box-shadow: 0 14px 34px rgba(40, 20, 90, .35);
   overflow: hidden;
   text-align: center;
 }
 .questions-hero::before {
   content: "";
   position: absolute;
-  width: 140px; height: 140px;
-  right: -40px; top: -50px;
+  width: 120px; height: 120px;
+  right: -36px; top: -46px;
   border-radius: 50%;
-  background: rgba(255,255,255,.14);
+  background: rgba(255,255,255,.16);
   pointer-events: none;
 }
+.questions-hero::after {
+  content: "🎤";
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-size: 1.4rem;
+  opacity: .85;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.2));
+}
 .questions-hero-emoji {
-  font-size: 2.2rem;
+  font-size: 2rem;
   display: inline-block;
   animation: celebrateBounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.18));
 }
 .questions-hero .title {
   color: #fff;
   margin: 8px 0 4px;
   font-size: clamp(1.35rem, 5vw, 1.7rem);
-  text-shadow: 0 2px 12px rgba(0,0,0,.12);
+  text-shadow: 0 2px 14px rgba(0,0,0,.2);
 }
 .questions-hero .subtitle {
   color: rgba(255,255,255,.95);
   margin: 0;
-  font-size: .9rem;
+  font-size: .88rem;
+}
+.qa-host {
+  margin: 8px 0 0;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.9);
+  background: rgba(0,0,0,.18);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 .question-steps {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 }
 .question-step {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 999px;
-  background: rgba(15,76,117,.18);
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.15);
   transition: width .35s ease, background .35s ease, box-shadow .35s ease;
 }
 .question-step.done {
-  background: #2ec4b6;
+  background: #80ed99;
+  box-shadow: 0 0 10px rgba(128, 237, 153, .55);
 }
 .question-step.active {
-  width: 28px;
-  background: linear-gradient(90deg, #ff7a59, #ffb347);
-  box-shadow: 0 0 12px rgba(255,122,89,.45);
+  width: 32px;
+  background: linear-gradient(90deg, #ffd60a, #ff6bcb);
+  box-shadow: 0 0 14px rgba(255, 107, 203, .55);
 }
 .question-shell {
   position: relative;
-  min-height: 260px;
+  min-height: 270px;
 }
 .question {
   display: none;
@@ -714,12 +964,26 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   padding: 22px 18px 20px;
   border-radius: 22px;
   background:
-    linear-gradient(165deg, rgba(255,255,255,.72), rgba(255,248,230,.55));
-  border: 1px solid rgba(255,255,255,.7);
+    radial-gradient(circle at 100% 0%, rgba(255, 214, 10, .18), transparent 40%),
+    linear-gradient(165deg, rgba(255,255,255,.96), rgba(255, 240, 250, .92));
+  border: 2px solid rgba(255,255,255,.55);
   box-shadow:
-    0 12px 28px rgba(20,70,100,.12),
-    inset 0 1px 0 rgba(255,255,255,.8);
+    0 16px 36px rgba(20, 20, 80, .28),
+    inset 0 1px 0 rgba(255,255,255,.9);
   overflow: hidden;
+  color: #2a1848;
+}
+.question-card::before {
+  content: "?";
+  position: absolute;
+  right: 10px;
+  top: -8px;
+  font-family: "Fraunces", serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: rgba(123, 92, 255, .1);
+  line-height: 1;
+  pointer-events: none;
 }
 .question-card::after {
   content: "";
@@ -727,7 +991,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   width: 90px; height: 90px;
   right: -20px; bottom: -30px;
   border-radius: 50%;
-  background: rgba(78,184,232,.12);
+  background: rgba(255, 107, 203, .1);
   pointer-events: none;
 }
 .question-badge {
@@ -736,19 +1000,21 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   gap: 6px;
   font-size: .72rem;
   font-weight: 800;
-  letter-spacing: .04em;
+  letter-spacing: .05em;
   text-transform: uppercase;
-  color: #0f4c75;
-  background: rgba(255,255,255,.7);
-  border: 1px solid rgba(255,255,255,.9);
-  padding: 5px 10px;
+  color: #5b2d8e;
+  background: linear-gradient(135deg, #ffe66d, #ffd6e8);
+  border: 1px solid rgba(255,255,255,.8);
+  padding: 5px 11px;
   border-radius: 999px;
   margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
 }
 .question h2 {
   font-family: "Fraunces", serif;
   font-size: clamp(1.2rem, 4.8vw, 1.4rem);
-  color: #134e6f;
+  color: #2a1848;
   line-height: 1.45;
   margin-bottom: 22px;
   position: relative;
@@ -765,13 +1031,14 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   z-index: 2;
 }
 .yes {
-  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+  background: linear-gradient(135deg, #ff6bcb, #7b5cff);
   color: #fff;
-  box-shadow: 0 10px 24px rgba(232,93,58,.38);
+  box-shadow: 0 10px 24px rgba(123, 92, 255, .4);
   padding: 14px 28px;
   font-size: 1rem;
   position: relative;
   overflow: hidden;
+  border: none;
 }
 .yes::after {
   content: "";
@@ -783,22 +1050,22 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 .yes:hover::after { transform: translateX(120%); }
 .no {
-  background: rgba(255,255,255,.78);
-  color: #5a7a8c;
-  border: 1px solid rgba(255,255,255,.95);
+  background: rgba(255,255,255,.9);
+  color: #6a5a80;
+  border: 2px dashed rgba(123, 92, 255, .35);
   touch-action: none;
   position: relative;
   z-index: 5;
   padding: 11px 18px;
   font-size: .88rem;
-  opacity: .9;
-  box-shadow: 0 4px 12px rgba(20,70,100,.08);
+  opacity: .95;
+  box-shadow: 0 4px 12px rgba(40, 20, 80, .1);
 }
 .question-hint {
   margin-top: 14px;
   font-size: .75rem;
-  color: #5a7f93;
-  opacity: .85;
+  color: #6a5a80;
+  opacity: .9;
   position: relative;
   z-index: 1;
 }
@@ -806,7 +1073,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   margin-top: 16px;
   min-height: 32px;
   font-weight: 700;
-  color: #0f5c6e;
+  color: #5b2d8e;
   font-size: .95rem;
   position: relative;
   z-index: 1;
@@ -814,8 +1081,8 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .message:not(:empty) {
   padding: 10px 14px;
   border-radius: 14px;
-  background: rgba(46,196,182,.14);
-  border: 1px solid rgba(46,196,182,.25);
+  background: rgba(123, 92, 255, .12);
+  border: 1px solid rgba(123, 92, 255, .22);
   animation: messagePop .35s cubic-bezier(.22,1,.36,1);
 }
 @keyframes messagePop {
@@ -823,6 +1090,12 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .question.answered .buttons { opacity: .55; pointer-events: none; }
+#screen-questions .btn-ghost {
+  background: rgba(255,255,255,.12);
+  color: #fff8ff;
+  border: 1px solid rgba(255,255,255,.28);
+}
+#screen-questions .nav-row { margin-top: 16px; }
 
 .section-title {
   font-family: "Fraunces", serif;
@@ -2756,10 +3029,16 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <!-- 1b. How we met (animated story) -->
 <section class="screen" id="screen-story">
   <div class="card">
+    <div class="cinema-inner">
+    <div class="cinema-marquee" aria-hidden="true">
+      <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+      <span class="cinema-badge">Now Showing</span>
+      <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+    </div>
     <div class="story-top">
       <div class="story-top-text">
         <h1>How we met 🎬</h1>
-        <p class="story-top-sub">A tiny film about our first day</p>
+        <p class="story-top-sub">A short film · Scene by scene</p>
       </div>
       <button type="button" class="story-skip" id="storySkip">Skip</button>
     </div>
@@ -2770,6 +3049,10 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
 
     <div class="story-stage" id="storyStage">
+      <div class="story-letterbox top" aria-hidden="true"></div>
+      <div class="story-letterbox bottom" aria-hidden="true"></div>
+      <div class="story-grain" aria-hidden="true"></div>
+      <span class="pause-tag">Paused</span>
       <div class="story-scene active" data-scene="0">
         <h2 class="story-caption">It started online…</h2>
         <p class="story-sub">Two friends, one hello away from everything</p>
@@ -2817,9 +3100,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
             <div class="gift-exchange">
               <span class="prop" title="Keychain">🔑</span>
               <span class="arrow">⇄</span>
-              <span class="prop" title="Flowers">🌸</span>
+              <span class="prop" title="Flowers">💐</span>
             </div>
-            <p class="meetup-note">I gave a keychain · You gave flowers 💐</p>
+            <p class="meetup-note">I gave a keychain · You gave flowers </p>
           </div>
         </div>
       </div>
@@ -2896,16 +3179,28 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       <button type="button" class="story-btn story-pause" id="storyPause">⏸</button>
       <button type="button" class="story-btn primary story-next" id="storyNext">→</button>
     </div>
+    </div>
   </div>
 </section>
 
 <!-- 2. Questions -->
 <section class="screen" id="screen-questions">
   <div class="card">
+    <div class="qa-confetti" aria-hidden="true">
+      <i style="--x:8%;--y:12%;--d:6s;--delay:0s">🎉</i>
+      <i style="--x:22%;--y:70%;--d:7s;--delay:.5s">✨</i>
+      <i style="--x:78%;--y:18%;--d:5s;--delay:1s">💖</i>
+      <i style="--x:88%;--y:62%;--d:8s;--delay:.2s">⭐</i>
+      <i style="--x:48%;--y:88%;--d:6.5s;--delay:.8s">🎈</i>
+      <i style="--x:12%;--y:42%;--d:7.5s;--delay:1.2s">💫</i>
+    </div>
+    <div class="qa-inner">
+    <div class="qa-live"><span class="dot"></span> Live Q&amp;A</div>
     <div class="questions-hero">
-      <div class="questions-hero-emoji" aria-hidden="true">😇✨</div>
-      <h1 class="title">A few tiny questions</h1>
-      <p class="subtitle">Warm up your heart — answer carefully…</p>
+      <div class="questions-hero-emoji" aria-hidden="true">🎤✨</div>
+      <h1 class="title">Rapid-fire round</h1>
+      <p class="subtitle">4 tiny questions · honesty (and smiles) only</p>
+      <p class="qa-host">Hosted with love · Audience of one ❤️</p>
     </div>
 
     <div class="question-steps" id="questionSteps" aria-label="Question progress">
@@ -2918,7 +3213,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <div class="question-shell">
       <div class="question active">
         <div class="question-card">
-          <div class="question-badge">Question 1 of 4 · 🎂</div>
+          <div class="question-badge">Q1 · Birthday wish 🎂</div>
           <h2>Will you make a wonderful birthday wish today?</h2>
           <div class="buttons">
             <button class="yes" type="button">YES 💖</button>
@@ -2929,7 +3224,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
       <div class="question">
         <div class="question-card">
-          <div class="question-badge">Question 2 of 4 · 😊</div>
+          <div class="question-badge">Q2 · Smile check 😊</div>
           <h2>Will you promise to smile a little more today?</h2>
           <div class="buttons">
             <button class="yes" type="button">Of Course ❤️</button>
@@ -2941,7 +3236,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
       <div class="question">
         <div class="question-card">
-          <div class="question-badge">Question 3 of 4 · 😋</div>
+          <div class="question-badge">Q3 · Cute tax 😋</div>
           <h2>Can I steal one cute smile from you today?</h2>
           <div class="buttons">
             <button class="yes" type="button">Take It 💕</button>
@@ -2953,7 +3248,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
       <div class="question">
         <div class="question-card">
-          <div class="question-badge">Question 4 of 4 · 🌸</div>
+          <div class="question-badge">Q4 · Final buzz 🌸</div>
           <h2>Will you always remember how amazing you are?</h2>
           <div class="buttons">
             <button class="yes" type="button">Always ❤️</button>
@@ -2966,6 +3261,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
     <div class="nav-row">
       <button class="btn-ghost" type="button" data-go="story">←</button>
+    </div>
     </div>
   </div>
 </section>
@@ -3430,6 +3726,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     document.body.classList.toggle("theme-neon", screenId === "arrows");
     document.body.classList.toggle("theme-chalk", screenId === "ttt");
     document.body.classList.toggle("theme-paper", screenId === "sudoku");
+    document.body.classList.toggle("theme-cinema", screenId === "story");
+    document.body.classList.toggle("theme-qa", screenId === "questions");
   }
 
   function showScreen(id) {
