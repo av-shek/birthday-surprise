@@ -3149,29 +3149,98 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   50% { transform: translateY(-4px); opacity: 1; }
 }
 
-/* Birthday cake */
+/* Birthday cake — grand party moment */
+.cinematic.is-cake {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 12%, rgba(255, 200, 140, .38), transparent 55%),
+    radial-gradient(ellipse 45% 40% at 12% 78%, rgba(255, 110, 150, .22), transparent 50%),
+    radial-gradient(ellipse 40% 35% at 88% 70%, rgba(120, 180, 255, .16), transparent 48%),
+    linear-gradient(180deg, #2a1524 0%, #140c18 48%, #08060c 100%);
+}
+.cinematic.is-cake #particleCanvas {
+  opacity: .4;
+}
+.cinematic.is-cake .cine-stage {
+  width: min(440px, calc(100vw - 28px));
+}
+.cinematic.is-cake .cine-skip,
+.cinematic.is-cake .cine-close {
+  font-family: "Cinzel", "Fraunces", serif;
+  font-size: .82rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-color: rgba(255, 220, 180, .35);
+  background: rgba(30, 16, 28, .65);
+  color: #f7efd8;
+  border-radius: 999px;
+  padding: 8px 16px;
+}
 .cake-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
   user-select: none;
   -webkit-user-select: none;
+  animation: cakeEnter 1s ease both;
 }
-.cake-prompt {
+@keyframes cakeEnter {
+  from { opacity: 0; transform: translateY(22px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cake-glow {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: min(340px, 85vw);
+  height: min(340px, 85vw);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 180, 100, .35), transparent 68%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
+  animation: cakeGlowPulse 2.8s ease-in-out infinite;
+}
+@keyframes cakeGlowPulse {
+  0%, 100% { opacity: .65; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+.cake-kicker {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: "Cinzel", "Fraunces", serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255, 230, 190, .7);
+}
+.cake-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
   font-family: "Fraunces", serif;
-  font-size: clamp(1.15rem, 4.5vw, 1.55rem);
+  font-size: clamp(1.55rem, 6vw, 2.1rem);
+  font-weight: 700;
   color: #fff6e8;
-  text-shadow: 0 0 18px rgba(255,180,120,.45);
-  max-width: 18em;
-  line-height: 1.4;
+  text-shadow: 0 0 24px rgba(255, 180, 120, .45);
+  letter-spacing: .02em;
+}
+.cake-sub {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 6px;
+  font-family: "Caveat", cursive;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(255, 220, 190, .8);
 }
 .cake-hint {
-  font-size: .86rem;
-  opacity: .75;
-  margin-top: -6px;
+  display: none;
 }
-.cake-hint strong { opacity: 1; color: #ffd7a8; }
 .mic-status {
   font-size: .8rem;
   opacity: .7;
@@ -3180,59 +3249,86 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 .mic-status.on { color: #7fdbda; opacity: 1; }
 .cake-scene {
   position: relative;
-  width: min(300px, 78vw);
-  height: 280px;
-  margin: 8px auto 0;
+  z-index: 1;
+  width: min(320px, 82vw);
+  height: 300px;
+  margin: 4px auto 0;
   touch-action: none;
+}
+.cake-bokeh {
+  position: absolute;
+  inset: -20% -10% 10%;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 200, 140, .35) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(255, 140, 180, .28) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(140, 200, 255, .25) 0 35%, transparent 40%),
+    radial-gradient(circle, rgba(255, 230, 150, .3) 0 35%, transparent 40%);
+  background-size: 18px 18px, 14px 14px, 22px 22px, 12px 12px;
+  background-position: 12% 30%, 78% 22%, 30% 70%, 85% 65%;
+  background-repeat: no-repeat;
+  filter: blur(1px);
+  animation: cakeBokeh 5s ease-in-out infinite alternate;
+  opacity: .85;
+}
+@keyframes cakeBokeh {
+  from { transform: translateY(0); opacity: .65; }
+  to { transform: translateY(-8px); opacity: 1; }
 }
 .cake-plate {
   position: absolute;
   left: 50%;
   bottom: 8px;
-  width: 92%;
-  height: 18px;
+  width: 94%;
+  height: 20px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, #f5f0e6 0%, #cfc4b0 70%, #a89880 100%);
-  box-shadow: 0 8px 18px rgba(0,0,0,.45);
+  background: radial-gradient(ellipse at center, #fff8ee 0%, #e8dcc8 55%, #b8a890 100%);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.5),
+    0 0 30px rgba(255, 200, 140, .2);
+  z-index: 1;
 }
 .cake {
   position: absolute;
   left: 50%;
-  bottom: 22px;
+  bottom: 24px;
   transform: translateX(-50%);
-  width: 78%;
+  width: 80%;
+  z-index: 2;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
 }
 .cake-layer {
   position: relative;
   margin: 0 auto;
-  border-radius: 8px 8px 10px 10px;
+  border-radius: 10px 10px 12px 12px;
   box-shadow:
-    inset 0 8px 12px rgba(255,255,255,.25),
+    inset 0 8px 12px rgba(255,255,255,.28),
     inset 0 -10px 16px rgba(0,0,0,.18),
     0 6px 14px rgba(0,0,0,.28);
 }
 .cake-layer.bottom {
   width: 100%;
-  height: 58px;
+  height: 62px;
   background:
-    repeating-linear-gradient(90deg, transparent 0 14px, rgba(255,255,255,.08) 14px 16px),
-    linear-gradient(180deg, #f4b6c8 0%, #e88aa8 45%, #d66b8c 100%);
+    repeating-linear-gradient(90deg, transparent 0 14px, rgba(255,255,255,.1) 14px 16px),
+    linear-gradient(180deg, #ffc0d4 0%, #f08aaa 45%, #e06a90 100%);
 }
 .cake-layer.middle {
   width: 84%;
-  height: 48px;
+  height: 50px;
   margin-top: -6px;
   background:
-    repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,255,255,.1) 12px 14px),
-    linear-gradient(180deg, #fff0d6 0%, #f2d39a 50%, #e4bc72 100%);
+    repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,255,255,.12) 12px 14px),
+    linear-gradient(180deg, #fff4e0 0%, #f6d9a4 50%, #e8c078 100%);
   z-index: 1;
 }
 .cake-layer.top {
   width: 68%;
-  height: 40px;
+  height: 42px;
   margin-top: -6px;
-  background: linear-gradient(180deg, #9ad7f5 0%, #6bb8e0 55%, #4a9ecb 100%);
+  background: linear-gradient(180deg, #b8e4ff 0%, #7ec4f0 55%, #5aa8d8 100%);
   z-index: 2;
 }
 .frosting {
@@ -4418,8 +4514,12 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
     <div class="cine-phase" id="phaseCake">
       <div class="cake-wrap">
-        <p class="cake-prompt">Make a wish… then blow out the candles</p>
+        <div class="cake-glow" aria-hidden="true"></div>
+        <p class="cake-kicker">Tonight</p>
+        <h2 class="cake-title">Make a wish</h2>
+        <p class="cake-sub">for Gopal</p>
         <div class="cake-scene" id="cakeScene">
+          <div class="cake-bokeh" aria-hidden="true"></div>
           <div class="candles" id="candles" aria-label="Birthday candles">
             <button type="button" class="candle" aria-label="Candle 1"><span class="stick"></span><span class="wick"></span><span class="flame"></span><span class="smoke"></span></button>
             <button type="button" class="candle" aria-label="Candle 2"><span class="stick"></span><span class="wick"></span><span class="flame"></span><span class="smoke"></span></button>
@@ -5791,12 +5891,13 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (phase) phase.classList.add("visible");
     cinematic.classList.toggle("is-typewriter", phase === phaseTypewriter);
     cinematic.classList.toggle("is-album", phase === phaseSlideshow);
+    cinematic.classList.toggle("is-cake", phase === phaseCake);
     cinematic.classList.toggle("is-finale", phase === phaseFinale);
     document.body.classList.toggle("theme-typewriter", phase === phaseTypewriter || phase === phaseSlideshow);
     if (phase !== phaseTypewriter) hideTypeContinue();
 
-    // Back: typewriter → sudoku, finale → typewriter
-    if (phase === phaseTypewriter || phase === phaseFinale) {
+    // Back on letter, cake, and finale
+    if (phase === phaseTypewriter || phase === phaseCake || phase === phaseFinale) {
       cineClose.classList.add("show");
     } else {
       cineClose.classList.remove("show");
@@ -6063,8 +6164,19 @@ Keep shining, keep dreaming, and keep being yourself.`;
     resetCandles();
     showPhase(phaseCake);
     cineSkip.style.display = "none";
-    // Keep Back hidden on cake — only show after final wish
-    cineClose.classList.remove("show");
+  }
+
+  function backToSlideshow() {
+    clearCineTimers();
+    hideTypeContinue();
+    cakeDone = false;
+    resetCandles();
+    cineRunning = true;
+    cineSkip.style.display = "none";
+    runSlideshow().then(() => {
+      if (!cineRunning) return;
+      showCakePhase();
+    });
   }
 
   // Candle interactions
@@ -6469,7 +6581,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     // Full exit from cinematic back to sudoku
     allowCinematicAudio = false;
     stopCinematicExtras();
-    cinematic.classList.remove("active", "is-typewriter", "is-album", "is-finale");
+    cinematic.classList.remove("active", "is-typewriter", "is-album", "is-cake", "is-finale");
     cinematic.setAttribute("aria-hidden", "true");
     document.body.classList.remove("cinematic-on", "theme-typewriter");
     showPhase(null);
@@ -6496,6 +6608,8 @@ Keep shining, keep dreaming, and keep being yourself.`;
     e.stopPropagation();
     if (phaseFinale.classList.contains("visible")) {
       backToTypewriter();
+    } else if (phaseCake.classList.contains("visible")) {
+      backToSlideshow();
     } else {
       closeCinematic();
     }
