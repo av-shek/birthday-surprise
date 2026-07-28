@@ -308,33 +308,141 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   border-radius: 24px;
   overflow: hidden;
   background:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.75), transparent),
+    radial-gradient(1px 1px at 28% 42%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.5px 1.5px at 44% 12%, rgba(255,240,200,.7), transparent),
+    radial-gradient(1px 1px at 62% 28%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1px 1px at 78% 16%, rgba(255,255,255,.65), transparent),
+    radial-gradient(1.5px 1.5px at 88% 38%, rgba(255,240,200,.55), transparent),
+    radial-gradient(1px 1px at 16% 62%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1px 1px at 34% 78%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.5px 1.5px at 52% 68%, rgba(255,240,200,.5), transparent),
+    radial-gradient(1px 1px at 70% 82%, rgba(255,255,255,.6), transparent),
+    radial-gradient(1px 1px at 86% 64%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 8% 88%, rgba(255,255,255,.5), transparent),
     radial-gradient(circle at 20% 20%, rgba(90,120,220,.25), transparent 40%),
     radial-gradient(circle at 80% 30%, rgba(160,90,200,.18), transparent 35%),
     linear-gradient(180deg, #0b1230, #050814 70%, #0a1830);
   border: 1px solid rgba(255,255,255,.1);
   box-shadow: inset 0 0 60px rgba(0,0,0,.35);
 }
+.sky-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.sky-lines line {
+  stroke: rgba(255, 233, 168, .28);
+  stroke-width: 1;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(255, 233, 168, .25));
+}
 .star {
   position: absolute;
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--star) 45%, transparent 70%);
-  box-shadow: 0 0 10px rgba(255,233,168,.8), 0 0 22px rgba(255,233,168,.35);
-  cursor: pointer;
-  animation: twinkle 2.4s ease-in-out infinite;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
   border: none;
   padding: 0;
+  cursor: pointer;
+  background: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 6px rgba(255, 233, 168, .85));
+  animation: twinkle 2.8s ease-in-out infinite;
 }
-.star:nth-child(odd) { animation-duration: 3.1s; }
-.star:nth-child(3n) { animation-delay: -.8s; width: 10px; height: 10px; margin: -5px 0 0 -5px; }
+.star::before,
+.star::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #fffef6 0%, #ffe9a8 45%, #ffd27a 100%);
+  clip-path: polygon(
+    50% 0%,
+    58% 38%,
+    100% 50%,
+    58% 62%,
+    50% 100%,
+    42% 62%,
+    0% 50%,
+    42% 38%
+  );
+}
+.star::after {
+  transform: rotate(45deg) scale(.72);
+  opacity: .95;
+  background: linear-gradient(180deg, #ffffff 0%, #fff3c4 55%, #ffd27a 100%);
+}
+.star .star-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 2px rgba(255, 248, 220, .9);
+  z-index: 1;
+}
+.star.star-sm {
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+  animation-duration: 3.4s;
+  animation-delay: -.7s;
+}
+.star.star-sm .star-core {
+  width: 3px;
+  height: 3px;
+  margin: -1.5px 0 0 -1.5px;
+}
+.star.star-lg {
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  animation-duration: 2.2s;
+  filter: drop-shadow(0 0 9px rgba(255, 233, 168, .95));
+}
+.star.star-tilt {
+  animation-name: twinkleTilt;
+}
+.star:hover {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
+}
 .star.revealed {
-  background: radial-gradient(circle, #fff 0%, #7fdbda 50%, transparent 72%);
-  box-shadow: 0 0 14px rgba(127,219,218,.9);
+  filter: drop-shadow(0 0 10px rgba(127, 219, 218, 1));
+  animation-name: twinkleBright;
+  animation-duration: 1.8s;
+}
+.star.revealed.star-tilt {
+  animation-name: twinkleBrightTilt;
+}
+.star.revealed::before,
+.star.revealed::after {
+  background: linear-gradient(180deg, #ffffff 0%, #b8fff6 45%, #7fdbda 100%);
+}
+.star.revealed .star-core {
+  box-shadow: 0 0 10px 3px rgba(127, 219, 218, .95);
 }
 @keyframes twinkle {
-  0%, 100% { opacity: .55; transform: scale(.9); }
-  50% { opacity: 1; transform: scale(1.15); }
+  0%, 100% { opacity: .55; transform: scale(.88); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+@keyframes twinkleTilt {
+  0%, 100% { opacity: .55; transform: rotate(20deg) scale(.88); }
+  50% { opacity: 1; transform: rotate(20deg) scale(1.12); }
+}
+@keyframes twinkleBright {
+  0%, 100% { opacity: .75; transform: scale(.95); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+@keyframes twinkleBrightTilt {
+  0%, 100% { opacity: .75; transform: rotate(20deg) scale(.95); }
+  50% { opacity: 1; transform: rotate(20deg) scale(1.18); }
 }
 
 /* overlays */
@@ -380,19 +488,63 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 .overlay-card.night h2 { color: #f4f7ff; }
 .photo-frame {
+  position: relative;
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: 16px;
   margin: 12px 0 16px;
   overflow: hidden;
-  background: #0f4c75;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,180,120,.22), transparent 55%),
+    #1a3048;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
 }
 .photo-frame img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.photo-frame img.is-ready {
+  opacity: 1;
+}
+.photo-loader,
+.slide-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(160deg, rgba(20, 18, 30, .94), rgba(40, 28, 40, .92));
+  color: #fff6e8;
+  font-size: .88rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.photo-frame:not(.is-loading) .photo-loader,
+.slide-frame:not(.is-loading) .slide-loader {
+  display: none;
+}
+.media-spinner,
+.slide-spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.22);
+  border-top-color: #ffb347;
+  border-right-color: #ff7a59;
+  animation: mediaSpin .75s linear infinite;
+  box-shadow: 0 0 18px rgba(255, 179, 71, .35);
+}
+@keyframes mediaSpin {
+  to { transform: rotate(360deg); }
 }
 
 .toast {
@@ -521,68 +673,60 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     0 20px 60px rgba(0,0,0,.55),
     0 0 40px rgba(255,122,89,.25);
   background:
-    radial-gradient(circle at 50% 40%, rgba(255,180,120,.18), transparent 55%),
-    #141414;
-  touch-action: pan-y;
+    radial-gradient(circle at 50% 40%, rgba(255,180,120,.22), transparent 55%),
+    #1a1520;
+  touch-action: none;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
 }
 .slide-frame:active { cursor: grabbing; }
-.slide-loader {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+.slide-track {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: rgba(12, 12, 16, .55);
-  color: rgba(255, 246, 232, .9);
-  font-size: .85rem;
-  font-weight: 600;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s ease;
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.slide-frame.is-loading .slide-loader {
-  opacity: 1;
+.slide-track.is-dragging {
+  transition: none;
 }
-.slide-spinner {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,.2);
-  border-top-color: #ffb347;
-  animation: slideSpin .7s linear infinite;
+.slide-item {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-@keyframes slideSpin {
-  to { transform: rotate(360deg); }
-}
-.slide-frame img {
+.slide-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   opacity: 0;
-  transform: scale(1.08);
-  transition: opacity .45s ease, transform 5.5s ease;
+  transform: scale(1.04);
+  transition: opacity .45s ease, transform 6s ease;
   pointer-events: none;
 }
-.slide-frame img.show {
+.slide-item img.is-ready {
   opacity: 1;
+}
+.slide-item.is-active img.is-ready {
   transform: scale(1);
 }
-.slide-frame img.slide-out-left {
-  opacity: 0;
-  transform: translateX(-28%) scale(1.02);
-  transition: opacity .35s ease, transform .35s ease;
+.slide-caption {
+  margin-top: 14px;
+  font-size: .95rem;
+  opacity: .9;
+  letter-spacing: .02em;
+  min-height: 2.6em;
+  line-height: 1.4;
+  transition: opacity .28s ease, transform .28s ease;
 }
-.slide-frame img.slide-out-right {
+.slide-caption.is-fading {
   opacity: 0;
-  transform: translateX(28%) scale(1.02);
-  transition: opacity .35s ease, transform .35s ease;
+  transform: translateY(6px);
 }
 .slide-nav {
   display: flex;
@@ -623,19 +767,12 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   padding: 0;
   background: rgba(255,255,255,.35);
   cursor: pointer;
+  transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
 }
 .slide-dot.active {
   background: #ffb347;
   box-shadow: 0 0 10px rgba(255,179,71,.7);
   transform: scale(1.25);
-}
-.slide-caption {
-  margin-top: 14px;
-  font-size: .95rem;
-  opacity: .9;
-  letter-spacing: .02em;
-  min-height: 2.6em;
-  line-height: 1.4;
 }
 .slide-counter {
   margin-top: 6px;
@@ -1159,12 +1296,12 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       <p class="cine-message" id="typeBody"></p>
     </div>
     <div class="cine-phase" id="phaseSlideshow">
-      <div class="slide-frame" id="slideFrame">
-        <div class="slide-loader" id="slideLoader" aria-hidden="true">
-          <div class="slide-spinner"></div>
+      <div class="slide-frame is-loading" id="slideFrame">
+        <div class="slide-loader" id="slideLoader" aria-live="polite">
+          <div class="media-spinner"></div>
           <span>Loading photo…</span>
         </div>
-        <img id="slideImg" alt="Memory">
+        <div class="slide-track" id="slideTrack"></div>
       </div>
       <p class="slide-caption" id="slideCaption"></p>
       <p class="slide-counter" id="slideCounter"></p>
@@ -1173,7 +1310,6 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
         <div class="slide-dots" id="slideDots"></div>
         <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
       </div>
-      <p class="slide-hint">Swipe left / right · or use the arrows</p>
       <button type="button" class="slide-continue" id="slideContinue">Lets cut the cake →</button>
     </div>
     <div class="cine-phase" id="phaseCake">
@@ -1208,7 +1344,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
     <div class="cine-phase" id="phaseFinale">
       <h1 class="cine-finale-text">Happy Birthday ❤️</h1>
-      <p class="cine-finale-sub">Wish granted, Gopal. Keep shining. 🌊✨</p>
+      <p class="cine-finale-sub">Wish granted, Gopal. Keep shining.✨</p>
     </div>
   </div>
   <button type="button" class="cine-skip" id="cineSkip">Skip</button>
@@ -1233,6 +1369,51 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   let confettiPieces = [];
   let currentQuestion = 0;
 
+  function photoHTML(src, alt) {
+    return `<div class="photo-frame is-loading">
+      <div class="photo-loader" aria-live="polite">
+        <div class="media-spinner"></div>
+        <span>Loading photo…</span>
+      </div>
+      <img src="${src}" alt="${alt || "Photo"}">
+    </div>`;
+  }
+
+  function bindPhotoLoaders(root) {
+    if (!root) return;
+    root.querySelectorAll(".photo-frame img").forEach((img) => {
+      const frame = img.closest(".photo-frame");
+      const loader = frame?.querySelector(".photo-loader");
+      if (!frame) return;
+
+      const finish = () => {
+        frame.classList.remove("is-loading");
+        img.classList.add("is-ready");
+        if (loader) {
+          loader.style.display = "none";
+          loader.setAttribute("aria-hidden", "true");
+        }
+      };
+
+      const start = () => {
+        frame.classList.add("is-loading");
+        img.classList.remove("is-ready");
+        if (loader) {
+          loader.style.display = "flex";
+          loader.setAttribute("aria-hidden", "false");
+        }
+      };
+
+      start();
+      if (img.complete && img.naturalWidth > 0) {
+        finish();
+        return;
+      }
+      img.addEventListener("load", finish, { once: true });
+      img.addEventListener("error", finish, { once: true });
+    });
+  }
+
   const gifts = {
     1: {
       title: "🎁 Gift 1 — Funny Message",
@@ -1243,13 +1424,13 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     },
     2: {
       title: "🎁 Gift 2 — Favourite Photo",
-      html: `<div class="photo-frame"><img src="birthday-photos/harry_potter.jpeg" alt="Favourite photo"></div>
+      html: `${photoHTML("birthday-photos/harry_potter.jpeg", "Favourite photo")}
         <p>This is the spot for your favourite memory snapshot —
         the kind that makes you grin without even trying.</p>`
     },
     3: {
       title: "🎁 Gift 3 — Unforgettable/Cashless Moment",
-      html: `<div class="photo-frame"><img src="birthday-photos/cashless_moment.jpeg" alt="Cashless moment"></div>
+      html: `${photoHTML("birthday-photos/cashless_moment.jpeg", "Cashless moment")}
         <p>This is the moment which will always stay as a snapshot in our memories —
         cannot forget the experience we went through.</p>`
     }
@@ -1257,14 +1438,14 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   const stars = [
     { x: 18, y: 22, title: "⭐ Compliment", html: "<p>You have a way of making people feel seen and safe. That rare kindness is your superpower. 🌊</p>" },
-    { x: 42, y: 16, title: "📷 Memory", html: "<div class='photo-frame'><img src='birthday-photos/roller-coaster.jpeg' alt='Memory photo'></div><p>Remember that roller coaster ride? It was fun! I mean, who goes on a roller coaster and doesn't spin? You did! 🤩</p>" },
+    { x: 42, y: 16, title: "📷 Memory", html: `${photoHTML("birthday-photos/roller-coaster.jpeg", "Memory photo")}<p>Remember that roller coaster ride? It was fun! I mean, who goes on a roller coaster and doesn't spin? You did! 🤩</p>` },
     { x: 68, y: 28, title: "⭐ Compliment", html: "<p>Your laugh is contagious. The room gets lighter the second you walk in. ✨</p>" },
     { x: 82, y: 48, title: "🧠 Memory", html: "<p>That random conversation that went on forever… one of those nights that quietly became a favourite.</p>" },
-    { x: 30, y: 48, title: "📷 Photo", html: "<div class='photo-frame'><img src='birthday-photos/traces.jpeg' alt='Another favourite'></div><p>Proof that good times leave beautiful traces.</p>" },
+    { x: 30, y: 48, title: "📷 Photo", html: `${photoHTML("birthday-photos/traces.jpeg", "Another favourite")}<p>Proof that good times leave beautiful traces.</p>` },
     { x: 55, y: 58, title: "⭐ Compliment", html: "<p>You are stronger and softer than you realize — a rare combination. 💙</p>" },
     { x: 15, y: 70, title: "🧠 Memory", html: "<p>The little adventures, the silly plans, the shared snacks — they added up to something beautiful.</p>" },
     { x: 75, y: 72, title: "⭐ Compliment", html: "<p>The world is luckier with you in it. Happy birthday, Gopal. 🎂🌊</p>" },
-    { x: 48, y: 36, title: "📷 Photo", html: "<div class='photo-frame'><img src='birthday-photos/bright-you.jpeg' alt='Smile archive'></div><p>A reminder of how bright you already are.</p>" },
+    { x: 48, y: 36, title: "📷 Photo", html: `${photoHTML("birthday-photos/bright-you.jpeg", "Smile archive")}<p>A reminder of how bright you already are.</p>` },
   ];
 
   function showToast(text) {
@@ -1383,6 +1564,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       gift.classList.add("opened");
       document.getElementById("giftTitle").textContent = data.title;
       document.getElementById("giftBody").innerHTML = data.html;
+      bindPhotoLoaders(document.getElementById("giftBody"));
       giftOverlay.classList.add("active");
       createHeartBurst();
     });
@@ -1394,18 +1576,41 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   // Constellation stars
   const sky = document.getElementById("sky");
   const starOverlay = document.getElementById("starOverlay");
-  stars.forEach((star) => {
+
+  // Faint constellation lines between a few stars
+  const skyLines = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  skyLines.classList.add("sky-lines");
+  skyLines.setAttribute("viewBox", "0 0 100 100");
+  skyLines.setAttribute("preserveAspectRatio", "none");
+  const linePairs = [[0,1],[1,4],[4,8],[8,2],[2,5],[5,7],[3,6],[6,7],[1,8]];
+  linePairs.forEach(([a, b]) => {
+    if (!stars[a] || !stars[b]) return;
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", stars[a].x);
+    line.setAttribute("y1", stars[a].y);
+    line.setAttribute("x2", stars[b].x);
+    line.setAttribute("y2", stars[b].y);
+    skyLines.appendChild(line);
+  });
+  sky.appendChild(skyLines);
+
+  stars.forEach((star, i) => {
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "star";
+    const sizeClass = i % 3 === 0 ? "star-sm" : i % 4 === 0 ? "star-lg" : "";
+    const tiltClass = i % 5 === 2 ? "star-tilt" : "";
+    btn.className = ["star", sizeClass, tiltClass].filter(Boolean).join(" ");
     btn.style.left = star.x + "%";
     btn.style.top = star.y + "%";
+    btn.style.animationDelay = (-(i * 0.35) % 2.5) + "s";
     btn.setAttribute("aria-label", star.title);
+    btn.innerHTML = '<span class="star-core" aria-hidden="true"></span>';
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       btn.classList.add("revealed");
       document.getElementById("starTitle").textContent = star.title;
       document.getElementById("starBody").innerHTML = star.html;
+      bindPhotoLoaders(document.getElementById("starBody"));
       starOverlay.classList.add("active");
     });
     sky.appendChild(btn);
@@ -1423,7 +1628,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   const phaseCake = document.getElementById("phaseCake");
   const phaseFinale = document.getElementById("phaseFinale");
   const slideFrame = document.getElementById("slideFrame");
-  const slideImg = document.getElementById("slideImg");
+  const slideLoader = document.getElementById("slideLoader");
+  const slideTrack = document.getElementById("slideTrack");
   const slideCaption = document.getElementById("slideCaption");
   const slideCounter = document.getElementById("slideCounter");
   const slideDots = document.getElementById("slideDots");
@@ -1490,7 +1696,12 @@ Keep shining, keep dreaming, and keep being yourself.`;
   let slideBusy = false;
   let slideResolve = null;
   let slidePointerX = 0;
+  let slideDragStartX = 0;
   let slideDragging = false;
+  let slideDragOffset = 0;
+  let slideLastX = 0;
+  let slideLastT = 0;
+  let slideVelocity = 0;
 
   function cineWait(ms) {
     return new Promise((resolve) => {
@@ -1874,9 +2085,15 @@ Keep shining, keep dreaming, and keep being yourself.`;
     showPhase(phaseSlideshow);
     slideIndex = 0;
     slideBusy = false;
+    slideDragOffset = 0;
+    buildSlideTrack();
     buildSlideDots();
-    preloadSlides();
-    await renderSlide(true);
+    // Wait for layout so slideFrame has a real width (phase was display:none)
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    setTrackPosition(0, false);
+    updateSlideChrome();
+    await revealCaption(SLIDES[0]?.caption || "");
+    await waitForSlideReady(0);
 
     return new Promise((resolve) => {
       slideResolve = resolve;
@@ -1891,27 +2108,91 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function setSlideLoading(on) {
-    slideFrame.classList.toggle("is-loading", on);
+    if (!slideFrame) return;
+    slideFrame.classList.toggle("is-loading", !!on);
+    if (slideLoader) {
+      slideLoader.style.display = on ? "flex" : "none";
+      slideLoader.setAttribute("aria-hidden", on ? "false" : "true");
+    }
   }
 
-  function waitForImage(src) {
-    return new Promise((resolve) => {
-      if (slideImg.getAttribute("src") === src && slideImg.complete && slideImg.naturalWidth > 0) {
-        resolve();
-        return;
-      }
-      const onDone = () => {
-        slideImg.removeEventListener("load", onDone);
-        slideImg.removeEventListener("error", onDone);
-        resolve();
+  function buildSlideTrack() {
+    slideTrack.innerHTML = "";
+    slideTrack.classList.remove("is-dragging");
+    SLIDES.forEach((slide, i) => {
+      const item = document.createElement("div");
+      item.className = "slide-item" + (i === 0 ? " is-active" : "");
+      item.innerHTML = `
+        <div class="photo-loader" aria-hidden="false">
+          <div class="media-spinner"></div>
+          <span>Loading photo…</span>
+        </div>
+        <img alt="${slide.caption.replace(/"/g, "&quot;")}">
+      `;
+      const img = item.querySelector("img");
+      const loader = item.querySelector(".photo-loader");
+      const finish = () => {
+        img.classList.add("is-ready");
+        item.classList.add("is-loaded");
+        if (loader) {
+          loader.style.display = "none";
+          loader.setAttribute("aria-hidden", "true");
+        }
+        if (i === slideIndex) setSlideLoading(false);
       };
-      slideImg.addEventListener("load", onDone);
-      slideImg.addEventListener("error", onDone);
-      if (slideImg.getAttribute("src") !== src) {
-        slideImg.src = src;
-      } else if (slideImg.complete) {
-        onDone();
+      img.addEventListener("load", finish, { once: true });
+      img.addEventListener("error", finish, { once: true });
+      img.src = slide.src;
+      if (img.complete && img.naturalWidth > 0) finish();
+      slideTrack.appendChild(item);
+    });
+    setSlideLoading(true);
+  }
+
+  function waitForSlideReady(index) {
+    return new Promise((resolve) => {
+      const item = slideTrack.children[index];
+      if (!item) return resolve();
+      const img = item.querySelector("img");
+      if (img?.classList.contains("is-ready")) {
+        setSlideLoading(false);
+        return resolve();
       }
+      setSlideLoading(true);
+      const started = performance.now();
+      const check = () => {
+        if (!cineRunning) return resolve();
+        if (img?.classList.contains("is-ready") || (img?.complete && img.naturalWidth > 0)) {
+          img.classList.add("is-ready");
+          const loader = item.querySelector(".photo-loader");
+          if (loader) loader.style.display = "none";
+          setSlideLoading(false);
+          return resolve();
+        }
+        if (performance.now() - started > 8000) {
+          setSlideLoading(false);
+          return resolve();
+        }
+        requestAnimationFrame(check);
+      };
+      check();
+    });
+  }
+
+  function setTrackPosition(index, animate = true) {
+    const width = slideFrame.clientWidth || 1;
+    const x = -index * width + slideDragOffset;
+    if (animate) {
+      slideTrack.classList.remove("is-dragging");
+      slideTrack.style.transform = `translate3d(${x}px, 0, 0)`;
+    } else {
+      slideTrack.classList.add("is-dragging");
+      slideTrack.style.transform = `translate3d(${x}px, 0, 0)`;
+      void slideTrack.offsetWidth;
+      slideTrack.classList.remove("is-dragging");
+    }
+    Array.from(slideTrack.children).forEach((el, i) => {
+      el.classList.toggle("is-active", i === index);
     });
   }
 
@@ -1938,38 +2219,33 @@ Keep shining, keep dreaming, and keep being yourself.`;
       dot.classList.toggle("active", i === slideIndex);
     });
     if (slideIndex >= SLIDES.length - 1) {
-      slideContinue.textContent = "Continue to cake →";
+      slideContinue.textContent = "Lets cut the cake →";
     } else {
       slideContinue.textContent = "Skip photos →";
     }
   }
 
-  async function renderSlide() {
-    const slide = SLIDES[slideIndex];
-    if (!slide) return;
-    slideCaption.textContent = slide.caption;
-    updateSlideChrome();
-    slideImg.classList.remove("show", "slide-out-left", "slide-out-right");
-    setSlideLoading(true);
-    await waitForImage(slide.src);
-    if (!cineRunning) return;
-    void slideImg.offsetWidth;
-    slideImg.classList.add("show");
-    setSlideLoading(false);
+  async function revealCaption(text) {
+    slideCaption.classList.add("is-fading");
+    await cineWait(180);
+    slideCaption.textContent = text;
+    slideCaption.classList.remove("is-fading");
   }
 
-  async function goToSlide(nextIndex, direction = 0) {
+  async function goToSlide(nextIndex) {
     if (slideBusy || !cineRunning) return;
     if (nextIndex < 0 || nextIndex >= SLIDES.length || nextIndex === slideIndex) return;
     slideBusy = true;
-    const dir = direction || (nextIndex > slideIndex ? 1 : -1);
-    slideImg.classList.remove("show");
-    slideImg.classList.add(dir > 0 ? "slide-out-left" : "slide-out-right");
-    await cineWait(280);
-    if (!cineRunning) { slideBusy = false; return; }
+    slideDragOffset = 0;
     slideIndex = nextIndex;
-    slideImg.classList.remove("slide-out-left", "slide-out-right");
-    await renderSlide();
+    updateSlideChrome();
+    setTrackPosition(slideIndex, true);
+    revealCaption(SLIDES[slideIndex].caption);
+    // Run animation wait + image ready in parallel so swipe feels instant
+    await Promise.all([
+      cineWait(560),
+      waitForSlideReady(slideIndex),
+    ]);
     slideBusy = false;
   }
 
@@ -1983,11 +2259,11 @@ Keep shining, keep dreaming, and keep being yourself.`;
 
   slidePrev.addEventListener("click", (e) => {
     e.stopPropagation();
-    goToSlide(slideIndex - 1, -1);
+    goToSlide(slideIndex - 1);
   });
   slideNext.addEventListener("click", (e) => {
     e.stopPropagation();
-    goToSlide(slideIndex + 1, 1);
+    goToSlide(slideIndex + 1);
   });
   slideContinue.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -1995,26 +2271,72 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
 
   slideFrame.addEventListener("pointerdown", (e) => {
-    if (!phaseSlideshow.classList.contains("visible")) return;
+    if (!phaseSlideshow.classList.contains("visible") || slideBusy) return;
     slideDragging = true;
+    slideDragStartX = e.clientX;
     slidePointerX = e.clientX;
+    slideLastX = e.clientX;
+    slideLastT = performance.now();
+    slideVelocity = 0;
+    slideDragOffset = 0;
+    slideTrack.classList.add("is-dragging");
     slideFrame.setPointerCapture?.(e.pointerId);
+  });
+  slideFrame.addEventListener("pointermove", (e) => {
+    if (!slideDragging) return;
+    const now = performance.now();
+    const dx = e.clientX - slideDragStartX;
+    const dt = Math.max(1, now - slideLastT);
+    slideVelocity = (e.clientX - slideLastX) / dt;
+    slideLastX = e.clientX;
+    slideLastT = now;
+
+    const width = slideFrame.clientWidth || 1;
+    // resist at edges
+    let offset = dx;
+    if ((slideIndex === 0 && dx > 0) || (slideIndex === SLIDES.length - 1 && dx < 0)) {
+      offset = dx * 0.35;
+    }
+    slideDragOffset = offset;
+    slideTrack.style.transform = `translate3d(${-slideIndex * width + offset}px, 0, 0)`;
   });
   slideFrame.addEventListener("pointerup", (e) => {
     if (!slideDragging) return;
     slideDragging = false;
-    const dx = e.clientX - slidePointerX;
-    if (Math.abs(dx) < 42) return;
-    if (dx < 0) goToSlide(slideIndex + 1, 1);
-    else goToSlide(slideIndex - 1, -1);
+    slideTrack.classList.remove("is-dragging");
+    const width = slideFrame.clientWidth || 1;
+    const dx = e.clientX - slideDragStartX;
+    const flick = slideVelocity * 1000; // px/s-ish
+    let target = slideIndex;
+    if (dx < -width * 0.22 || flick < -600) target = slideIndex + 1;
+    else if (dx > width * 0.22 || flick > 600) target = slideIndex - 1;
+    target = Math.max(0, Math.min(SLIDES.length - 1, target));
+    slideDragOffset = 0;
+    if (target === slideIndex) {
+      setTrackPosition(slideIndex, true);
+    } else {
+      goToSlide(target);
+    }
   });
-  slideFrame.addEventListener("pointercancel", () => { slideDragging = false; });
+  slideFrame.addEventListener("pointercancel", () => {
+    if (!slideDragging) return;
+    slideDragging = false;
+    slideDragOffset = 0;
+    slideTrack.classList.remove("is-dragging");
+    setTrackPosition(slideIndex, true);
+  });
 
   document.addEventListener("keydown", (e) => {
     if (!phaseSlideshow.classList.contains("visible") || !cineRunning) return;
-    if (e.key === "ArrowLeft") { e.preventDefault(); goToSlide(slideIndex - 1, -1); }
-    if (e.key === "ArrowRight") { e.preventDefault(); goToSlide(slideIndex + 1, 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goToSlide(slideIndex - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); goToSlide(slideIndex + 1); }
     if (e.key === "Enter") { e.preventDefault(); finishSlideshow(); }
+  });
+
+  window.addEventListener("resize", () => {
+    if (phaseSlideshow.classList.contains("visible")) {
+      setTrackPosition(slideIndex, false);
+    }
   });
 
   async function runCinematicSequence(skipToCake = false) {
@@ -2073,10 +2395,14 @@ Keep shining, keep dreaming, and keep being yourself.`;
     starOverlay.classList.remove("active");
     typeGreeting.textContent = "";
     typeBody.textContent = "";
-    slideImg.removeAttribute("src");
-    slideImg.classList.remove("show", "slide-out-left", "slide-out-right");
-    slideFrame.classList.remove("is-loading");
+    slideTrack.innerHTML = "";
+    slideTrack.style.transform = "translate3d(0,0,0)";
+    slideTrack.classList.remove("is-dragging");
+    slideDragOffset = 0;
+    slideIndex = 0;
+    setSlideLoading(true);
     slideCaption.textContent = "";
+    slideCaption.classList.remove("is-fading");
     if (slideCounter) slideCounter.textContent = "";
     cineSkip.style.display = "";
     cineClose.classList.remove("show");
