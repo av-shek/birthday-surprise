@@ -2145,6 +2145,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
         </div>
       </div>
     </div>
+    <div class="nav-row">
+      <button class="btn-ghost" type="button" data-go="story">←</button>
+    </div>
   </div>
 </section>
 
@@ -2204,7 +2207,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </button>
     </div>
     <div class="nav-row">
-      <button class="btn-secondary" type="button" data-go="gifts">Open Gift Boxes →</button>
+      <button class="btn-ghost" type="button" data-go="questions">←</button>
+      <button class="btn-secondary" type="button" data-go="gifts">→</button>
     </div>
   </div>
 </section>
@@ -2462,9 +2466,21 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       startCinematic();
       return;
     }
+    if (target === "welcome") {
+      clearStoryTimer();
+      storyAutoplay = false;
+      storyPaused = false;
+      showScreen("welcome");
+      return;
+    }
     if (target === "story") {
       showScreen("story");
       startStory();
+      return;
+    }
+    if (target === "questions") {
+      resetQuestions();
+      showScreen("questions");
       return;
     }
     showScreen(target);
@@ -2520,12 +2536,15 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   function syncStoryChrome() {
     const total = storyScenes.length;
     if (storyCounter) storyCounter.textContent = `${storyIndex + 1} / ${total}`;
-    if (storyBackBtn) storyBackBtn.disabled = storyIndex <= 0;
+    if (storyBackBtn) {
+      storyBackBtn.disabled = false;
+      storyBackBtn.title = storyIndex <= 0 ? "Back to start" : "Previous scene";
+    }
     if (storyNextBtn) {
-      storyNextBtn.textContent = storyIndex >= total - 1 ? "Continue →" : "Next →";
+      storyNextBtn.textContent = storyIndex >= total - 1 ? "→" : "→";
     }
     if (storyPauseBtn) {
-      storyPauseBtn.textContent = storyPaused ? "▶ Play" : "⏸ Pause";
+      storyPauseBtn.textContent = storyPaused ? "▶" : "⏸";
       storyPauseBtn.classList.toggle("pause-on", storyPaused);
     }
     storyProgress.classList.toggle("is-paused", storyPaused);
@@ -2599,7 +2618,10 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   function goStory(delta) {
     clearStoryTimer();
     const next = storyIndex + delta;
-    if (next < 0) return;
+    if (next < 0) {
+      goTo("welcome");
+      return;
+    }
     if (next >= storyScenes.length) {
       finishStory();
       return;
@@ -2614,6 +2636,10 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   });
   storyBackBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
+    if (storyIndex <= 0) {
+      goTo("welcome");
+      return;
+    }
     goStory(-1);
   });
   storyPauseBtn?.addEventListener("click", (e) => {
@@ -2653,11 +2679,31 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     });
   }
 
+  function resetQuestions() {
+    currentQuestion = 0;
+    questions.forEach((question, i) => {
+      question.classList.remove("active", "answered");
+      if (i === 0) question.classList.add("active");
+      const message = question.querySelector(".message");
+      if (message) message.textContent = "";
+      if (typeof question._resetNo === "function") question._resetNo();
+    });
+    syncQuestionSteps(0);
+  }
+
   questions.forEach((question, index) => {
     const yesBtn = question.querySelector(".yes");
     const noBtn = question.querySelector(".no");
     const message = question.querySelector(".message");
     let noMoves = 0;
+    const defaultNoLabel = noBtn ? noBtn.textContent : "No";
+
+    question._resetNo = () => {
+      noMoves = 0;
+      if (!noBtn) return;
+      noBtn.style.transform = "";
+      noBtn.textContent = defaultNoLabel;
+    };
 
     yesBtn.addEventListener("click", () => {
       question.classList.add("answered");
