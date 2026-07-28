@@ -168,38 +168,62 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 
 /* ===== How we met story ===== */
 #screen-story .card {
-  max-width: 460px;
-  overflow: hidden;
-  padding-bottom: 22px;
+  max-width: 480px;
+  overflow: visible;
+  padding: 26px 20px 24px;
 }
 .story-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.story-top-text { text-align: left; }
+.story-top h1 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.25rem, 4.5vw, 1.5rem);
+  color: #0f4c75;
+  margin: 0 0 4px;
+}
+.story-top-sub {
+  margin: 0;
+  font-size: .8rem;
+  color: #3d6f86;
+}
+.story-skip {
+  flex-shrink: 0;
+  background: rgba(255,255,255,.75);
+  color: #3a6a82;
+  border: 1px solid rgba(255,255,255,.95);
+  padding: 8px 12px;
+  font-size: .75rem;
+  white-space: nowrap;
+}
+.story-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.story-top h1 {
-  font-family: "Fraunces", serif;
-  font-size: 1.25rem;
-  color: #0f4c75;
-  margin: 0;
-}
-.story-skip {
-  background: rgba(255,255,255,.7);
-  color: #3a6a82;
-  border: 1px solid rgba(255,255,255,.9);
-  padding: 7px 12px;
+.story-counter {
   font-size: .78rem;
+  font-weight: 800;
+  color: #0f4c75;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.9);
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 .story-progress {
   display: flex;
   gap: 5px;
-  margin-bottom: 14px;
+  flex: 1;
 }
 .story-progress span {
   flex: 1;
-  height: 4px;
+  height: 5px;
   border-radius: 999px;
   background: rgba(15,76,117,.14);
   overflow: hidden;
@@ -211,8 +235,11 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, #ff7a59, #ffb347);
-  animation: storyBar 4.2s linear forwards;
+  animation: storyBar var(--story-dur, 5s) linear forwards;
   transform-origin: left;
+}
+.story-progress.is-paused span.active::after {
+  animation-play-state: paused;
 }
 @keyframes storyBar {
   from { transform: scaleX(0); }
@@ -220,41 +247,65 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 .story-stage {
   position: relative;
-  min-height: 340px;
-  border-radius: 22px;
+  min-height: 390px;
+  border-radius: 24px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 20% 15%, rgba(255,255,255,.35), transparent 40%),
-    linear-gradient(165deg, #e8f7fc 0%, #dff5f1 55%, #fff4e8 100%);
-  border: 1px solid rgba(255,255,255,.7);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,.5), transparent 35%),
+    radial-gradient(circle at 90% 85%, rgba(255,122,89,.12), transparent 40%),
+    linear-gradient(165deg, #eaf8fc 0%, #e3f7f2 48%, #fff6ea 100%);
+  border: 1px solid rgba(255,255,255,.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 12px 28px rgba(20,70,100,.1);
+}
+.story-stage.is-paused::after {
+  content: "Paused";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #0f4c75;
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.95);
+  padding: 4px 9px;
+  border-radius: 999px;
 }
 .story-scene {
   display: none;
-  position: absolute;
-  inset: 0;
-  padding: 18px 16px 16px;
+  height: 100%;
+  min-height: 390px;
+  padding: 22px 18px 20px;
   flex-direction: column;
-  animation: storyIn .5s cubic-bezier(.22,1,.36,1);
+  gap: 12px;
+  box-sizing: border-box;
+  animation: storyIn .45s cubic-bezier(.22,1,.36,1);
 }
 .story-scene.active { display: flex; }
 @keyframes storyIn {
-  from { opacity: 0; transform: translateY(12px) scale(.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .story-caption {
   font-family: "Fraunces", serif;
-  font-size: 1.05rem;
+  font-size: clamp(1.1rem, 4.2vw, 1.3rem);
   color: #0f4c75;
   text-align: center;
-  margin-bottom: 12px;
   line-height: 1.35;
+  margin: 0;
+  flex-shrink: 0;
 }
 .story-sub {
   text-align: center;
-  font-size: .82rem;
+  font-size: .84rem;
   color: #3d6f86;
-  margin: -4px 0 12px;
+  margin: 0;
+  line-height: 1.45;
+  flex-shrink: 0;
 }
 .story-art {
   flex: 1;
@@ -262,44 +313,76 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 180px;
+  min-height: 0;
+  padding: 6px 0 4px;
 }
-.story-next-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 12px;
+.story-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.story-controls .story-back { justify-self: start; }
+.story-controls .story-pause { justify-self: center; }
+.story-controls .story-next { justify-self: end; }
+.story-btn {
+  background: rgba(255,255,255,.8);
+  color: #0f4c75;
+  border: 1px solid rgba(255,255,255,.95);
+  padding: 11px 16px;
+  font-size: .88rem;
+  box-shadow: 0 6px 14px rgba(20,70,100,.1);
+}
+.story-btn:disabled {
+  opacity: .4;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none;
+}
+.story-btn.primary {
+  background: linear-gradient(135deg, #1f8fc9, #2ec4b6);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 18px rgba(31,143,201,.28);
+}
+.story-btn.pause-on {
+  background: linear-gradient(135deg, #ff7a59, #e85d3a);
+  color: #fff;
+  border: none;
 }
 
 /* Chat scene */
 .chat-phone {
-  width: min(280px, 100%);
-  background: #0f2130;
-  border-radius: 24px;
-  padding: 12px 10px 14px;
-  box-shadow: 0 16px 36px rgba(15,50,70,.28);
+  width: min(270px, 92%);
+  background: linear-gradient(180deg, #142636, #0d1b27);
+  border-radius: 26px;
+  padding: 14px 11px 14px;
+  box-shadow: 0 18px 36px rgba(15,50,70,.3);
   color: #fff;
 }
 .chat-phone-top {
   text-align: center;
-  font-size: .7rem;
-  opacity: .7;
+  font-size: .68rem;
+  opacity: .75;
   margin-bottom: 10px;
+  letter-spacing: .02em;
 }
 .chat-thread {
-  background: #152a3b;
+  background: rgba(255,255,255,.06);
   border-radius: 16px;
   padding: 12px;
-  min-height: 170px;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
 .chat-bubble {
-  max-width: 82%;
-  padding: 8px 11px;
+  max-width: 84%;
+  padding: 9px 12px;
   border-radius: 14px;
-  font-size: .82rem;
-  line-height: 1.35;
+  font-size: .8rem;
+  line-height: 1.4;
   opacity: 0;
   transform: translateY(8px);
   animation: bubbleIn .4s ease forwards;
@@ -314,11 +397,11 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   background: linear-gradient(135deg, #2ec4b6, #1f8fc9);
   border-bottom-right-radius: 4px;
 }
-.chat-bubble.d1 { animation-delay: .25s; }
-.chat-bubble.d2 { animation-delay: .85s; }
-.chat-bubble.d3 { animation-delay: 1.5s; }
-.chat-bubble.d4 { animation-delay: 2.2s; }
-.chat-bubble.d5 { animation-delay: 2.9s; }
+.chat-bubble.d1 { animation-delay: .2s; }
+.chat-bubble.d2 { animation-delay: .75s; }
+.chat-bubble.d3 { animation-delay: 1.35s; }
+.chat-bubble.d4 { animation-delay: 2s; }
+.chat-bubble.d5 { animation-delay: 2.65s; }
 @keyframes bubbleIn {
   to { opacity: 1; transform: translateY(0); }
 }
@@ -328,11 +411,11 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 18px;
+  gap: 22px;
   width: 100%;
 }
 .person {
-  width: 78px;
+  width: 72px;
   text-align: center;
   animation: personPop .55s cubic-bezier(.22,1,.36,1) both;
 }
@@ -342,33 +425,33 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .person .body {
-  width: 58px;
-  height: 78px;
-  margin: 0 auto 6px;
-  border-radius: 28px 28px 18px 18px;
+  width: 54px;
+  height: 72px;
+  margin: 0 auto 8px;
+  border-radius: 26px 26px 16px 16px;
   position: relative;
   box-shadow: 0 10px 18px rgba(0,0,0,.12);
 }
 .person .head {
   position: absolute;
   left: 50%;
-  top: -18px;
-  width: 34px;
-  height: 34px;
-  margin-left: -17px;
+  top: -16px;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
   border-radius: 50%;
   background: linear-gradient(180deg, #f7d7b8, #e8b890);
   box-shadow: 0 4px 8px rgba(0,0,0,.12);
 }
 .person.me .body { background: linear-gradient(180deg, #4db8e8, #1f8fc9); }
-.person.gopal .body { background: linear-gradient(180deg, #ff9a76, #e85d3a); }
+.person.you .body { background: linear-gradient(180deg, #ff9a76, #e85d3a); }
 .person .label {
   font-size: .72rem;
   font-weight: 800;
   color: #0f4c75;
 }
 .prop {
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   animation: propFloat 1.4s ease-in-out infinite;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,.15));
 }
@@ -379,45 +462,94 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .gift-exchange {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  margin-top: 8px;
+  padding: 8px 10px;
+  margin: 0 2px 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.8);
 }
 .gift-exchange .arrow {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   animation: arrowPulse 1s ease-in-out infinite;
 }
 @keyframes arrowPulse {
   0%, 100% { opacity: .5; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.15); }
 }
+.meetup-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+.meetup-note {
+  margin: 0;
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #0f4c75;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.9);
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 280px;
+  line-height: 1.4;
+}
 
 /* Places */
 .place-card {
-  width: min(300px, 100%);
+  width: min(280px, 100%);
   border-radius: 18px;
-  padding: 18px 14px;
+  padding: 18px 16px;
   text-align: center;
   color: #fff;
   box-shadow: 0 14px 30px rgba(20,70,100,.2);
   animation: personPop .5s ease both;
 }
-.place-card .place-emoji { font-size: 2.4rem; display: block; margin-bottom: 6px; }
+.place-card .place-emoji { font-size: 2.2rem; display: block; margin-bottom: 8px; }
 .place-card h3 {
   font-family: "Fraunces", serif;
-  font-size: 1.15rem;
-  margin-bottom: 4px;
+  font-size: 1.1rem;
+  margin: 0 0 6px;
 }
-.place-card p { font-size: .82rem; opacity: .92; line-height: 1.4; }
+.place-card p {
+  font-size: .8rem;
+  opacity: .94;
+  line-height: 1.45;
+  margin: 0;
+}
 .place-coffee { background: linear-gradient(145deg, #c48a5a, #8b5a2b); }
 .place-drinks { background: linear-gradient(145deg, #5b4b8a, #2f2658); }
 .place-bakery { background: linear-gradient(145deg, #f0b27a, #d68910); }
 .place-party { background: linear-gradient(145deg, #ff7a59, #c44569); }
 .place-lanes { background: linear-gradient(145deg, #2ec4b6, #1a7f8e); }
 
+.story-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(280px, 100%);
+  align-items: stretch;
+}
+.story-stack .place-card { width: 100%; }
+
+.party-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
 .dance-floor {
   display: flex;
   align-items: flex-end;
-  gap: 20px;
+  justify-content: center;
+  gap: 28px;
+  min-height: 100px;
+  padding-top: 12px;
 }
 .dance-floor .person { animation: dance 0.7s ease-in-out infinite alternate; }
 .dance-floor .person.p2 { animation-delay: .2s; }
@@ -425,14 +557,14 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   from { transform: translateY(0) rotate(-4deg); }
   to { transform: translateY(-10px) rotate(5deg); }
 }
-.hug-scene .duo { gap: 2px; }
+.hug-scene .duo { gap: 6px; }
 .hug-scene .person { animation: hugIn .8s ease both; }
 @keyframes hugIn {
   from { opacity: 0; transform: translateX(var(--hx, 0)); }
   to { opacity: 1; transform: translateX(0); }
 }
 .hug-scene .person.me { --hx: -24px; }
-.hug-scene .person.gopal { --hx: 24px; animation-delay: .1s; }
+.hug-scene .person.you { --hx: 24px; animation-delay: .1s; }
 .story-hearts {
   position: absolute;
   inset: 0;
@@ -441,7 +573,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 .story-hearts i {
   position: absolute;
-  bottom: 10%;
+  bottom: 12%;
   left: var(--x);
   font-style: normal;
   animation: storyHeart 2.4s ease-out infinite;
@@ -452,6 +584,18 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   0% { opacity: 0; transform: translateY(0) scale(.6); }
   20% { opacity: .9; }
   100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+}
+
+@media (max-width: 420px) {
+  .story-controls {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .story-controls .story-back,
+  .story-controls .story-pause,
+  .story-controls .story-next { justify-self: stretch; width: 100%; }
+  .story-stage,
+  .story-scene { min-height: 360px; }
 }
 
 /* questions */
@@ -1794,21 +1938,28 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 <section class="screen" id="screen-story">
   <div class="card">
     <div class="story-top">
-      <h1>How we met 🎬</h1>
-      <button type="button" class="story-skip" id="storySkip">Skip →</button>
+      <div class="story-top-text">
+        <h1>How we met 🎬</h1>
+        <p class="story-top-sub">A tiny film about our first day</p>
+      </div>
+      <button type="button" class="story-skip" id="storySkip">Skip</button>
     </div>
-    <div class="story-progress" id="storyProgress" aria-hidden="true"></div>
+
+    <div class="story-meta">
+      <div class="story-progress" id="storyProgress" aria-hidden="true"></div>
+      <div class="story-counter" id="storyCounter">1 / 7</div>
+    </div>
+
     <div class="story-stage" id="storyStage">
-      <!-- scenes injected / static below -->
       <div class="story-scene active" data-scene="0">
-        <div class="story-caption">It started online…</div>
-        <div class="story-sub">Two friends, one hello away from everything</div>
+        <h2 class="story-caption">It started online…</h2>
+        <p class="story-sub">Two friends, one hello away from everything</p>
         <div class="story-art">
           <div class="chat-phone">
-            <div class="chat-phone-top">Online chat · today-ish ✨</div>
+            <div class="chat-phone-top">Online chat ✨</div>
             <div class="chat-thread">
               <div class="chat-bubble them d1">Heyy 👋</div>
-              <div class="chat-bubble me d2">Hey Gopal! Nice to meet you 😊</div>
+              <div class="chat-bubble me d2">Hey! Nice to meet you 😊</div>
               <div class="chat-bubble them d3">Haha likewise! You seem cool</div>
               <div class="chat-bubble me d4">We should hang out sometime ☕</div>
               <div class="chat-bubble them d5">Deal. Coffee soon? 😄</div>
@@ -1818,8 +1969,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
 
       <div class="story-scene" data-scene="1">
-        <div class="story-caption">Plans were made</div>
-        <div class="story-sub">Coffee meetup locked in 📅</div>
+        <h2 class="story-caption">Plans were made</h2>
+        <p class="story-sub">Coffee meetup locked in 📅</p>
         <div class="story-art">
           <div class="place-card place-coffee">
             <span class="place-emoji">☕📱</span>
@@ -1830,35 +1981,33 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
 
       <div class="story-scene" data-scene="2">
-        <div class="story-caption">We finally met</div>
-        <div class="story-sub">Gifts exchanged — a little nervous, a lot happy</div>
+        <h2 class="story-caption">We finally met</h2>
+        <p class="story-sub">Gifts exchanged — a little nervous, a lot happy</p>
         <div class="story-art">
-          <div>
+          <div class="meetup-wrap">
             <div class="duo">
               <div class="person me p1">
                 <div class="body"><div class="head"></div></div>
                 <div class="label">Me</div>
               </div>
-              <div class="gift-exchange">
-                <span class="prop">🔑</span>
-                <span class="arrow">⇄</span>
-                <span class="prop">🌸</span>
-              </div>
-              <div class="person gopal p2">
+              <div class="person you p2">
                 <div class="body"><div class="head"></div></div>
-                <div class="label">Gopal</div>
+                <div class="label">You</div>
               </div>
             </div>
-            <p class="story-sub" style="margin-top:14px;">
-              I gave a keychain · Gopal gave flowers 💐
-            </p>
+            <div class="gift-exchange">
+              <span class="prop" title="Keychain">🔑</span>
+              <span class="arrow">⇄</span>
+              <span class="prop" title="Flowers">🌸</span>
+            </div>
+            <p class="meetup-note">I gave a keychain · You gave flowers 💐</p>
           </div>
         </div>
       </div>
 
       <div class="story-scene" data-scene="3">
-        <div class="story-caption">Coffee? Wait… drinks instead</div>
-        <div class="story-sub">Plot twist at Ching Lung 🍹</div>
+        <h2 class="story-caption">Coffee? Wait… drinks instead</h2>
+        <p class="story-sub">Plot twist at Ching Lung 🍹</p>
         <div class="story-art">
           <div class="place-card place-drinks">
             <span class="place-emoji">🥂✨</span>
@@ -1869,16 +2018,16 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
 
       <div class="story-scene" data-scene="4">
-        <div class="story-caption">Lanes &amp; a bakery stop</div>
-        <div class="story-sub">Wandering, talking, tasting something sweet</div>
+        <h2 class="story-caption">Lanes &amp; a bakery stop</h2>
+        <p class="story-sub">Wandering, talking, tasting something sweet</p>
         <div class="story-art">
-          <div style="display:flex;flex-direction:column;gap:12px;width:100%;align-items:center;">
-            <div class="place-card place-lanes" style="width:min(300px,100%);">
+          <div class="story-stack">
+            <div class="place-card place-lanes">
               <span class="place-emoji">🚶‍♂️🚶‍♂️</span>
               <h3>Evening stroll</h3>
               <p>Through quiet lanes,<br>stories between footsteps.</p>
             </div>
-            <div class="place-card place-bakery" style="width:min(300px,100%);">
+            <div class="place-card place-bakery">
               <span class="place-emoji">🥐🧁</span>
               <h3>Bakery detour</h3>
               <p>Couldn’t resist — one sweet stop.</p>
@@ -1888,42 +2037,45 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       </div>
 
       <div class="story-scene" data-scene="5">
-        <div class="story-caption">Then the night got louder</div>
-        <div class="story-sub">Party place · drinks · dance floor energy</div>
+        <h2 class="story-caption">Then the night got louder</h2>
+        <p class="story-sub">Party place · drinks · dance floor energy</p>
         <div class="story-art">
-          <div>
-            <div class="place-card place-party" style="margin-bottom:16px;">
+          <div class="party-wrap">
+            <div class="place-card place-party">
               <span class="place-emoji">🪩🕺</span>
               <h3>Party vibes</h3>
               <p>A few drinks, big smiles,<br>and dancing like nobody planned it.</p>
             </div>
             <div class="dance-floor duo">
               <div class="person me"><div class="body"><div class="head"></div></div></div>
-              <div class="person gopal p2"><div class="body"><div class="head"></div></div></div>
+              <div class="person you p2"><div class="body"><div class="head"></div></div></div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="story-scene hug-scene" data-scene="6">
-        <div class="story-caption">Goodbye for the day</div>
-        <div class="story-sub">One hug — and a friendship sealed 🤍</div>
+        <h2 class="story-caption">Goodbye for the day</h2>
+        <p class="story-sub">One hug — and a friendship sealed 🤍</p>
         <div class="story-art">
           <div class="story-hearts" aria-hidden="true">
-            <i style="--x:15%;--d:0s">💖</i>
-            <i style="--x:35%;--d:.4s">✨</i>
-            <i style="--x:55%;--d:.8s">💕</i>
-            <i style="--x:75%;--d:.2s">🌟</i>
+            <i style="--x:18%;--d:0s">💖</i>
+            <i style="--x:38%;--d:.4s">✨</i>
+            <i style="--x:58%;--d:.8s">💕</i>
+            <i style="--x:78%;--d:.2s">🌟</i>
           </div>
           <div class="duo">
             <div class="person me"><div class="body"><div class="head"></div></div><div class="label">Me</div></div>
-            <div class="person gopal p2"><div class="body"><div class="head"></div></div><div class="label">Gopal</div></div>
+            <div class="person you p2"><div class="body"><div class="head"></div></div><div class="label">You</div></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="story-next-row">
-      <button type="button" class="btn-secondary" id="storyNext">Next →</button>
+
+    <div class="story-controls">
+      <button type="button" class="story-btn story-back" id="storyBack">←</button>
+      <button type="button" class="story-btn story-pause" id="storyPause">⏸</button>
+      <button type="button" class="story-btn primary story-next" id="storyNext">→</button>
     </div>
   </div>
 </section>
@@ -2340,12 +2492,18 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 
   /* ===== How we met story player ===== */
   const storyScenes = Array.from(document.querySelectorAll("#storyStage .story-scene"));
+  const storyStageEl = document.getElementById("storyStage");
   const storyProgress = document.getElementById("storyProgress");
+  const storyCounter = document.getElementById("storyCounter");
   const storyNextBtn = document.getElementById("storyNext");
+  const storyBackBtn = document.getElementById("storyBack");
+  const storyPauseBtn = document.getElementById("storyPause");
   const storySkipBtn = document.getElementById("storySkip");
+  const STORY_DURATIONS = [5200, 4200, 4500, 4200, 4800, 4500, 4500];
   let storyIndex = 0;
   let storyTimer = null;
-  let storyPlaying = false;
+  let storyAutoplay = true;
+  let storyPaused = false;
 
   function buildStoryProgress() {
     storyProgress.innerHTML = storyScenes.map(() => "<span></span>").join("");
@@ -2359,12 +2517,28 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     }
   }
 
-  function syncStoryProgress() {
+  function syncStoryChrome() {
+    const total = storyScenes.length;
+    if (storyCounter) storyCounter.textContent = `${storyIndex + 1} / ${total}`;
+    if (storyBackBtn) storyBackBtn.disabled = storyIndex <= 0;
+    if (storyNextBtn) {
+      storyNextBtn.textContent = storyIndex >= total - 1 ? "Continue →" : "Next →";
+    }
+    if (storyPauseBtn) {
+      storyPauseBtn.textContent = storyPaused ? "▶ Play" : "⏸ Pause";
+      storyPauseBtn.classList.toggle("pause-on", storyPaused);
+    }
+    storyProgress.classList.toggle("is-paused", storyPaused);
+    storyStageEl.classList.toggle("is-paused", storyPaused);
+
     const bars = storyProgress.querySelectorAll("span");
+    const dur = STORY_DURATIONS[storyIndex] || 4200;
     bars.forEach((bar, i) => {
       bar.classList.remove("active", "done");
+      bar.style.removeProperty("--story-dur");
       if (i === storyIndex) {
         void bar.offsetWidth;
+        bar.style.setProperty("--story-dur", dur + "ms");
         bar.classList.add("active");
       } else if (i < storyIndex) {
         bar.classList.add("done");
@@ -2373,49 +2547,85 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   }
 
   function showStoryScene(index) {
-    storyIndex = index;
+    storyIndex = Math.max(0, Math.min(storyScenes.length - 1, index));
     storyScenes.forEach((scene, i) => {
-      scene.classList.toggle("active", i === index);
+      const on = i === storyIndex;
+      scene.classList.toggle("active", on);
+      if (on) {
+        // Restart chat / entrance animations when revisiting
+        scene.style.animation = "none";
+        void scene.offsetWidth;
+        scene.style.animation = "";
+        scene.querySelectorAll(".chat-bubble").forEach((b) => {
+          b.style.animation = "none";
+          void b.offsetWidth;
+          b.style.animation = "";
+        });
+      }
     });
-    syncStoryProgress();
-    storyNextBtn.textContent = index >= storyScenes.length - 1 ? "Continue to questions →" : "Next →";
+    syncStoryChrome();
   }
 
   function finishStory() {
     clearStoryTimer();
-    storyPlaying = false;
+    storyAutoplay = false;
+    storyPaused = false;
     goTo("questions");
   }
 
   function scheduleStoryAdvance() {
     clearStoryTimer();
-    if (!storyPlaying) return;
-    const delay = storyIndex === 0 ? 4800 : 4200;
+    if (!storyAutoplay || storyPaused) return;
+    const delay = STORY_DURATIONS[storyIndex] || 4200;
     storyTimer = setTimeout(() => {
       if (storyIndex < storyScenes.length - 1) {
         showStoryScene(storyIndex + 1);
         scheduleStoryAdvance();
       } else {
-        finishStory();
+        // Stay on last scene until Continue — don't auto-force ahead
+        storyPaused = true;
+        syncStoryChrome();
       }
     }, delay);
   }
 
   function startStory() {
-    storyPlaying = true;
+    storyAutoplay = true;
+    storyPaused = false;
     showStoryScene(0);
     scheduleStoryAdvance();
   }
 
+  function goStory(delta) {
+    clearStoryTimer();
+    const next = storyIndex + delta;
+    if (next < 0) return;
+    if (next >= storyScenes.length) {
+      finishStory();
+      return;
+    }
+    showStoryScene(next);
+    if (storyAutoplay && !storyPaused) scheduleStoryAdvance();
+  }
+
   storyNextBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
-    clearStoryTimer();
-    if (storyIndex < storyScenes.length - 1) {
-      showStoryScene(storyIndex + 1);
-      if (storyPlaying) scheduleStoryAdvance();
+    goStory(1);
+  });
+  storyBackBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goStory(-1);
+  });
+  storyPauseBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    storyPaused = !storyPaused;
+    if (storyPaused) {
+      clearStoryTimer();
     } else {
-      finishStory();
+      storyAutoplay = true;
+      scheduleStoryAdvance();
     }
+    syncStoryChrome();
   });
   storySkipBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
