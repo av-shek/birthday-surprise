@@ -166,6 +166,294 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 
 .hidden { display: none !important; }
 
+/* ===== How we met story ===== */
+#screen-story .card {
+  max-width: 460px;
+  overflow: hidden;
+  padding-bottom: 22px;
+}
+.story-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.story-top h1 {
+  font-family: "Fraunces", serif;
+  font-size: 1.25rem;
+  color: #0f4c75;
+  margin: 0;
+}
+.story-skip {
+  background: rgba(255,255,255,.7);
+  color: #3a6a82;
+  border: 1px solid rgba(255,255,255,.9);
+  padding: 7px 12px;
+  font-size: .78rem;
+}
+.story-progress {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+.story-progress span {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(15,76,117,.14);
+  overflow: hidden;
+  position: relative;
+}
+.story-progress span.done { background: #2ec4b6; }
+.story-progress span.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #ff7a59, #ffb347);
+  animation: storyBar 4.2s linear forwards;
+  transform-origin: left;
+}
+@keyframes storyBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.story-stage {
+  position: relative;
+  min-height: 340px;
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,.35), transparent 40%),
+    linear-gradient(165deg, #e8f7fc 0%, #dff5f1 55%, #fff4e8 100%);
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+.story-scene {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 18px 16px 16px;
+  flex-direction: column;
+  animation: storyIn .5s cubic-bezier(.22,1,.36,1);
+}
+.story-scene.active { display: flex; }
+@keyframes storyIn {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.story-caption {
+  font-family: "Fraunces", serif;
+  font-size: 1.05rem;
+  color: #0f4c75;
+  text-align: center;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+.story-sub {
+  text-align: center;
+  font-size: .82rem;
+  color: #3d6f86;
+  margin: -4px 0 12px;
+}
+.story-art {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 180px;
+}
+.story-next-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Chat scene */
+.chat-phone {
+  width: min(280px, 100%);
+  background: #0f2130;
+  border-radius: 24px;
+  padding: 12px 10px 14px;
+  box-shadow: 0 16px 36px rgba(15,50,70,.28);
+  color: #fff;
+}
+.chat-phone-top {
+  text-align: center;
+  font-size: .7rem;
+  opacity: .7;
+  margin-bottom: 10px;
+}
+.chat-thread {
+  background: #152a3b;
+  border-radius: 16px;
+  padding: 12px;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chat-bubble {
+  max-width: 82%;
+  padding: 8px 11px;
+  border-radius: 14px;
+  font-size: .82rem;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: bubbleIn .4s ease forwards;
+}
+.chat-bubble.them {
+  align-self: flex-start;
+  background: #2a4458;
+  border-bottom-left-radius: 4px;
+}
+.chat-bubble.me {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #2ec4b6, #1f8fc9);
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.d1 { animation-delay: .25s; }
+.chat-bubble.d2 { animation-delay: .85s; }
+.chat-bubble.d3 { animation-delay: 1.5s; }
+.chat-bubble.d4 { animation-delay: 2.2s; }
+.chat-bubble.d5 { animation-delay: 2.9s; }
+@keyframes bubbleIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Characters */
+.duo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+}
+.person {
+  width: 78px;
+  text-align: center;
+  animation: personPop .55s cubic-bezier(.22,1,.36,1) both;
+}
+.person.p2 { animation-delay: .15s; }
+@keyframes personPop {
+  from { opacity: 0; transform: translateY(16px) scale(.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.person .body {
+  width: 58px;
+  height: 78px;
+  margin: 0 auto 6px;
+  border-radius: 28px 28px 18px 18px;
+  position: relative;
+  box-shadow: 0 10px 18px rgba(0,0,0,.12);
+}
+.person .head {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  width: 34px;
+  height: 34px;
+  margin-left: -17px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f7d7b8, #e8b890);
+  box-shadow: 0 4px 8px rgba(0,0,0,.12);
+}
+.person.me .body { background: linear-gradient(180deg, #4db8e8, #1f8fc9); }
+.person.gopal .body { background: linear-gradient(180deg, #ff9a76, #e85d3a); }
+.person .label {
+  font-size: .72rem;
+  font-weight: 800;
+  color: #0f4c75;
+}
+.prop {
+  font-size: 1.6rem;
+  animation: propFloat 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.15));
+}
+@keyframes propFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.gift-exchange {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.gift-exchange .arrow {
+  font-size: 1.2rem;
+  animation: arrowPulse 1s ease-in-out infinite;
+}
+@keyframes arrowPulse {
+  0%, 100% { opacity: .5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Places */
+.place-card {
+  width: min(300px, 100%);
+  border-radius: 18px;
+  padding: 18px 14px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(20,70,100,.2);
+  animation: personPop .5s ease both;
+}
+.place-card .place-emoji { font-size: 2.4rem; display: block; margin-bottom: 6px; }
+.place-card h3 {
+  font-family: "Fraunces", serif;
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+.place-card p { font-size: .82rem; opacity: .92; line-height: 1.4; }
+.place-coffee { background: linear-gradient(145deg, #c48a5a, #8b5a2b); }
+.place-drinks { background: linear-gradient(145deg, #5b4b8a, #2f2658); }
+.place-bakery { background: linear-gradient(145deg, #f0b27a, #d68910); }
+.place-party { background: linear-gradient(145deg, #ff7a59, #c44569); }
+.place-lanes { background: linear-gradient(145deg, #2ec4b6, #1a7f8e); }
+
+.dance-floor {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+.dance-floor .person { animation: dance 0.7s ease-in-out infinite alternate; }
+.dance-floor .person.p2 { animation-delay: .2s; }
+@keyframes dance {
+  from { transform: translateY(0) rotate(-4deg); }
+  to { transform: translateY(-10px) rotate(5deg); }
+}
+.hug-scene .duo { gap: 2px; }
+.hug-scene .person { animation: hugIn .8s ease both; }
+@keyframes hugIn {
+  from { opacity: 0; transform: translateX(var(--hx, 0)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.hug-scene .person.me { --hx: -24px; }
+.hug-scene .person.gopal { --hx: 24px; animation-delay: .1s; }
+.story-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.story-hearts i {
+  position: absolute;
+  bottom: 10%;
+  left: var(--x);
+  font-style: normal;
+  animation: storyHeart 2.4s ease-out infinite;
+  animation-delay: var(--d);
+  opacity: 0;
+}
+@keyframes storyHeart {
+  0% { opacity: 0; transform: translateY(0) scale(.6); }
+  20% { opacity: .9; }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+}
+
 /* questions */
 #screen-questions .card {
   overflow: hidden;
@@ -1497,8 +1785,145 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </p>
     <p class="subtitle">A little journey made just for you.</p>
     <div class="click-begin">
-      <button class="btn-primary" type="button" id="beginBtn" data-go="questions">Click to begin</button>
-   
+      <button class="btn-primary" type="button" id="beginBtn" data-go="story">Click to begin</button>
+    </div>
+  </div>
+</section>
+
+<!-- 1b. How we met (animated story) -->
+<section class="screen" id="screen-story">
+  <div class="card">
+    <div class="story-top">
+      <h1>How we met 🎬</h1>
+      <button type="button" class="story-skip" id="storySkip">Skip →</button>
+    </div>
+    <div class="story-progress" id="storyProgress" aria-hidden="true"></div>
+    <div class="story-stage" id="storyStage">
+      <!-- scenes injected / static below -->
+      <div class="story-scene active" data-scene="0">
+        <div class="story-caption">It started online…</div>
+        <div class="story-sub">Two friends, one hello away from everything</div>
+        <div class="story-art">
+          <div class="chat-phone">
+            <div class="chat-phone-top">Online chat · today-ish ✨</div>
+            <div class="chat-thread">
+              <div class="chat-bubble them d1">Heyy 👋</div>
+              <div class="chat-bubble me d2">Hey Gopal! Nice to meet you 😊</div>
+              <div class="chat-bubble them d3">Haha likewise! You seem cool</div>
+              <div class="chat-bubble me d4">We should hang out sometime ☕</div>
+              <div class="chat-bubble them d5">Deal. Coffee soon? 😄</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene" data-scene="1">
+        <div class="story-caption">Plans were made</div>
+        <div class="story-sub">Coffee meetup locked in 📅</div>
+        <div class="story-art">
+          <div class="place-card place-coffee">
+            <span class="place-emoji">☕📱</span>
+            <h3>Coffee plans</h3>
+            <p>Messages turned into a real plan.<br>Time, place, butterflies — all set.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene" data-scene="2">
+        <div class="story-caption">We finally met</div>
+        <div class="story-sub">Gifts exchanged — a little nervous, a lot happy</div>
+        <div class="story-art">
+          <div>
+            <div class="duo">
+              <div class="person me p1">
+                <div class="body"><div class="head"></div></div>
+                <div class="label">Me</div>
+              </div>
+              <div class="gift-exchange">
+                <span class="prop">🔑</span>
+                <span class="arrow">⇄</span>
+                <span class="prop">🌸</span>
+              </div>
+              <div class="person gopal p2">
+                <div class="body"><div class="head"></div></div>
+                <div class="label">Gopal</div>
+              </div>
+            </div>
+            <p class="story-sub" style="margin-top:14px;">
+              I gave a keychain · Gopal gave flowers 💐
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene" data-scene="3">
+        <div class="story-caption">Coffee? Wait… drinks instead</div>
+        <div class="story-sub">Plot twist at Ching Lung 🍹</div>
+        <div class="story-art">
+          <div class="place-card place-drinks">
+            <span class="place-emoji">🥂✨</span>
+            <h3>Ching Lung</h3>
+            <p>We ditched the coffee idea<br>and went for drinks instead.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene" data-scene="4">
+        <div class="story-caption">Lanes &amp; a bakery stop</div>
+        <div class="story-sub">Wandering, talking, tasting something sweet</div>
+        <div class="story-art">
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%;align-items:center;">
+            <div class="place-card place-lanes" style="width:min(300px,100%);">
+              <span class="place-emoji">🚶‍♂️🚶‍♂️</span>
+              <h3>Evening stroll</h3>
+              <p>Through quiet lanes,<br>stories between footsteps.</p>
+            </div>
+            <div class="place-card place-bakery" style="width:min(300px,100%);">
+              <span class="place-emoji">🥐🧁</span>
+              <h3>Bakery detour</h3>
+              <p>Couldn’t resist — one sweet stop.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene" data-scene="5">
+        <div class="story-caption">Then the night got louder</div>
+        <div class="story-sub">Party place · drinks · dance floor energy</div>
+        <div class="story-art">
+          <div>
+            <div class="place-card place-party" style="margin-bottom:16px;">
+              <span class="place-emoji">🪩🕺</span>
+              <h3>Party vibes</h3>
+              <p>A few drinks, big smiles,<br>and dancing like nobody planned it.</p>
+            </div>
+            <div class="dance-floor duo">
+              <div class="person me"><div class="body"><div class="head"></div></div></div>
+              <div class="person gopal p2"><div class="body"><div class="head"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-scene hug-scene" data-scene="6">
+        <div class="story-caption">Goodbye for the day</div>
+        <div class="story-sub">One hug — and a friendship sealed 🤍</div>
+        <div class="story-art">
+          <div class="story-hearts" aria-hidden="true">
+            <i style="--x:15%;--d:0s">💖</i>
+            <i style="--x:35%;--d:.4s">✨</i>
+            <i style="--x:55%;--d:.8s">💕</i>
+            <i style="--x:75%;--d:.2s">🌟</i>
+          </div>
+          <div class="duo">
+            <div class="person me"><div class="body"><div class="head"></div></div><div class="label">Me</div></div>
+            <div class="person gopal p2"><div class="body"><div class="head"></div></div><div class="label">Gopal</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="story-next-row">
+      <button type="button" class="btn-secondary" id="storyNext">Next →</button>
     </div>
   </div>
 </section>
@@ -1528,7 +1953,6 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
             <button class="yes" type="button">YES 💖</button>
             <button class="no" type="button">No</button>
           </div>
-          <p class="question-hint">Psst… the No button is a little shy 👀</p>
           <div class="message"></div>
         </div>
       </div>
@@ -1585,7 +2009,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     </div>
 
     <h2 class="section-title">🎟 Birthday Coupons</h2>
-    <p class="section-hint">Tap each ticket to redeem a little treat</p>
+    <p class="section-hint">Tap ticket to redeem a little treat</p>
 
     <div class="coupon-progress" aria-live="polite">
       <div class="coupon-progress-label">
@@ -1669,8 +2093,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
     <p class="section-hint">Tap the stars — each one holds something for you</p>
     <div class="sky" id="sky"></div>
     <div class="nav-row">
-      <button class="btn-ghost" type="button" data-go="gifts">← Gifts</button>
-      <button class="btn-primary" type="button" data-go="letter">Final Surprise →</button>
+      <button class="btn-ghost" type="button" data-go="gifts">←</button>
+      <button class="btn-primary" type="button" data-go="letter">→</button>
     </div>
     <p class="footer-note">Made with ❤️ for your special day</p>
   </div>
@@ -1886,6 +2310,11 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       startCinematic();
       return;
     }
+    if (target === "story") {
+      showScreen("story");
+      startStory();
+      return;
+    }
     showScreen(target);
     if (target === "celebrate") launchConfetti();
   }
@@ -1899,14 +2328,98 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
       goTo(navBtn.getAttribute("data-go"));
       return;
     }
-    if (e.target.closest("button, .coupon, .gift, .star, .overlay-card, .cinematic, a, input")) return;
+    if (e.target.closest("button, .coupon, .gift, .star, .overlay-card, .cinematic, .story-stage, a, input")) return;
     createHeart(e.clientX, e.clientY);
   });
 
   document.getElementById("beginBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+    goTo("story");
+  });
+
+  /* ===== How we met story player ===== */
+  const storyScenes = Array.from(document.querySelectorAll("#storyStage .story-scene"));
+  const storyProgress = document.getElementById("storyProgress");
+  const storyNextBtn = document.getElementById("storyNext");
+  const storySkipBtn = document.getElementById("storySkip");
+  let storyIndex = 0;
+  let storyTimer = null;
+  let storyPlaying = false;
+
+  function buildStoryProgress() {
+    storyProgress.innerHTML = storyScenes.map(() => "<span></span>").join("");
+  }
+  buildStoryProgress();
+
+  function clearStoryTimer() {
+    if (storyTimer) {
+      clearTimeout(storyTimer);
+      storyTimer = null;
+    }
+  }
+
+  function syncStoryProgress() {
+    const bars = storyProgress.querySelectorAll("span");
+    bars.forEach((bar, i) => {
+      bar.classList.remove("active", "done");
+      if (i === storyIndex) {
+        void bar.offsetWidth;
+        bar.classList.add("active");
+      } else if (i < storyIndex) {
+        bar.classList.add("done");
+      }
+    });
+  }
+
+  function showStoryScene(index) {
+    storyIndex = index;
+    storyScenes.forEach((scene, i) => {
+      scene.classList.toggle("active", i === index);
+    });
+    syncStoryProgress();
+    storyNextBtn.textContent = index >= storyScenes.length - 1 ? "Continue to questions →" : "Next →";
+  }
+
+  function finishStory() {
+    clearStoryTimer();
+    storyPlaying = false;
     goTo("questions");
+  }
+
+  function scheduleStoryAdvance() {
+    clearStoryTimer();
+    if (!storyPlaying) return;
+    const delay = storyIndex === 0 ? 4800 : 4200;
+    storyTimer = setTimeout(() => {
+      if (storyIndex < storyScenes.length - 1) {
+        showStoryScene(storyIndex + 1);
+        scheduleStoryAdvance();
+      } else {
+        finishStory();
+      }
+    }, delay);
+  }
+
+  function startStory() {
+    storyPlaying = true;
+    showStoryScene(0);
+    scheduleStoryAdvance();
+  }
+
+  storyNextBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    clearStoryTimer();
+    if (storyIndex < storyScenes.length - 1) {
+      showStoryScene(storyIndex + 1);
+      if (storyPlaying) scheduleStoryAdvance();
+    } else {
+      finishStory();
+    }
+  });
+  storySkipBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    finishStory();
   });
 
   // Questions
@@ -2147,6 +2660,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   let melodyNodes = [];
   let cakeDone = false;
   let swiping = false;
+  let allowCinematicAudio = false;
   let slideIndex = 0;
   let slideBusy = false;
   let slideResolve = null;
@@ -2304,6 +2818,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   }
 
   function playMelody(kind = "soft") {
+    if (!allowCinematicAudio) return;
     try {
       stopMelody();
       if (!audioCtx || audioCtx.state === "closed") {
@@ -2358,13 +2873,33 @@ Keep shining, keep dreaming, and keep being yourself.`;
     } catch (_) { /* ignore */ }
   }
 
+  async function playSoftSong() {
+    if (!allowCinematicAudio) return;
+    try {
+      partyAudio.pause();
+      finaleAudio.currentTime = 0;
+      await finaleAudio.play();
+      if (!allowCinematicAudio) {
+        finaleAudio.pause();
+        finaleAudio.currentTime = 0;
+      }
+    } catch (_) {
+      if (allowCinematicAudio) playMelody("soft");
+    }
+  }
+
   async function playPartySong() {
+    if (!allowCinematicAudio) return;
     try {
       finaleAudio.pause();
       partyAudio.currentTime = 0;
       await partyAudio.play();
+      if (!allowCinematicAudio) {
+        partyAudio.pause();
+        partyAudio.currentTime = 0;
+      }
     } catch (_) {
-      playMelody("party");
+      if (allowCinematicAudio) playMelody("party");
     }
   }
 
@@ -2401,12 +2936,12 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (cakeDone) return;
     cakeDone = true;
     setTimeout(() => {
-      if (!cineRunning) return;
+      if (!cineRunning || !allowCinematicAudio) return;
       showPhase(phaseFinale);
       launchConfetti();
       startFireworks();
       spawnCineHearts();
-      playPartySong();
+      playPartySong(); // final wish celebration music
       cineSkip.style.display = "none";
       cineClose.classList.add("show");
     }, 700);
@@ -2416,12 +2951,8 @@ Keep shining, keep dreaming, and keep being yourself.`;
     resetCandles();
     showPhase(phaseCake);
     cineSkip.style.display = "none";
-    // Allow leaving cake without starting music
-    cineClose.classList.add("show");
-    // Stop any leftover soft track from earlier
-    finaleAudio.pause();
-    finaleAudio.currentTime = 0;
-    stopMelody();
+    // Keep Back hidden on cake — only show after final wish
+    cineClose.classList.remove("show");
   }
 
   // Candle interactions
@@ -2732,6 +3263,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   function stopCinematicExtras() {
     cineRunning = false;
     cakeDone = true;
+    allowCinematicAudio = false; // blocks any late play() after Back
     finishSlideshow();
     clearCineTimers();
     cancelAnimationFrame(particleRAF);
@@ -2752,6 +3284,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
 
   function startCinematic() {
     stopCinematicExtras();
+    allowCinematicAudio = true;
     document.body.classList.add("cinematic-on");
     cinematic.classList.add("active");
     cinematic.setAttribute("aria-hidden", "false");
@@ -2774,12 +3307,13 @@ Keep shining, keep dreaming, and keep being yourself.`;
     resizeCineCanvases();
     cineRunning = true;
     startParticles();
-    // Warm cache while letter types
     preloadSlides();
     runCinematicSequence(false);
   }
 
   function closeCinematic() {
+    // Explicitly silence everything before returning to constellation
+    allowCinematicAudio = false;
     stopCinematicExtras();
     cinematic.classList.remove("active");
     cinematic.setAttribute("aria-hidden", "true");
