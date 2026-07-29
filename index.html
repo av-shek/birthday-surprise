@@ -2687,21 +2687,41 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   opacity: 1;
 }
 
-/* Typewriter letter scene */
+/* Typewriter letter + memories (one screen) */
 .cinematic.is-typewriter {
   background:
     radial-gradient(ellipse 80% 50% at 50% 12%, rgba(255, 186, 120, .18), transparent 52%),
     radial-gradient(ellipse 60% 40% at 50% 15%, #4a3424 0%, transparent 55%),
-    linear-gradient(180deg, #2a1c14 0%, #16100c 48%, #0c0907 100%);
+    radial-gradient(ellipse 55% 40% at 50% 92%, rgba(255, 140, 160, .14), transparent 55%),
+    linear-gradient(180deg, #2a1c14 0%, #16100c 48%, #140e10 100%);
 }
 .cinematic.is-typewriter #particleCanvas {
   opacity: .28;
+}
+.cinematic.is-typewriter .cine-stage {
+  width: min(480px, calc(100vw - 28px));
+  max-height: calc(100dvh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 56px 8px 48px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 220, 170, .25) transparent;
 }
 .cinematic.is-typewriter .cine-skip {
   font-family: "Special Elite", "Courier New", monospace;
   border-color: rgba(255, 220, 170, .28);
   background: rgba(40, 28, 18, .72);
   color: #f4e8d0;
+}
+.letter-memories {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
 }
 .typewriter-desk {
   width: 100%;
@@ -2711,8 +2731,8 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   gap: 18px;
 }
 .typewriter-machine {
-  width: min(440px, 100%);
-  padding: 14px 12px 18px;
+  width: min(400px, 100%);
+  padding: 12px 10px 16px;
   border-radius: 18px 18px 22px 22px;
   background:
     linear-gradient(180deg, #3a2f28 0%, #2a221c 40%, #1c1612 100%);
@@ -2731,9 +2751,9 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 .typewriter-paper {
   position: relative;
   margin: 0 auto;
-  width: min(380px, 92%);
-  min-height: 280px;
-  padding: 28px 26px 32px;
+  width: min(340px, 92%);
+  min-height: 220px;
+  padding: 22px 22px 26px;
   text-align: left;
   color: #1c140c;
   background:
@@ -2785,15 +2805,15 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 .cine-message {
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: clamp(.88rem, 3.1vw, 1.02rem);
-  line-height: 1.75;
+  font-size: clamp(.82rem, 2.9vw, .95rem);
+  line-height: 1.7;
   color: #24180e;
   text-align: left;
   white-space: pre-wrap;
   max-width: none;
   margin: 0 0 0 8px;
   text-shadow: none;
-  min-height: 8em;
+  min-height: 6.5em;
   letter-spacing: .02em;
 }
 .cine-cursor::after {
@@ -2838,36 +2858,27 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 .typewriter-hint.show { opacity: 1; }
 
-/* Personal memory scrapbook (photo + caption) */
-.cinematic.is-album {
-  background:
-    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(255, 210, 180, .45), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(255, 140, 160, .22), transparent 50%),
-    radial-gradient(ellipse 45% 35% at 90% 70%, rgba(255, 200, 120, .2), transparent 48%),
-    linear-gradient(165deg, #4a2a38 0%, #6b3a48 28%, #8b5560 58%, #3d2430 100%);
-}
-.cinematic.is-album #particleCanvas {
-  opacity: .2;
-  filter: sepia(.25) hue-rotate(-10deg);
-}
-.cinematic.is-album .cine-stage {
-  width: min(480px, calc(100vw - 28px));
-}
-.cinematic.is-album .cine-skip {
-  font-family: "Caveat", cursive;
-  font-size: 1.05rem;
-  font-weight: 600;
-  border-color: rgba(255, 220, 210, .35);
-  background: rgba(60, 30, 40, .55);
-  color: #ffe8e0;
-}
-
+/* Personal memory scrapbook (photo + caption) — lives with the letter */
 .memory-album {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity .75s ease, transform .75s ease, max-height .85s ease, gap .4s ease;
+}
+.memory-album.is-revealed {
   gap: 10px;
+  max-height: 1200px;
+  opacity: 1;
+  overflow: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 .memory-kicker {
   margin: 0 0 4px;
@@ -2884,7 +2895,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 }
 .memory-card {
   position: relative;
-  width: min(400px, 92vw);
+  width: min(360px, 92vw);
   padding: 14px 14px 10px;
   border-radius: 4px 4px 6px 6px;
   background:
@@ -2940,7 +2951,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(400px, 92vw);
+  width: min(360px, 92vw);
   padding: 0 4px;
   margin-top: 2px;
 }
@@ -2962,11 +2973,11 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   0%, 100% { transform: scale(1); opacity: .55; }
   50% { transform: scale(1.12); opacity: .9; }
 }
-.cinematic.is-album .slide-nav {
+.cinematic.is-typewriter .slide-nav {
   margin-top: 8px;
   gap: 12px;
 }
-.cinematic.is-album .slide-arrow {
+.cinematic.is-typewriter .slide-arrow {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -2975,17 +2986,17 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
   color: #ffe8e0;
   backdrop-filter: blur(6px);
 }
-.cinematic.is-album .slide-arrow:hover {
+.cinematic.is-typewriter .slide-arrow:hover {
   background: rgba(255, 236, 228, .3);
 }
-.cinematic.is-album .slide-dot {
+.cinematic.is-typewriter .slide-dot {
   background: rgba(255, 230, 220, .35);
 }
-.cinematic.is-album .slide-dot.active {
+.cinematic.is-typewriter .slide-dot.active {
   background: #ff9eb0;
   box-shadow: 0 0 12px rgba(255, 140, 160, .55);
 }
-.cinematic.is-album .slide-loader {
+.cinematic.is-typewriter .slide-loader {
   background: linear-gradient(160deg, rgba(60, 30, 40, .92), rgba(90, 45, 55, .9));
   font-family: "Caveat", cursive;
   font-size: 1.15rem;
@@ -3125,7 +3136,7 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 .slide-continue.is-on {
   display: inline-flex;
 }
-.cinematic.is-album .cine-skip {
+.cinematic.has-slide-next .cine-skip {
   visibility: hidden;
   pointer-events: none;
 }
@@ -4173,8 +4184,7 @@ button.nav-next,
 .cinematic .cine-next,
 .cinematic .slide-continue,
 .cinematic.is-typewriter .cine-close,
-.cinematic.is-album .cine-close,
-.cinematic.is-album .slide-continue,
+.cinematic.is-typewriter .slide-continue,
 .cinematic.is-cake .cine-close,
 .cinematic.is-finale .cine-close {
   width: 44px !important;
@@ -4208,7 +4218,6 @@ button.nav-back,
 .cine-close,
 .cinematic .cine-close,
 .cinematic.is-typewriter .cine-close,
-.cinematic.is-album .cine-close,
 .cinematic.is-cake .cine-close,
 .cinematic.is-finale .cine-close {
   background: rgba(20, 24, 40, .55) !important;
@@ -4222,7 +4231,7 @@ button.nav-next,
 .slide-continue,
 .cinematic .cine-next,
 .cinematic .slide-continue,
-.cinematic.is-album .slide-continue {
+.cinematic.is-typewriter .slide-continue {
   background: linear-gradient(135deg, #ffb347, #e87854) !important;
   color: #1a1020 !important;
   border: none !important;
@@ -4267,7 +4276,7 @@ button.nav-next,
     <p class="welcome-title">Happy Birthday</p>
     <p class="welcome-line">A private celebration of you — stories, gifts, games, and a finale waiting at the end.</p>
     <button class="welcome-cta" type="button" id="beginBtn" data-go="story">Begin the journey</button>
-    <p class="welcome-promise">Made only for this night</p>
+    <p class="welcome-promise">Made only for you</p>
   </div>
 </section>
 
@@ -4784,40 +4793,40 @@ button.nav-next,
   <canvas id="fireworksCanvas"></canvas>
   <div class="cine-stage">
     <div class="cine-phase" id="phaseTypewriter">
-      <div class="typewriter-desk">
-        <div class="typewriter-machine" aria-hidden="true">
-          <div class="typewriter-platen"></div>
-          <div class="typewriter-paper">
-            <p class="cine-glow" id="typeGreeting"></p>
-            <p class="cine-message" id="typeBody"></p>
-          </div>
-          <div class="typewriter-keys">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="cine-phase" id="phaseSlideshow">
-      <div class="memory-album">
-        <p class="memory-kicker">Little moments with you <span>♡</span></p>
-        <div class="memory-card">
-          <div class="slide-frame is-loading" id="slideFrame">
-            <div class="slide-loader" id="slideLoader" aria-live="polite">
-              <div class="media-spinner"></div>
-              <span>Opening a memory…</span>
+      <div class="letter-memories">
+        <div class="typewriter-desk">
+          <div class="typewriter-machine" aria-hidden="true">
+            <div class="typewriter-platen"></div>
+            <div class="typewriter-paper">
+              <p class="cine-glow" id="typeGreeting"></p>
+              <p class="cine-message" id="typeBody"></p>
             </div>
-            <div class="slide-track" id="slideTrack"></div>
+            <div class="typewriter-keys">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
           </div>
-          <p class="slide-caption" id="slideCaption"></p>
         </div>
-        <div class="memory-meta">
-          <p class="slide-counter" id="slideCounter"></p>
-          <span class="memory-heart" aria-hidden="true">💌</span>
-        </div>
-        <div class="slide-nav">
-          <button type="button" class="slide-arrow" id="slidePrev" aria-label="Previous photo">‹</button>
-          <div class="slide-dots" id="slideDots"></div>
-          <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
+        <div class="memory-album" id="memoryAlbum">
+          <p class="memory-kicker">Little moments with you <span>♡</span></p>
+          <div class="memory-card">
+            <div class="slide-frame is-loading" id="slideFrame">
+              <div class="slide-loader" id="slideLoader" aria-live="polite">
+                <div class="media-spinner"></div>
+                <span>Opening a memory…</span>
+              </div>
+              <div class="slide-track" id="slideTrack"></div>
+            </div>
+            <p class="slide-caption" id="slideCaption"></p>
+          </div>
+          <div class="memory-meta">
+            <p class="slide-counter" id="slideCounter"></p>
+            <span class="memory-heart" aria-hidden="true">💌</span>
+          </div>
+          <div class="slide-nav">
+            <button type="button" class="slide-arrow" id="slidePrev" aria-label="Previous photo">‹</button>
+            <div class="slide-dots" id="slideDots"></div>
+            <button type="button" class="slide-arrow" id="slideNext" aria-label="Next photo">›</button>
+          </div>
         </div>
       </div>
     </div>
@@ -6075,9 +6084,9 @@ Hope it made you smile.</p>
   const typeBody = document.getElementById("typeBody");
   const typeContinue = document.getElementById("typeContinue");
   const phaseTypewriter = document.getElementById("phaseTypewriter");
-  const phaseSlideshow = document.getElementById("phaseSlideshow");
   const phaseCake = document.getElementById("phaseCake");
   const phaseFinale = document.getElementById("phaseFinale");
+  const memoryAlbum = document.getElementById("memoryAlbum");
   const slideFrame = document.getElementById("slideFrame");
   const slideLoader = document.getElementById("slideLoader");
   const slideTrack = document.getElementById("slideTrack");
@@ -6198,29 +6207,43 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
 
   function showPhase(phase) {
-    [phaseTypewriter, phaseSlideshow, phaseCake, phaseFinale].forEach((el) => {
+    [phaseTypewriter, phaseCake, phaseFinale].forEach((el) => {
       el.classList.remove("visible");
     });
     if (phase) phase.classList.add("visible");
     cinematic.classList.toggle("is-typewriter", phase === phaseTypewriter);
-    cinematic.classList.toggle("is-album", phase === phaseSlideshow);
     cinematic.classList.toggle("is-cake", phase === phaseCake);
     cinematic.classList.toggle("is-finale", phase === phaseFinale);
-    document.body.classList.toggle("theme-typewriter", phase === phaseTypewriter || phase === phaseSlideshow);
-    if (phase !== phaseTypewriter) hideTypeContinue();
+    document.body.classList.toggle("theme-typewriter", phase === phaseTypewriter);
+    if (phase !== phaseTypewriter) {
+      hideTypeContinue();
+      if (slideContinue) {
+        slideContinue.classList.remove("is-on");
+        cinematic.classList.remove("has-slide-next");
+      }
+      memoryAlbum?.classList.remove("is-revealed");
+    }
 
-    // Back on letter, cake, and finale
+    // Back on letter+memories, cake, and finale
     if (phase === phaseTypewriter || phase === phaseCake || phase === phaseFinale) {
       cineClose.classList.add("show");
     } else {
       cineClose.classList.remove("show");
     }
+  }
 
-    // Slideshow next (top-right)
+  function revealMemories() {
+    memoryAlbum?.classList.add("is-revealed");
     if (slideContinue) {
-      slideContinue.classList.toggle("is-on", phase === phaseSlideshow);
-      if (phase === phaseSlideshow) slideContinue.textContent = "→";
+      slideContinue.classList.add("is-on");
+      cinematic.classList.add("has-slide-next");
     }
+  }
+
+  function hideMemoriesChrome() {
+    memoryAlbum?.classList.remove("is-revealed");
+    if (slideContinue) slideContinue.classList.remove("is-on");
+    cinematic?.classList.remove("has-slide-next");
   }
 
   function typeText(el, text, speed = 38) {
@@ -6486,13 +6509,18 @@ Keep shining, keep dreaming, and keep being yourself.`;
     cineClose.classList.add("show");
   }
 
-  function backToSlideshow() {
+  function backToLetterMemories() {
     clearCineTimers();
     hideTypeContinue();
     cakeDone = false;
     resetCandles();
     cineRunning = true;
     cineSkip.style.display = "none";
+    showPhase(phaseTypewriter);
+    typeGreeting.textContent = GREETING;
+    typeBody.textContent = LETTER;
+    typeGreeting.classList.remove("cine-cursor");
+    typeBody.classList.remove("cine-cursor");
     runSlideshow().then(() => {
       if (!cineRunning) return;
       showCakePhase();
@@ -6522,18 +6550,21 @@ Keep shining, keep dreaming, and keep being yourself.`;
   cakeScene.addEventListener("pointercancel", endSwipe);
 
   async function runSlideshow() {
-    showPhase(phaseSlideshow);
+    // Memories stay on the same letter screen — just reveal + wire the album
+    revealMemories();
     slideIndex = 0;
     slideBusy = false;
     slideDragOffset = 0;
     buildSlideTrack();
     buildSlideDots();
-    // Wait for layout so slideFrame has a real width (phase was display:none)
+    // Wait for layout so slideFrame has a real width
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     setTrackPosition(0, false);
     updateSlideChrome();
     await revealCaption(SLIDES[0]?.caption || "");
     await waitForSlideReady(0);
+    // Scroll memories into view gently once revealed
+    memoryAlbum?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
     return new Promise((resolve) => {
       slideResolve = resolve;
@@ -6711,7 +6742,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
 
   slideFrame.addEventListener("pointerdown", (e) => {
-    if (!phaseSlideshow.classList.contains("visible") || slideBusy) return;
+    if (!phaseTypewriter.classList.contains("visible") || !memoryAlbum?.classList.contains("is-revealed") || slideBusy) return;
     slideDragging = true;
     slideDragStartX = e.clientX;
     slidePointerX = e.clientX;
@@ -6767,14 +6798,14 @@ Keep shining, keep dreaming, and keep being yourself.`;
   });
 
   document.addEventListener("keydown", (e) => {
-    if (!phaseSlideshow.classList.contains("visible") || !cineRunning) return;
+    if (!phaseTypewriter.classList.contains("visible") || !memoryAlbum?.classList.contains("is-revealed") || !cineRunning) return;
     if (e.key === "ArrowLeft") { e.preventDefault(); goToSlide(slideIndex - 1); }
     if (e.key === "ArrowRight") { e.preventDefault(); goToSlide(slideIndex + 1); }
     if (e.key === "Enter") { e.preventDefault(); finishSlideshow(); }
   });
 
   window.addEventListener("resize", () => {
-    if (phaseSlideshow.classList.contains("visible")) {
+    if (phaseTypewriter.classList.contains("visible") && memoryAlbum?.classList.contains("is-revealed")) {
       setTrackPosition(slideIndex, false);
     }
   });
@@ -6784,11 +6815,13 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (skipToCake) {
       hideTypeContinue();
       finishSlideshow();
+      hideMemoriesChrome();
       showCakePhase();
       return;
     }
 
     showPhase(phaseTypewriter);
+    hideMemoriesChrome();
     typeGreeting.textContent = "";
     typeBody.textContent = "";
     typeGreeting.classList.add("cine-cursor");
@@ -6804,10 +6837,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     typeBody.classList.remove("cine-cursor");
     if (!cineRunning || gen !== cineGen) return;
 
-    // Full letter done — → to open photos
-    const afterLetter = await waitForTypeContinue();
-    if (!afterLetter || !cineRunning || gen !== cineGen) return;
-
+    // Letter + memories share one screen — reveal album after typing
     await runSlideshow();
     if (!cineRunning || gen !== cineGen) return;
 
@@ -6822,6 +6852,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     allowCinematicAudio = false; // blocks any late play() after Back
     hideTypeContinue();
     finishSlideshow();
+    hideMemoriesChrome();
     clearCineTimers();
     cancelAnimationFrame(particleRAF);
     cancelAnimationFrame(fireworksRAF);
@@ -6853,6 +6884,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     starOverlay.classList.remove("active");
     typeGreeting.textContent = "";
     typeBody.textContent = "";
+    hideMemoriesChrome();
     slideTrack.innerHTML = "";
     slideTrack.style.transform = "translate3d(0,0,0)";
     slideTrack.classList.remove("is-dragging");
@@ -6888,6 +6920,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     stopMelody();
     hideTypeContinue();
     finishSlideshow();
+    hideMemoriesChrome();
     cakeDone = false;
     cineSkip.style.display = "";
     allowCinematicAudio = true;
@@ -6901,7 +6934,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     // Full exit from cinematic back to sudoku
     allowCinematicAudio = false;
     stopCinematicExtras();
-    cinematic.classList.remove("active", "is-typewriter", "is-album", "is-cake", "is-finale");
+    cinematic.classList.remove("active", "is-typewriter", "is-cake", "is-finale");
     cinematic.setAttribute("aria-hidden", "true");
     document.body.classList.remove("cinematic-on", "theme-typewriter");
     showPhase(null);
@@ -6929,7 +6962,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
     if (phaseFinale.classList.contains("visible")) {
       backToTypewriter();
     } else if (phaseCake.classList.contains("visible")) {
-      backToSlideshow();
+      backToLetterMemories();
     } else {
       closeCinematic();
     }
