@@ -112,15 +112,54 @@ body.theme-neon {
 }
 body.theme-chalk {
   background:
-    radial-gradient(ellipse at 30% 0%, rgba(255,255,255,.08), transparent 40%),
-    linear-gradient(180deg, #1a3d2a 0%, #245238 40%, #163224 100%);
+    radial-gradient(ellipse 75% 50% at 12% 8%, rgba(140, 220, 170, .28), transparent 52%),
+    radial-gradient(ellipse 55% 42% at 92% 18%, rgba(255, 220, 140, .16), transparent 48%),
+    radial-gradient(ellipse 60% 45% at 70% 95%, rgba(40, 120, 80, .35), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(255, 255, 255, .05), transparent 50%),
+    linear-gradient(165deg, #12241a 0%, #1a3d2a 22%, #2a5a3c 48%, #1e4530 72%, #0f1f16 100%);
   color: #f4f7f0;
 }
 body.theme-paper {
   background:
-    radial-gradient(ellipse at 50% -10%, #fff8e8 0%, transparent 50%),
-    linear-gradient(180deg, #e8dcc8 0%, #d4c4a8 55%, #c4b090 100%);
+    radial-gradient(ellipse 85% 55% at 50% -8%, rgba(255, 250, 235, .95), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 8% 85%, rgba(210, 160, 90, .28), transparent 52%),
+    radial-gradient(ellipse 48% 38% at 95% 55%, rgba(190, 140, 80, .22), transparent 50%),
+    radial-gradient(ellipse 35% 30% at 40% 40%, rgba(255, 255, 255, .35), transparent 55%),
+    linear-gradient(165deg, #f7eedc 0%, #e8d9be 32%, #d4c09a 62%, #c4a878 100%);
   color: #2c2418;
+}
+
+/* Soft floating appreciative words (behind page content) */
+.bg-keywords {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.cinematic-on .bg-keywords {
+  display: none;
+}
+.bg-keyword {
+  position: absolute;
+  font-family: "Caveat", cursive;
+  font-weight: 600;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: currentColor;
+  opacity: 0;
+  user-select: none;
+  will-change: transform, opacity;
+  animation-name: keywordDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes keywordDrift {
+  0%   { transform: translate3d(0, 0, 0) rotate(var(--rot, -6deg)); opacity: 0; }
+  12%  { opacity: var(--peak, .09); }
+  50%  { transform: translate3d(var(--dx, 18px), var(--dy, -28px), 0) rotate(calc(var(--rot, -6deg) + 4deg)); opacity: var(--peak, .09); }
+  88%  { opacity: var(--peak, .09); }
+  100% { transform: translate3d(calc(var(--dx, 18px) * 1.4), calc(var(--dy, -28px) * 1.5), 0) rotate(calc(var(--rot, -6deg) + 8deg)); opacity: 0; }
 }
 
 .waves {
@@ -3983,13 +4022,26 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 /* Chalkboard tic-tac-toe */
 #screen-ttt .game-shell {
   background:
-    radial-gradient(circle at 20% 10%, rgba(255,255,255,.06), transparent 40%),
-    linear-gradient(165deg, #2a5a3c, #1e4530);
-  border: 3px solid #d7c4a0;
+    radial-gradient(ellipse 90% 55% at 15% -10%, rgba(255, 255, 255, .16), transparent 48%),
+    radial-gradient(ellipse 70% 50% at 100% 110%, rgba(255, 200, 110, .14), transparent 52%),
+    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(80, 160, 110, .12), transparent 60%),
+    linear-gradient(155deg, #3a7a52 0%, #2a5a3c 38%, #1e4530 72%, #163528 100%);
+  border: 3px solid rgba(232, 210, 160, .75);
   box-shadow:
-    0 18px 50px rgba(0, 0, 0, .4),
-    inset 0 0 0 2px rgba(255,255,255,.06);
+    0 22px 56px rgba(0, 0, 0, .42),
+    0 0 0 1px rgba(255, 255, 255, .06),
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    inset 0 -18px 40px rgba(0, 0, 0, .18);
   color: #f4f7f0;
+}
+#screen-ttt .game-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(125deg, rgba(255,255,255,.1) 0%, transparent 38%, transparent 62%, rgba(255, 220, 140, .08) 100%);
+  pointer-events: none;
 }
 #screen-ttt h1 {
   color: #fff8e8;
@@ -4062,18 +4114,31 @@ body.cinematic-on #confettiCanvas { z-index: 9200; }
 /* Paper sudoku */
 #screen-sudoku .game-shell {
   background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255, 255, 255, .55), transparent 50%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(210, 160, 80, .18), transparent 55%),
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 27px,
-      rgba(80, 60, 40, .06) 28px
+      rgba(80, 60, 40, .05) 28px
     ),
-    linear-gradient(165deg, #fffaf0, #f0e2c8);
-  border: 1px solid rgba(90, 70, 40, .25);
+    linear-gradient(155deg, #fffdf8 0%, #f7ecd8 42%, #ead9b8 100%);
+  border: 1px solid rgba(90, 70, 40, .22);
   box-shadow:
-    0 18px 40px rgba(80, 50, 20, .22),
-    inset 0 0 0 1px rgba(255,255,255,.5);
+    0 22px 50px rgba(80, 50, 20, .24),
+    0 0 40px rgba(255, 220, 150, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .75),
+    inset 0 -12px 28px rgba(160, 120, 60, .06);
   color: #2c2418;
+}
+#screen-sudoku .game-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.45) 0%, transparent 40%, transparent 70%, rgba(200, 150, 70, .08) 100%);
+  pointer-events: none;
 }
 #screen-sudoku h1 {
   color: #3d2a18;
@@ -4240,6 +4305,8 @@ button.nav-next,
 </style>
 </head>
 <body class="theme-welcome">
+
+<div class="bg-keywords" id="bgKeywords" aria-hidden="true"></div>
 
 <div class="waves" aria-hidden="true">
   <svg class="wave-1" viewBox="0 0 1440 180" preserveAspectRatio="none">
@@ -4995,6 +5062,58 @@ Hope it made you smile.</p>
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2800);
   }
 
+  const APPRECIATION_WORDS = [
+    "Wonderful", "Brilliant", "Kind", "Radiant", "Loved", "Amazing", "Cherished",
+    "Bright", "Special", "Grateful", "Joy", "Shine", "Blessed", "Treasure",
+    "Admired", "Warmth", "Smile", "Magic", "Heart", "Courage", "Gentle",
+    "Happy", "Lucky", "Friend", "Inspiring", "Beautiful", "Strong", "Peace",
+    "Hope", "Glow", "Grace", "Delight", "Spark", "Beloved", "Rare", "Golden",
+    "Soft", "Brave", "Sunny", "Genuine", "Thoughtful", "Awesome", "Precious"
+  ];
+
+  function shufflePick(arr, count) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, count);
+  }
+
+  function spawnBgKeywords() {
+    const layer = document.getElementById("bgKeywords");
+    if (!layer) return;
+    layer.innerHTML = "";
+    const count = 9 + Math.floor(Math.random() * 5); // 9–13 words
+    const words = shufflePick(APPRECIATION_WORDS, count);
+    words.forEach((word, i) => {
+      const el = document.createElement("span");
+      el.className = "bg-keyword";
+      el.textContent = word;
+      const left = 4 + Math.random() * 84;
+      const top = 6 + Math.random() * 82;
+      const size = 0.95 + Math.random() * 1.35; // rem-ish via em on font-size
+      const dur = 14 + Math.random() * 16;
+      const delay = -Math.random() * dur;
+      const peak = 0.05 + Math.random() * 0.06; // very translucent
+      const dx = (Math.random() * 48 - 24).toFixed(1) + "px";
+      const dy = (-18 - Math.random() * 36).toFixed(1) + "px";
+      const rot = (Math.random() * 24 - 12).toFixed(1) + "deg";
+      el.style.left = left + "%";
+      el.style.top = top + "%";
+      el.style.fontSize = size + "rem";
+      el.style.setProperty("--peak", String(peak));
+      el.style.setProperty("--dx", dx);
+      el.style.setProperty("--dy", dy);
+      el.style.setProperty("--rot", rot);
+      el.style.animationDuration = dur + "s";
+      el.style.animationDelay = delay + "s";
+      // slight stagger so not all mid-cycle
+      if (i % 3 === 0) el.style.fontFamily = '"Fraunces", serif';
+      layer.appendChild(el);
+    });
+  }
+
   function setTheme(screenId) {
     document.body.classList.toggle("theme-welcome", screenId === "welcome");
     document.body.classList.toggle("theme-night", screenId === "constellation");
@@ -5016,6 +5135,7 @@ Hope it made you smile.</p>
     }
     screen.classList.add("active");
     setTheme(id);
+    spawnBgKeywords();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -7025,6 +7145,7 @@ Keep shining, keep dreaming, and keep being yourself.`;
 
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
+  spawnBgKeywords();
 })();
 </script>
 </body>
