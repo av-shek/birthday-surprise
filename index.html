@@ -58,11 +58,18 @@ body.theme-cinema .waves,
 body.theme-qa .waves,
 body.theme-ticket .waves,
 body.theme-typewriter .waves,
-body.theme-welcome .waves { display: none; }
+body.theme-welcome .waves,
+body.theme-lock .waves { display: none; }
 
 body.theme-welcome {
   background: #07060f;
   color: #f7efd8;
+  overflow-x: hidden;
+}
+
+body.theme-lock {
+  background: #0a0610;
+  color: #f3e6c8;
   overflow-x: hidden;
 }
 
@@ -184,9 +191,10 @@ body.cinematic-on .bg-keywords {
   align-items: flex-start;
 }
 .screen.active { display: flex; animation: fadeIn .45s ease; }
+/* Avoid transform on .screen — it breaks position:fixed nav on mobile */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .card {
@@ -800,21 +808,6 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   min-height: 0;
   padding: 8px 0 6px;
 }
-#screen-story .story-controls {
-  position: fixed;
-  top: max(12px, env(safe-area-inset-top, 0px));
-  left: 12px;
-  right: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  z-index: 50;
-  pointer-events: none;
-}
-#screen-story .story-controls > * { pointer-events: auto; }
-#screen-story .story-controls .nav-next { margin-left: auto; }
 #screen-story .story-skip {
   display: none;
 }
@@ -1404,8 +1397,6 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .question.answered .buttons { opacity: .55; pointer-events: none; }
-#screen-questions .nav-row { margin-top: 0; }
-
 .section-title {
   font-family: "Fraunces", serif;
   margin-top: 8px;
@@ -1417,18 +1408,20 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .section-hint { font-size: .85rem; color: #3d6f86; margin-bottom: 16px; }
 .theme-night .section-hint { color: #aeb9d8; }
 
+/* ===== Uniform fixed corner nav (always outside cards) ===== */
 .nav-row {
   position: fixed;
   top: max(12px, env(safe-area-inset-top, 0px));
-  left: 12px;
-  right: 12px;
+  left: max(12px, env(safe-area-inset-left, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
   display: flex;
   gap: 10px;
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
   margin: 0;
-  z-index: 40;
+  padding: 0;
+  z-index: 200;
   pointer-events: none;
 }
 .nav-row > * {
@@ -1444,16 +1437,17 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 .cine-close,
 .cine-next,
 .slide-continue {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   padding: 0;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: "Nunito", sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
@@ -1461,6 +1455,10 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   backdrop-filter: blur(8px);
   transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  position: relative;
+  z-index: 201;
 }
 .nav-back,
 .cine-close {
@@ -2245,7 +2243,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
 }
 
 #screen-gifts .nav-row {
-  z-index: 40;
+  z-index: 200;
 }
 
 .overlay.gift-cozy {
@@ -2270,7 +2268,7 @@ button:hover { transform: translateY(-2px) scale(1.03); }
   overflow: hidden;
 }
 #screen-constellation .nav-row {
-  z-index: 40;
+  z-index: 200;
 }
 .constellation-stage {
   position: relative;
@@ -4252,19 +4250,21 @@ button.nav-next,
 .cinematic.is-typewriter .slide-continue,
 .cinematic.is-cake .cine-close,
 .cinematic.is-finale .cine-close {
-  width: 44px !important;
-  height: 44px !important;
-  min-width: 44px !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   align-items: center !important;
   justify-content: center !important;
   font-family: "Nunito", sans-serif !important;
-  font-size: 1.15rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: 0 !important;
   text-transform: none !important;
+  touch-action: manipulation !important;
 }
 .nav-back,
 button.nav-back,
@@ -4301,6 +4301,215 @@ button.nav-next,
   color: #1a1020 !important;
   border: none !important;
   box-shadow: 0 0 18px rgba(255, 180, 80, .4) !important;
+}
+
+/* ===== Harry Potter lock screen ===== */
+#screen-lock {
+  padding: 24px 16px 40px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.lock-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(120, 40, 20, .45), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 15% 80%, rgba(40, 80, 40, .25), transparent 50%),
+    radial-gradient(ellipse 40% 35% at 90% 70%, rgba(40, 40, 100, .3), transparent 50%),
+    linear-gradient(180deg, #120810 0%, #1a0e18 40%, #0a0610 100%);
+}
+.lock-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #f5e6c0, transparent),
+    radial-gradient(1.5px 1.5px at 28% 42%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 22%, #f5e6c0, transparent),
+    radial-gradient(1.5px 1.5px at 72% 58%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 30%, #f5e6c0, transparent),
+    radial-gradient(1.5px 1.5px at 40% 75%, #fff, transparent),
+    radial-gradient(1px 1px at 18% 88%, #f5e6c0, transparent),
+    radial-gradient(1.5px 1.5px at 65% 12%, #fff, transparent);
+  opacity: .75;
+  animation: welcomeTwinkle 5s ease-in-out infinite alternate;
+}
+.lock-snitch {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff6d0, #d4a017 60%, #8a6a10);
+  box-shadow: 0 0 16px rgba(212, 160, 23, .7);
+  animation: snitchFly 14s ease-in-out infinite;
+  left: 10%;
+  top: 30%;
+}
+.lock-snitch::before,
+.lock-snitch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  width: 18px;
+  height: 8px;
+  background: rgba(255, 255, 255, .35);
+  border-radius: 50% 0 50% 0;
+}
+.lock-snitch::before { left: -16px; transform: rotate(-25deg); }
+.lock-snitch::after { right: -16px; transform: rotate(25deg) scaleX(-1); border-radius: 0 50% 0 50%; }
+@keyframes snitchFly {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(55vw, -12vh); }
+  50% { transform: translate(30vw, 25vh); }
+  75% { transform: translate(70vw, 8vh); }
+}
+.lock-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 28px 22px 24px;
+  border-radius: 8px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(180, 120, 40, .18), transparent 50%),
+    linear-gradient(165deg, #2a1c12 0%, #1a120c 55%, #120c08 100%);
+  border: 2px solid rgba(180, 140, 60, .55);
+  box-shadow:
+    0 0 0 1px rgba(255, 220, 140, .12),
+    0 24px 50px rgba(0, 0, 0, .55),
+    inset 0 0 40px rgba(80, 40, 10, .25);
+}
+.lock-crest {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 12px rgba(212, 160, 23, .45));
+}
+.lock-card h1 {
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.25rem, 5vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: #e8c878;
+  text-shadow: 0 0 20px rgba(212, 160, 23, .35);
+  margin: 0 0 6px;
+}
+.lock-card .lock-sub {
+  font-family: "Cinzel", serif;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #a89070;
+  margin: 0 0 18px;
+}
+.lock-houses {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.lock-houses span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+.lock-houses .gryff { color: #ae0001; background: #ae0001; }
+.lock-houses .slyth { color: #2a623d; background: #2a623d; }
+.lock-houses .rav { color: #222f5b; background: #222f5b; }
+.lock-houses .huff { color: #ecb939; background: #ecb939; }
+.lock-pin-display {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.lock-pin-display .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(232, 200, 120, .55);
+  background: transparent;
+  transition: background .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.lock-pin-display .dot.filled {
+  background: #e8c878;
+  border-color: #e8c878;
+  box-shadow: 0 0 12px rgba(232, 200, 120, .65);
+}
+.lock-hint {
+  min-height: 1.4em;
+  font-size: .82rem;
+  color: #c4a878;
+  margin: 0 0 14px;
+  font-family: "Nunito", sans-serif;
+}
+.lock-hint.error {
+  color: #ff8a8a;
+  animation: lockShake .4s ease;
+}
+.lock-hint.success {
+  color: #9dffb0;
+}
+@keyframes lockShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.lock-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 260px;
+  margin: 0 auto 8px;
+}
+.lock-pad button {
+  height: 52px;
+  border-radius: 10px;
+  border: 1px solid rgba(180, 140, 60, .4);
+  background: linear-gradient(165deg, rgba(60, 40, 24, .95), rgba(30, 20, 12, .98));
+  color: #f3e6c8;
+  font-family: "Cinzel", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .35);
+  transition: transform .12s ease, background .15s ease;
+}
+.lock-pad button:active {
+  transform: scale(.96);
+  background: linear-gradient(165deg, rgba(100, 70, 30, .95), rgba(50, 35, 18, .98));
+}
+.lock-pad button.lock-del {
+  font-size: .85rem;
+  letter-spacing: .04em;
+}
+.lock-pad button.lock-clear {
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.lock-spell {
+  margin-top: 14px;
+  font-family: "Cinzel", serif;
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(232, 200, 120, .45);
+}
+.lock-card.is-unlocked {
+  animation: lockUnlock .8s ease;
+}
+@keyframes lockUnlock {
+  0% { filter: brightness(1); }
+  40% { filter: brightness(1.5); box-shadow: 0 0 40px rgba(232, 200, 120, .6); }
+  100% { filter: brightness(1); }
 }
 </style>
 </head>
@@ -4342,13 +4551,58 @@ button.nav-next,
     <h1 class="welcome-name">Gopal</h1>
     <p class="welcome-title">Happy Birthday</p>
     <p class="welcome-line">A private celebration of you — stories, gifts, games, and a finale waiting at the end.</p>
-    <button class="welcome-cta" type="button" id="beginBtn" data-go="story">Begin the journey</button>
+    <button class="welcome-cta" type="button" id="beginBtn" data-go="lock">Begin the journey</button>
     <p class="welcome-promise">Made only for you</p>
+  </div>
+</section>
+
+<!-- 1a. Harry Potter lock -->
+<section class="screen" id="screen-lock">
+  <div class="lock-stage" aria-hidden="true">
+    <div class="lock-stars"></div>
+    <div class="lock-snitch"></div>
+  </div>
+  <div class="lock-card" id="lockCard">
+    <div class="lock-crest" aria-hidden="true">⚡</div>
+    <h1>Platform 9¾</h1>
+    <p class="lock-sub">Enter the secret code</p>
+    <div class="lock-houses" aria-hidden="true">
+      <span class="gryff"></span>
+      <span class="slyth"></span>
+      <span class="rav"></span>
+      <span class="huff"></span>
+    </div>
+    <div class="lock-pin-display" id="lockPinDisplay" aria-label="PIN progress">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <p class="lock-hint" id="lockHint">Four digits · Speak friend and enter</p>
+    <div class="lock-pad" id="lockPad">
+      <button type="button" data-digit="1">1</button>
+      <button type="button" data-digit="2">2</button>
+      <button type="button" data-digit="3">3</button>
+      <button type="button" data-digit="4">4</button>
+      <button type="button" data-digit="5">5</button>
+      <button type="button" data-digit="6">6</button>
+      <button type="button" data-digit="7">7</button>
+      <button type="button" data-digit="8">8</button>
+      <button type="button" data-digit="9">9</button>
+      <button type="button" class="lock-clear" id="lockClear">Clear</button>
+      <button type="button" data-digit="0">0</button>
+      <button type="button" class="lock-del" id="lockDel">⌫</button>
+    </div>
+    <p class="lock-spell">Alohomora</p>
   </div>
 </section>
 
 <!-- 1b. How we met (animated story) -->
 <section class="screen" id="screen-story">
+  <div class="nav-row" id="storyNav">
+    <button type="button" class="nav-back" id="storyBack" aria-label="Back">←</button>
+    <button type="button" class="nav-next" id="storyNext" aria-label="Next">→</button>
+  </div>
   <div class="card">
     <div class="cinema-inner">
     <div class="cinema-marquee" aria-hidden="true">
@@ -4498,16 +4752,15 @@ button.nav-next,
     <div class="story-pause-bar">
       <button type="button" class="story-btn story-pause" id="storyPause" aria-label="Pause or play">⏸</button>
     </div>
-    <div class="story-controls">
-      <button type="button" class="nav-back" id="storyBack" aria-label="Back">←</button>
-      <button type="button" class="nav-next" id="storyNext" aria-label="Next">→</button>
-    </div>
     </div>
   </div>
 </section>
 
 <!-- 2. Questions -->
 <section class="screen" id="screen-questions">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="story" aria-label="Back">←</button>
+  </div>
   <div class="card">
     <div class="qa-confetti" aria-hidden="true">
       <i style="--x:8%;--y:12%;--d:6s;--delay:0s">🎉</i>
@@ -4582,15 +4835,16 @@ button.nav-next,
         </div>
       </div>
     </div>
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="story" aria-label="Back">←</button>
-    </div>
     </div>
   </div>
 </section>
 
 <!-- 3. Celebration + coupons -->
 <section class="screen" id="screen-celebrate">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="questions" aria-label="Back">←</button>
+    <button class="nav-next" type="button" data-go="arrows" aria-label="Next">→</button>
+  </div>
   <div class="card">
     <div class="ticket-inner">
     <div class="ticket-booth-banner" aria-hidden="true">
@@ -4647,16 +4901,16 @@ button.nav-next,
         <span class="coupon-tap"></span>
       </button>
     </div>
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="questions" aria-label="Back">←</button>
-      <button class="nav-next" type="button" data-go="arrows" aria-label="Next">→</button>
-    </div>
     </div>
   </div>
 </section>
 
 <!-- Mini-game 1: Arrow escape (neon) -->
 <section class="screen" id="screen-arrows">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="celebrate" aria-label="Back">←</button>
+    <button class="nav-next game-continue is-ready" type="button" id="arrowContinue" data-go="gifts" aria-label="Next">→</button>
+  </div>
   <div class="game-shell">
     <h1>Arrow Escape ⚡</h1>
     <div class="arrow-board-wrap">
@@ -4667,15 +4921,15 @@ button.nav-next,
     <div class="game-actions">
       <button class="btn-ghost" type="button" id="arrowReset">Reset</button>
     </div>
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="celebrate" aria-label="Back">←</button>
-      <button class="nav-next game-continue is-ready" type="button" id="arrowContinue" data-go="gifts" aria-label="Next">→</button>
-    </div>
   </div>
 </section>
 
 <!-- 4. Gift boxes — cozy room -->
 <section class="screen" id="screen-gifts">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="arrows" aria-label="Back">←</button>
+    <button class="nav-next" type="button" data-go="ttt" aria-label="Next">→</button>
+  </div>
   <div class="cozy-room">
     <div class="cozy-fairylights" aria-hidden="true">
       <div class="wire"></div>
@@ -4762,15 +5016,15 @@ button.nav-next,
       </button>
     </div>
 
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="arrows" aria-label="Back">←</button>
-      <button class="nav-next" type="button" data-go="ttt" aria-label="Next">→</button>
-    </div>
   </div>
 </section>
 
 <!-- Mini-game 2: Tic Tac Toe (chalkboard) -->
 <section class="screen" id="screen-ttt">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="gifts" aria-label="Back">←</button>
+    <button class="nav-next game-continue is-ready" type="button" id="tttContinue" data-go="constellation" aria-label="Next">→</button>
+  </div>
   <div class="game-shell">
     <h1>Birthday Tic-Tac-Toe 🎯</h1>
     <div class="ttt-legend">
@@ -4781,10 +5035,6 @@ button.nav-next,
     <p class="game-status" id="tttStatus"></p>
     <div class="game-actions">
       <button class="btn-ghost" type="button" id="tttReset">Rematch</button>
-    </div>
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="gifts" aria-label="Back">←</button>
-      <button class="nav-next game-continue is-ready" type="button" id="tttContinue" data-go="constellation" aria-label="Next">→</button>
     </div>
   </div>
 </section>
@@ -4810,6 +5060,10 @@ button.nav-next,
 
 <!-- Mini-game 3: Mini Sudoku (paper) -->
 <section class="screen" id="screen-sudoku">
+  <div class="nav-row">
+    <button class="nav-back" type="button" data-go="constellation" aria-label="Back">←</button>
+    <button class="nav-next game-continue is-ready" type="button" id="sudokuContinue" data-go="letter" aria-label="Next">→</button>
+  </div>
   <div class="game-shell">
     <h1>Mini Sudoku 🧩</h1>
     <div class="sudoku-grid" id="sudokuGrid" aria-label="Sudoku grid"></div>
@@ -4824,10 +5078,6 @@ button.nav-next,
     <div class="game-actions">
       <button class="btn-ghost" type="button" id="sudokuReset">Reset</button>
       <button class="btn-ghost" type="button" id="sudokuSkip">Skip →</button>
-    </div>
-    <div class="nav-row">
-      <button class="nav-back" type="button" data-go="constellation" aria-label="Back">←</button>
-      <button class="nav-next game-continue is-ready" type="button" id="sudokuContinue" data-go="letter" aria-label="Next">→</button>
     </div>
   </div>
 </section>
@@ -4969,12 +5219,16 @@ Hope it made you smile.</p>
 
 <script>
 (() => {
+  // ★ Change this 4-digit PIN to unlock the journey after Welcome ★
+  const LOCK_PIN = "0708";
+
   const toastEl = document.getElementById("toast");
   const canvas = document.getElementById("confettiCanvas");
   const ctx = canvas.getContext("2d");
   let toastTimer = null;
   let confettiPieces = [];
   let currentQuestion = 0;
+  let lockDigits = "";
 
   function photoHTML(src, alt) {
     return `<div class="photo-frame is-loading">
@@ -5116,6 +5370,7 @@ Hope it made you smile.</p>
 
   function setTheme(screenId) {
     document.body.classList.toggle("theme-welcome", screenId === "welcome");
+    document.body.classList.toggle("theme-lock", screenId === "lock");
     document.body.classList.toggle("theme-night", screenId === "constellation");
     document.body.classList.toggle("theme-cozy", screenId === "gifts");
     document.body.classList.toggle("theme-neon", screenId === "arrows");
@@ -5149,6 +5404,11 @@ Hope it made you smile.</p>
       storyAutoplay = false;
       storyPaused = false;
       showScreen("welcome");
+      return;
+    }
+    if (target === "lock") {
+      resetLockPad();
+      showScreen("lock");
       return;
     }
     if (target === "story") {
@@ -5196,7 +5456,78 @@ Hope it made you smile.</p>
   document.getElementById("beginBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    goTo("story");
+    goTo("lock");
+  });
+
+  /* ===== Harry Potter lock screen ===== */
+  const lockPinDisplay = document.getElementById("lockPinDisplay");
+  const lockHint = document.getElementById("lockHint");
+  const lockCard = document.getElementById("lockCard");
+  const lockPad = document.getElementById("lockPad");
+
+  function syncLockDots() {
+    const dots = lockPinDisplay?.querySelectorAll(".dot");
+    dots?.forEach((dot, i) => {
+      dot.classList.toggle("filled", i < lockDigits.length);
+    });
+  }
+
+  function resetLockPad(message) {
+    lockDigits = "";
+    syncLockDots();
+    if (lockHint) {
+      lockHint.textContent = message || "Four digits · Speak friend and enter";
+      lockHint.classList.remove("error", "success");
+    }
+    lockCard?.classList.remove("is-unlocked");
+  }
+
+  function tryUnlock() {
+    if (lockDigits === LOCK_PIN) {
+      if (lockHint) {
+        lockHint.textContent = "Alohomora! The door opens…";
+        lockHint.classList.remove("error");
+        lockHint.classList.add("success");
+      }
+      lockCard?.classList.add("is-unlocked");
+      setTimeout(() => goTo("story"), 700);
+      return;
+    }
+    if (lockHint) {
+      lockHint.textContent = "Wrong incantation — try again";
+      lockHint.classList.add("error");
+      lockHint.classList.remove("success");
+    }
+    setTimeout(() => resetLockPad(), 500);
+  }
+
+  lockPad?.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn || !lockPad.contains(btn)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (btn.id === "lockClear") {
+      resetLockPad();
+      return;
+    }
+    if (btn.id === "lockDel") {
+      lockDigits = lockDigits.slice(0, -1);
+      syncLockDots();
+      if (lockHint) {
+        lockHint.classList.remove("error", "success");
+        lockHint.textContent = "Four digits · Speak friend and enter";
+      }
+      return;
+    }
+    const digit = btn.getAttribute("data-digit");
+    if (digit == null || lockDigits.length >= 4) return;
+    lockDigits += digit;
+    syncLockDots();
+    if (lockHint) {
+      lockHint.classList.remove("error", "success");
+      lockHint.textContent = lockDigits.length === 4 ? "Checking the charm…" : "Four digits · Speak friend and enter";
+    }
+    if (lockDigits.length === 4) tryUnlock();
   });
 
   /* ===== How we met story player ===== */
@@ -5312,7 +5643,7 @@ Hope it made you smile.</p>
     clearStoryTimer();
     const next = storyIndex + delta;
     if (next < 0) {
-      goTo("welcome");
+      goTo("lock");
       return;
     }
     if (next >= storyScenes.length) {
@@ -5324,13 +5655,15 @@ Hope it made you smile.</p>
   }
 
   storyNextBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
     goStory(1);
   });
   storyBackBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
     if (storyIndex <= 0) {
-      goTo("welcome");
+      goTo("lock");
       return;
     }
     goStory(-1);
